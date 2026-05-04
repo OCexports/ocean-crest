@@ -6,6 +6,7 @@ import {
   useState,
   useCallback,
   useEffect,
+  useMemo,
   type ReactNode,
 } from "react";
 import { translations, type Locale } from "./translations";
@@ -46,11 +47,14 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("ocean-crest-locale", newLocale);
   }, []);
 
-  const t = translations[locale] || translations.en;
-  const dir = RTL_LOCALES.includes(locale) ? "rtl" : "ltr";
+  const value = useMemo(() => {
+    const t = translations[locale] || translations.en;
+    const dir: "ltr" | "rtl" = RTL_LOCALES.includes(locale) ? "rtl" : "ltr";
+    return { locale, setLocale, t, dir };
+  }, [locale, setLocale]);
 
   return (
-    <LanguageContext.Provider value={{ locale, setLocale, t, dir }}>
+    <LanguageContext.Provider value={value}>
       {children}
     </LanguageContext.Provider>
   );
