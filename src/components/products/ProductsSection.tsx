@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -10,6 +9,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Card, CardContent } from "@/components/ui/Card";
 import { categories, getProductsByCategory } from "@/lib/constants/products";
 import { ProductImagePlaceholder } from "./ProductImagePlaceholder";
+import { HoverVideoMedia } from "./HoverVideoMedia";
 
 export function ProductsSection() {
   const [active, setActive] = useState("all");
@@ -60,21 +60,29 @@ export function ProductsSection() {
                   <div className="aspect-[4/3] relative overflow-hidden bg-stone-100">
                     {product.hasPhotography ? (
                       <>
-                        <Image
+                        <HoverVideoMedia
                           src={product.image}
+                          video={product.video}
                           alt={product.name}
-                          fill
                           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                          className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.08]"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent group-hover:from-black/10 transition-colors duration-300" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent group-hover:from-black/10 transition-colors duration-300 pointer-events-none" />
                       </>
                     ) : (
                       <ProductImagePlaceholder />
                     )}
                     {product.meshBadge && (
-                      <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-sm text-[10px] font-semibold tracking-[0.15em] uppercase text-primary shadow-border">
+                      <span className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-sm text-[10px] font-semibold tracking-[0.15em] uppercase text-primary shadow-border">
                         {product.meshBadge}
+                      </span>
+                    )}
+                    {product.video && (
+                      <span
+                        className="absolute top-3 right-3 z-10 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-ink/70 backdrop-blur-sm text-[9px] font-semibold tracking-[0.15em] uppercase text-white"
+                        aria-hidden="true"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
+                        Video
                       </span>
                     )}
                   </div>

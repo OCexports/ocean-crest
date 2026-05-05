@@ -103,7 +103,12 @@ export default async function ProductDetailPage({ params }: Props) {
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
             {/* Product Gallery */}
             <ScrollReveal direction="left">
-              <ProductGallery images={getGalleryImages(product.slug)} alt={product.name} />
+              <ProductGallery
+                images={getGalleryImages(product.slug)}
+                video={product.video}
+                videoPoster={product.image}
+                alt={product.name}
+              />
             </ScrollReveal>
 
             {/* Info */}

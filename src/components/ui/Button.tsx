@@ -33,10 +33,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         className={cn(
-          "inline-flex items-center justify-center gap-2 font-semibold rounded-[var(--radius-sm)] transition-all duration-200 ease-out cursor-pointer",
+          "inline-flex items-center justify-center gap-2 font-semibold rounded-[var(--radius-sm)] transition-all duration-180 ease-out cursor-pointer",
           "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold",
           "disabled:opacity-50 disabled:cursor-not-allowed",
-          "active:scale-[0.98]",
+          "hover:scale-[1.03] active:scale-[0.98] hover:shadow-card-hover",
           variants[variant],
           sizes[size],
           className

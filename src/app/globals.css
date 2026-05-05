@@ -3,15 +3,18 @@
 @theme inline {
   /* ═══ OCEAN CREST EXPORTS — Blue + Beige + Golden ═══ */
 
-  /* Primary: Deep blue (from logo) */
-  --color-primary: #1B3A5C;
-  --color-primary-light: #2A5380;
-  --color-primary-muted: #4A7AAB;
+  /* Primary: Deep navy — unified to match the hero's premium dark tone.
+     Old #1B3A5C now lives as primary-light for hover/lift states. */
+  --color-primary: #0A1E2D;
+  --color-primary-deep: #081520;
+  --color-primary-light: #1B3A5C;
+  --color-primary-muted: #2A5380;
 
-  /* Golden accent (from logo "EXPORTS" text) */
-  --color-gold: #C5923A;
-  --color-gold-light: #D4A84E;
-  --color-gold-muted: #A67B2E;
+  /* Golden accent — unified to a more luminous metallic tone (from #C5923A).
+     Old warm-earth gold now lives as gold-muted for hover/active states. */
+  --color-gold: #D4AF37;
+  --color-gold-light: #E8C158;
+  --color-gold-muted: #C49B2A;
 
   /* Warm spice tones */
   --color-spice: #C4724E;
@@ -20,8 +23,8 @@
   --color-saffron: #D97706;
 
   /* Ocean blues — complementary */
-  --color-depth: #1B3A5C;
-  --color-depth-light: #4A7AAB;
+  --color-depth: #0A1E2D;
+  --color-depth-light: #2A5380;
   --color-teal: #0D7C6E;
 
   /* Neutrals — warm beige base */
@@ -45,32 +48,33 @@
   --color-success: #16A34A;
   --color-whatsapp: #25D366;
 
-  /* Backward compat aliases */
-  --color-ocean-deep: #1B3A5C;
-  --color-ocean-mid: #2A5380;
-  --color-ocean-light: #4A7AAB;
+  /* Backward compat aliases — kept pointing at logical equivalents in the
+     new palette so already-shipped components don't visually regress. */
+  --color-ocean-deep: #0A1E2D;
+  --color-ocean-mid: #1B3A5C;
+  --color-ocean-light: #2A5380;
   --color-ocean-surface: #7CA3C7;
   --color-seafoam: #0D7C6E;
-  --color-sand-warm: #C5923A;
+  --color-sand-warm: #D4AF37;
   --color-sand-light: #FAF7F2;
   --color-pearl: #F5F0E8;
   --color-shell: #EDE8DF;
   --color-text-primary: #1A1A2E;
   --color-text-secondary: #5A6275;
   --color-border: #D4CCB8;
-  --color-cta-hover: #A67B2E;
+  --color-cta-hover: #C49B2A;
 
   /* Fonts */
   --font-display: var(--font-cormorant);
   --font-body: var(--font-montserrat);
 
-  /* Shadows — Vercel-inspired layered system */
-  --shadow-border: 0 0 0 1px rgba(27, 58, 92, 0.08);
-  --shadow-card: 0 0 0 1px rgba(27, 58, 92, 0.08), 0 2px 4px rgba(27, 58, 92, 0.04);
-  --shadow-card-hover: 0 0 0 1px rgba(27, 58, 92, 0.12), 0 8px 24px rgba(27, 58, 92, 0.08);
-  --shadow-modal: 0 0 0 1px rgba(27, 58, 92, 0.1), 0 16px 48px rgba(27, 58, 92, 0.12);
-  --shadow-hero: 0 0 0 1px rgba(27, 58, 92, 0.06), 0 24px 64px rgba(27, 58, 92, 0.16);
-  --shadow-gold: 0 0 0 1px rgba(197, 146, 58, 0.2), 0 4px 16px rgba(197, 146, 58, 0.15);
+  /* Shadows — tinted with the new deep-navy/luminous-gold palette. */
+  --shadow-border: 0 0 0 1px rgba(10, 30, 45, 0.08);
+  --shadow-card: 0 0 0 1px rgba(10, 30, 45, 0.08), 0 2px 4px rgba(10, 30, 45, 0.04);
+  --shadow-card-hover: 0 0 0 1px rgba(10, 30, 45, 0.12), 0 8px 24px rgba(10, 30, 45, 0.08);
+  --shadow-modal: 0 0 0 1px rgba(10, 30, 45, 0.1), 0 16px 48px rgba(10, 30, 45, 0.12);
+  --shadow-hero: 0 0 0 1px rgba(10, 30, 45, 0.06), 0 24px 64px rgba(10, 30, 45, 0.16);
+  --shadow-gold: 0 0 0 1px rgba(212, 175, 55, 0.2), 0 4px 16px rgba(212, 175, 55, 0.15);
 
   /* Radius */
   --radius-sm: 6px;
@@ -106,10 +110,10 @@ h1 { letter-spacing: -0.04em; }
 
 /* ═══ Shadow-as-border (Vercel pattern) ═══ */
 .shadow-border {
-  box-shadow: 0 0 0 1px rgba(27, 58, 92, 0.08);
+  box-shadow: 0 0 0 1px rgba(10, 30, 45, 0.08);
 }
 .shadow-border:hover {
-  box-shadow: 0 0 0 1px rgba(27, 58, 92, 0.15), 0 4px 12px rgba(27, 58, 92, 0.06);
+  box-shadow: 0 0 0 1px rgba(10, 30, 45, 0.15), 0 4px 12px rgba(10, 30, 45, 0.06);
 }
 
 /* ═══ Liquid Glass ═══ */
@@ -181,14 +185,14 @@ h1 { letter-spacing: -0.04em; }
 /* ═══ Animated Gradient Mesh ═══ */
 .gradient-mesh {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(27, 58, 92, 0.5) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(197, 146, 58, 0.18) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 80%, rgba(74, 122, 171, 0.15) 0%, transparent 50%);
+    radial-gradient(ellipse at 20% 50%, rgba(10, 30, 45, 0.5) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(212, 175, 55, 0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(42, 83, 128, 0.15) 0%, transparent 50%);
 }
 
 /* ═══ Golden Text Gradient ═══ */
 .text-gradient-copper {
-  background: linear-gradient(135deg, #D4A84E 0%, #C5923A 50%, #A67B2E 100%);
+  background: linear-gradient(135deg, #E8C158 0%, #D4AF37 50%, #C49B2A 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -215,6 +219,25 @@ h1 { letter-spacing: -0.04em; }
 }
 .animate-ken-burns {
   animation: kenBurns 20s ease-in-out infinite alternate;
+}
+
+/* ═══ World Dot Map — arc draw + hub pulse ═══
+   SVG circles' transform-origin defaults to (0,0) of the SVG, so we
+   pulse via opacity only — no transforms — to keep dots anchored. */
+@keyframes arc-draw {
+  0%   { stroke-dashoffset: 600; opacity: 0; }
+  15%  { opacity: 1; }
+  60%  { stroke-dashoffset: 0; opacity: 1; }
+  85%  { opacity: 0.4; }
+  100% { stroke-dashoffset: -600; opacity: 0; }
+}
+@keyframes hub-pulse {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1; }
+}
+@keyframes india-glow {
+  0%, 100% { opacity: 0.15; }
+  50%      { opacity: 0.55; }
 }
 
 /* ═══ Float Animations ═══ */

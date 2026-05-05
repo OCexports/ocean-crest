@@ -15,6 +15,8 @@ export type Product = {
   bestFor?: string[];
   /** Value-prop differentiator — rendered as a copper-accent callout. */
   institutionalNote?: string;
+  /** Optional product motion clip. Plays on card hover and as the first gallery slide. */
+  video?: string;
   features: string[];
   specifications: Record<string, string>;
 };
@@ -71,6 +73,7 @@ export const products: Product[] = [
     categorySlug: "dehydrated",
     hasPhotography: true,
     image: "/images/products/garlic/chopped-2.png",
+    video: "/videos/products/garlic/chopped.mp4",
     meshBadge: "3–5 mm · 8–20 mesh",
     shortDescription:
       "Chunky 3–5 mm chopped garlic for applications where garlic needs to be both tasted and seen.",
@@ -188,6 +191,7 @@ export const products: Product[] = [
     categorySlug: "dehydrated",
     hasPhotography: true,
     image: "/images/products/garlic/powder-1.png",
+    video: "/videos/products/garlic/powder.mp4",
     meshBadge: "80–100+ mesh",
     shortDescription:
       "Ultra-fine pulverized garlic powder — engineered for instant dissolution and intense flavor.",

@@ -1,12 +1,22 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { HoverVideoMedia } from "@/components/products/HoverVideoMedia";
 
-const featured = [
+const featured: {
+  name: string;
+  slug: string;
+  image: string;
+  video?: string;
+  tag: string;
+  moq: string;
+  color: string;
+  span: string;
+  height: string;
+}[] = [
   {
     name: "Dehydrated Garlic Flakes",
     slug: "dehydrated-garlic-flakes",
@@ -21,6 +31,7 @@ const featured = [
     name: "Dehydrated Garlic Chopped",
     slug: "dehydrated-garlic-chopped",
     image: "/images/products/garlic/chopped-2.png",
+    video: "/videos/products/garlic/chopped.mp4",
     tag: "Dehydrated",
     moq: "MOQ 500 kg",
     color: "from-stone-900/40 via-stone-900/10 to-stone-950/80",
@@ -41,6 +52,7 @@ const featured = [
     name: "Dehydrated Garlic Powder",
     slug: "dehydrated-garlic-powder",
     image: "/images/products/garlic/powder-1.png",
+    video: "/videos/products/garlic/powder.mp4",
     tag: "Dehydrated",
     moq: "MOQ 500 kg",
     color: "from-yellow-900/30 via-yellow-900/5 to-yellow-950/75",
@@ -81,15 +93,14 @@ export function ProductShowcase() {
                 className="group block h-full"
               >
                 <div className={`relative ${product.height} rounded-[var(--radius-lg)] overflow-hidden cursor-pointer shadow-card hover:shadow-card-hover transition-shadow duration-300`}>
-                  <Image
+                  <HoverVideoMedia
                     src={product.image}
+                    video={product.video}
                     alt={product.name}
-                    fill
                     sizes={i === 0 ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1024px) 25vw, 50vw"}
-                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.08]"
                   />
                   <div
-                    className={`absolute inset-0 bg-gradient-to-t ${product.color} transition-opacity duration-300 group-hover:opacity-90`}
+                    className={`absolute inset-0 bg-gradient-to-t ${product.color} transition-opacity duration-300 group-hover:opacity-90 pointer-events-none`}
                   />
 
                   <div className="absolute top-5 left-5 z-10 flex items-center gap-2">
