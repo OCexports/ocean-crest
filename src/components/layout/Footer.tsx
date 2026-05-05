@@ -11,10 +11,12 @@ const footerLinks = [
 ];
 
 const productLinks = [
-  { name: "Dehydrated Garlic Powder", href: "/products/dehydrated-garlic-powder" },
+  { name: "Garlic Flakes", href: "/products/dehydrated-garlic-flakes" },
+  { name: "Garlic Chopped", href: "/products/dehydrated-garlic-chopped" },
+  { name: "Garlic Minced", href: "/products/dehydrated-garlic-minced" },
+  { name: "Garlic Granules", href: "/products/dehydrated-garlic-granules" },
+  { name: "Garlic Powder", href: "/products/dehydrated-garlic-powder" },
   { name: "Onion Powder", href: "/products/onion-powder" },
-  { name: "Turmeric", href: "/products/turmeric" },
-  { name: "Ginger", href: "/products/ginger" },
 ];
 
 export function Footer() {

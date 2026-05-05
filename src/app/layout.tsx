@@ -29,12 +29,12 @@ export const metadata: Metadata = {
   description:
     "Ocean Crest is a leading exporter of premium Indian spices, grains, seeds, and dehydrated vegetables. Quality certified, serving 25+ countries worldwide.",
   keywords: [
-    "spice exporter",
-    "Indian spices",
-    "bulk spice supplier",
-    "turmeric export",
+    "dehydrated garlic exporter",
     "garlic powder wholesale",
-    "premium spices India",
+    "garlic flakes supplier",
+    "dehydrated onion powder",
+    "Indian spice exporter",
+    "bulk spice supplier",
   ],
   openGraph: {
     type: "website",

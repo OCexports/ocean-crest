@@ -12,42 +12,37 @@ import { products, getProductBySlug } from "@/lib/constants/products";
 import { companyInfo } from "@/lib/constants/navigation";
 import { StructuredData, productSchema } from "@/components/seo/StructuredData";
 import { ProductGallery } from "@/components/products/ProductGallery";
+import { ProductImagePlaceholder } from "@/components/products/ProductImagePlaceholder";
 
-const productImages: Record<string, string> = {
-  "dehydrated-garlic-powder": "https://images.unsplash.com/photo-1540148426945-6cf22a6b2571?w=900&q=80",
-  "onion-powder": "https://images.unsplash.com/photo-1518977956812-cd3dbadaaf31?w=900&q=80",
-  turmeric: "https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=900&q=80",
-  ginger: "https://images.unsplash.com/photo-1615485736668-0f1d27f8d5df?w=900&q=80",
-};
-
-// Placeholder secondary shots — user will swap for real packaging/scale photos later.
-const gallerySecondary: Record<string, string[]> = {
+const galleryByProduct: Record<string, string[]> = {
+  "dehydrated-garlic-flakes": [
+    "/images/products/garlic/chopped-1.png",
+    "/images/products/garlic/chopped-2.png",
+    "/images/products/garlic/chopped-3.png",
+  ],
+  "dehydrated-garlic-chopped": [
+    "/images/products/garlic/chopped-2.png",
+    "/images/products/garlic/chopped-1.png",
+    "/images/products/garlic/chopped-3.png",
+  ],
+  "dehydrated-garlic-minced": [
+    "/images/products/garlic/chopped-3.png",
+    "/images/products/garlic/chopped-1.png",
+    "/images/products/garlic/chopped-2.png",
+  ],
+  "dehydrated-garlic-granules": [
+    "/images/products/garlic/powder-1.png",
+    "/images/products/garlic/chopped-1.png",
+  ],
   "dehydrated-garlic-powder": [
-    "https://images.unsplash.com/photo-1513135065346-a098a63a71ee?w=900&q=80",
-    "https://images.unsplash.com/photo-1588165171080-c89acfa5ee83?w=900&q=80",
-    "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=900&q=80",
+    "/images/products/garlic/powder-1.png",
   ],
-  "onion-powder": [
-    "https://images.unsplash.com/photo-1580201092675-a0a6a6cafbb1?w=900&q=80",
-    "https://images.unsplash.com/photo-1506368083636-6defb67639a7?w=900&q=80",
-    "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=900&q=80",
-  ],
-  turmeric: [
-    "https://images.unsplash.com/photo-1578855691621-8a08ea00d1fb?w=900&q=80",
-    "https://images.unsplash.com/photo-1532336414038-cf19250c5757?w=900&q=80",
-    "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=900&q=80",
-  ],
-  ginger: [
-    "https://images.unsplash.com/photo-1573414405692-7e20f01b6e69?w=900&q=80",
-    "https://images.unsplash.com/photo-1599909631716-8a9c67ae5d11?w=900&q=80",
-    "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=900&q=80",
-  ],
+  // Onion: empty array → placeholder card. Real photography pending.
+  "onion-powder": [],
 };
 
 function getGalleryImages(slug: string): string[] {
-  const main = productImages[slug] ?? "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=900&q=80";
-  const rest = gallerySecondary[slug] ?? [];
-  return [main, ...rest];
+  return galleryByProduct[slug] ?? [];
 }
 
 interface Props {
@@ -117,25 +112,34 @@ export default async function ProductDetailPage({ params }: Props) {
               <h1 className="text-3xl lg:text-4xl font-bold text-primary font-[family-name:var(--font-display)]">
                 {product.name}
               </h1>
-              <p className="mt-4 text-ink-muted leading-relaxed">
+
+              {/* Spec chips — buyer-scannable size/mesh/color above the fold */}
+              {(product.meshBadge || product.specifications.Color) && (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {product.meshBadge && (
+                    <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-gold/10 border border-gold/30 text-gold text-xs font-semibold tracking-wider uppercase">
+                      {product.meshBadge}
+                    </span>
+                  )}
+                  {product.specifications.Color && (
+                    <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-stone-100 border border-edge text-ink-muted text-xs font-medium">
+                      {product.specifications.Color}
+                    </span>
+                  )}
+                  {product.specifications.Moisture && (
+                    <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-stone-100 border border-edge text-ink-muted text-xs font-medium">
+                      Moisture: {product.specifications.Moisture}
+                    </span>
+                  )}
+                </div>
+              )}
+
+              <p className="mt-5 text-ink-muted leading-relaxed">
                 {product.description}
               </p>
 
-              {/* Features */}
-              <div className="mt-8">
-                <h2 className="text-lg font-semibold text-primary mb-4 font-[family-name:var(--font-display)]">Key Features</h2>
-                <ul className="space-y-2.5">
-                  {product.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-teal shrink-0 mt-0.5" />
-                      <span className="text-sm text-ink-muted">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* CTAs */}
-              <div className="mt-8 flex flex-wrap gap-3">
+              {/* CTAs — moved up, immediately under the lede */}
+              <div className="mt-7 flex flex-wrap gap-3">
                 <Link href={`/contact?product=${product.slug}`}>
                   <Button size="lg">
                     Request Quote
@@ -148,6 +152,50 @@ export default async function ProductDetailPage({ params }: Props) {
                     Inquire on WhatsApp
                   </Button>
                 </a>
+              </div>
+
+              {/* Ideal applications — Best For from the doc, as tagged list */}
+              {product.bestFor && product.bestFor.length > 0 && (
+                <div className="mt-10">
+                  <h2 className="text-xs font-medium tracking-[0.25em] uppercase text-gold mb-3">
+                    Ideal Applications
+                  </h2>
+                  <ul className="flex flex-wrap gap-2">
+                    {product.bestFor.map((use) => (
+                      <li
+                        key={use}
+                        className="px-3 py-1.5 rounded-md bg-white border border-edge-light text-sm text-ink"
+                      >
+                        {use}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Why this grade — Institutional Note as differentiator callout */}
+              {product.institutionalNote && (
+                <aside className="mt-8 p-5 rounded-[var(--radius-md)] bg-white border-l-2 border-gold shadow-border">
+                  <p className="text-xs font-medium tracking-[0.25em] uppercase text-gold mb-2">
+                    Why This Grade
+                  </p>
+                  <p className="text-sm text-ink leading-relaxed">
+                    {product.institutionalNote}
+                  </p>
+                </aside>
+              )}
+
+              {/* Key features — kept but de-emphasized vs. the structured sections above */}
+              <div className="mt-10">
+                <h2 className="text-lg font-semibold text-primary mb-4 font-[family-name:var(--font-display)]">Key Features</h2>
+                <ul className="space-y-2.5">
+                  {product.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-teal shrink-0 mt-0.5" />
+                      <span className="text-sm text-ink-muted">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </ScrollReveal>
           </div>
@@ -178,15 +226,21 @@ export default async function ProductDetailPage({ params }: Props) {
                   <StaggerItem key={rp.slug}>
                     <Link href={`/products/${rp.slug}`} className="group block">
                       <Card>
-                        <div className="aspect-[4/3] relative overflow-hidden">
-                          <Image
-                            src={productImages[rp.slug] || "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&q=80"}
-                            alt={rp.name}
-                            fill
-                            className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.08]"
-                            unoptimized
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent group-hover:from-black/10 transition-colors duration-300" />
+                        <div className="aspect-[4/3] relative overflow-hidden bg-stone-100">
+                          {rp.hasPhotography ? (
+                            <>
+                              <Image
+                                src={galleryByProduct[rp.slug][0]}
+                                alt={rp.name}
+                                fill
+                                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                                className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.08]"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent group-hover:from-black/10 transition-colors duration-300" />
+                            </>
+                          ) : (
+                            <ProductImagePlaceholder compact />
+                          )}
                         </div>
                         <CardContent>
                           <Badge variant="gold" className="mb-2">{rp.category}</Badge>

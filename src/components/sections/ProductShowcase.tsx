@@ -8,9 +8,9 @@ import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 const featured = [
   {
-    name: "Dehydrated Garlic Powder",
-    slug: "dehydrated-garlic-powder",
-    image: "https://images.unsplash.com/photo-1540148426945-6cf22a6b2571?w=1200&q=80",
+    name: "Dehydrated Garlic Flakes",
+    slug: "dehydrated-garlic-flakes",
+    image: "/images/products/garlic/chopped-1.png",
     tag: "Dehydrated",
     moq: "MOQ 500 kg",
     color: "from-stone-900/40 via-stone-900/10 to-stone-950/80",
@@ -18,9 +18,19 @@ const featured = [
     height: "h-[340px] lg:h-full",
   },
   {
-    name: "Onion Powder",
-    slug: "onion-powder",
-    image: "https://images.unsplash.com/photo-1518977956812-cd3dbadaaf31?w=700&q=80",
+    name: "Dehydrated Garlic Chopped",
+    slug: "dehydrated-garlic-chopped",
+    image: "/images/products/garlic/chopped-2.png",
+    tag: "Dehydrated",
+    moq: "MOQ 500 kg",
+    color: "from-stone-900/40 via-stone-900/10 to-stone-950/80",
+    span: "",
+    height: "h-[260px] lg:h-[260px]",
+  },
+  {
+    name: "Dehydrated Garlic Minced",
+    slug: "dehydrated-garlic-minced",
+    image: "/images/products/garlic/chopped-3.png",
     tag: "Dehydrated",
     moq: "MOQ 500 kg",
     color: "from-amber-900/30 via-amber-900/5 to-amber-950/75",
@@ -28,22 +38,12 @@ const featured = [
     height: "h-[260px] lg:h-[260px]",
   },
   {
-    name: "Turmeric",
-    slug: "turmeric",
-    image: "https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=700&q=80",
-    tag: "Spice",
-    moq: "MOQ 1,000 kg",
-    color: "from-yellow-900/30 via-yellow-900/5 to-yellow-950/75",
-    span: "",
-    height: "h-[260px] lg:h-[260px]",
-  },
-  {
-    name: "Ginger",
-    slug: "ginger",
-    image: "https://images.unsplash.com/photo-1615485736668-0f1d27f8d5df?w=700&q=80",
-    tag: "Spice",
+    name: "Dehydrated Garlic Powder",
+    slug: "dehydrated-garlic-powder",
+    image: "/images/products/garlic/powder-1.png",
+    tag: "Dehydrated",
     moq: "MOQ 500 kg",
-    color: "from-amber-800/30 via-amber-900/5 to-amber-900/75",
+    color: "from-yellow-900/30 via-yellow-900/5 to-yellow-950/75",
     span: "lg:col-span-2",
     height: "h-[260px] lg:h-[260px]",
   },
@@ -85,8 +85,8 @@ export function ProductShowcase() {
                     src={product.image}
                     alt={product.name}
                     fill
+                    sizes={i === 0 ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1024px) 25vw, 50vw"}
                     className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.08]"
-                    unoptimized
                   />
                   <div
                     className={`absolute inset-0 bg-gradient-to-t ${product.color} transition-opacity duration-300 group-hover:opacity-90`}

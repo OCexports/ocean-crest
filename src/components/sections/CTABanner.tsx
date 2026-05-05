@@ -134,10 +134,12 @@ export function CTABanner() {
                   </label>
                   <select id="cta-product" name="product" className="w-full px-3 py-2.5 bg-white/8 border border-white/15 rounded-[var(--radius-sm)] text-white text-sm focus:outline-none focus:ring-2 focus:ring-gold/40 focus:border-gold focus:bg-white/10 transition-colors cursor-pointer">
                     <option value="" className="bg-primary">Select a product</option>
-                    <option value="garlic" className="bg-primary">Dehydrated Garlic Powder</option>
-                    <option value="onion" className="bg-primary">Onion Powder</option>
-                    <option value="turmeric" className="bg-primary">Turmeric</option>
-                    <option value="ginger" className="bg-primary">Ginger</option>
+                    <option value="dehydrated-garlic-flakes" className="bg-primary">Garlic Flakes</option>
+                    <option value="dehydrated-garlic-chopped" className="bg-primary">Garlic Chopped</option>
+                    <option value="dehydrated-garlic-minced" className="bg-primary">Garlic Minced</option>
+                    <option value="dehydrated-garlic-granules" className="bg-primary">Garlic Granules</option>
+                    <option value="dehydrated-garlic-powder" className="bg-primary">Garlic Powder</option>
+                    <option value="onion-powder" className="bg-primary">Onion Powder</option>
                   </select>
                 </div>
                 <div className="space-y-1.5">

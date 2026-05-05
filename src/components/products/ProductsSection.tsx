@@ -9,13 +9,7 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardContent } from "@/components/ui/Card";
 import { categories, getProductsByCategory } from "@/lib/constants/products";
-
-const productImages: Record<string, string> = {
-  "dehydrated-garlic-powder": "https://images.unsplash.com/photo-1540148426945-6cf22a6b2571?w=600&q=80",
-  "onion-powder": "https://images.unsplash.com/photo-1518977956812-cd3dbadaaf31?w=600&q=80",
-  "turmeric": "https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=600&q=80",
-  "ginger": "https://images.unsplash.com/photo-1615485736668-0f1d27f8d5df?w=600&q=80",
-};
+import { ProductImagePlaceholder } from "./ProductImagePlaceholder";
 
 export function ProductsSection() {
   const [active, setActive] = useState("all");
@@ -63,18 +57,26 @@ export function ProductsSection() {
                 className="group block h-full"
               >
                 <Card className="h-full">
-                  <div className="aspect-[4/3] relative overflow-hidden">
-                    <Image
-                      src={
-                        productImages[product.slug] ||
-                        "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&q=80"
-                      }
-                      alt={product.name}
-                      fill
-                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.08]"
-                      unoptimized
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent group-hover:from-black/10 transition-colors duration-300" />
+                  <div className="aspect-[4/3] relative overflow-hidden bg-stone-100">
+                    {product.hasPhotography ? (
+                      <>
+                        <Image
+                          src={product.image}
+                          alt={product.name}
+                          fill
+                          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                          className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.08]"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent group-hover:from-black/10 transition-colors duration-300" />
+                      </>
+                    ) : (
+                      <ProductImagePlaceholder />
+                    )}
+                    {product.meshBadge && (
+                      <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-sm text-[10px] font-semibold tracking-[0.15em] uppercase text-primary shadow-border">
+                        {product.meshBadge}
+                      </span>
+                    )}
                   </div>
                   <CardContent>
                     <Badge variant="gold" className="mb-2">

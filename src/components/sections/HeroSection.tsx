@@ -8,10 +8,12 @@ import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 const productNames = [
-  "Dehydrated Garlic Powder",
+  "Garlic Flakes",
+  "Garlic Chopped",
+  "Garlic Minced",
+  "Garlic Granules",
+  "Garlic Powder",
   "Onion Powder",
-  "Turmeric",
-  "Ginger",
 ];
 
 export function HeroSection() {
