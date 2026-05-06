@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { products } from "@/lib/constants/products";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://oceancrestexports.com";
+  const baseUrl = "https://ocexports.com";
 
   const staticPages: MetadataRoute.Sitemap = [
     {

@@ -13,7 +13,11 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "oceancrestexports.com",
+        hostname: "ocexports.com",
+      },
+      {
+        protocol: "https",
+        hostname: "www.ocexports.com",
       },
       {
         protocol: "https",

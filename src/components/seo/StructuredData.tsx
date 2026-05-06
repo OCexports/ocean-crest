@@ -16,8 +16,8 @@ export const organizationSchema = {
   "@type": "Organization",
   name: "Ocean Crest Exports",
   description: "Premium Indian spice and food product exporter serving 25+ countries worldwide.",
-  url: "https://oceancrestexports.com",
-  logo: "https://oceancrestexports.com/logo.png",
+  url: "https://ocexports.com",
+  logo: "https://ocexports.com/logo.png",
   contactPoint: {
     "@type": "ContactPoint",
     telephone: "+91-98765-43210",
@@ -61,7 +61,7 @@ export function productSchema(product: {
       "@type": "Country",
       name: product.origin,
     },
-    url: `https://oceancrestexports.com/products/${product.slug}`,
+    url: `https://ocexports.com/products/${product.slug}`,
     manufacturer: {
       "@type": "Organization",
       name: "Ocean Crest Exports",
