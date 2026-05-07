@@ -1,9 +1,6 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
-import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { HoverVideoMedia } from "@/components/products/HoverVideoMedia";
 
 const featured: {
@@ -20,7 +17,8 @@ const featured: {
   {
     name: "Dehydrated Garlic Flakes",
     slug: "dehydrated-garlic-flakes",
-    image: "/images/products/garlic/chopped-1.png",
+    image: "/images/products/garlic/flakes-1.webp",
+    video: "/videos/products/garlic/flakes.mp4",
     tag: "Dehydrated",
     moq: "MOQ 500 kg",
     color: "from-stone-900/40 via-stone-900/10 to-stone-950/80",
@@ -30,7 +28,7 @@ const featured: {
   {
     name: "Dehydrated Garlic Chopped",
     slug: "dehydrated-garlic-chopped",
-    image: "/images/products/garlic/chopped-2.png",
+    image: "/images/products/garlic/chopped-1.webp",
     video: "/videos/products/garlic/chopped.mp4",
     tag: "Dehydrated",
     moq: "MOQ 500 kg",
@@ -41,7 +39,8 @@ const featured: {
   {
     name: "Dehydrated Garlic Minced",
     slug: "dehydrated-garlic-minced",
-    image: "/images/products/garlic/chopped-3.png",
+    image: "/images/products/garlic/minced-1.webp",
+    video: "/videos/products/garlic/minced.mp4",
     tag: "Dehydrated",
     moq: "MOQ 500 kg",
     color: "from-amber-900/30 via-amber-900/5 to-amber-950/75",
@@ -51,7 +50,7 @@ const featured: {
   {
     name: "Dehydrated Garlic Powder",
     slug: "dehydrated-garlic-powder",
-    image: "/images/products/garlic/powder-1.png",
+    image: "/images/products/garlic/powder-1.webp",
     video: "/videos/products/garlic/powder.mp4",
     tag: "Dehydrated",
     moq: "MOQ 500 kg",
@@ -62,17 +61,16 @@ const featured: {
 ];
 
 export function ProductShowcase() {
-  const { t } = useLanguage();
   return (
     <section className="py-28 lg:py-36 bg-stone">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16">
           <div>
             <span className="text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
-              {t.nav.products}
+              Products
             </span>
             <h2 className="mt-3 text-3xl lg:text-5xl font-semibold text-primary font-[family-name:var(--font-display)]">
-              {t.nav.products}
+              Our Products
             </h2>
             <div className="gold-line-left mt-4" />
           </div>
@@ -80,7 +78,7 @@ export function ProductShowcase() {
             href="/products"
             className="mt-4 lg:mt-0 inline-flex items-center gap-2 text-sm font-medium text-gold hover:text-gold-muted transition-colors cursor-pointer"
           >
-            {t.common.viewAll} <ArrowUpRight className="w-4 h-4" />
+            View All <ArrowUpRight className="w-4 h-4" />
           </Link>
         </div>
 
@@ -123,7 +121,7 @@ export function ProductShowcase() {
                       {product.name}
                     </h3>
                     <span className="inline-block mt-1 text-xs text-white/80 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
-                      {t.common.viewDetails} →
+                      View Details →
                     </span>
                   </div>
                 </div>

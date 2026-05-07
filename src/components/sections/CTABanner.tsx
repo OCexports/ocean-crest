@@ -139,7 +139,6 @@ export function CTABanner() {
                     <option value="dehydrated-garlic-minced" className="bg-primary">Garlic Minced</option>
                     <option value="dehydrated-garlic-granules" className="bg-primary">Garlic Granules</option>
                     <option value="dehydrated-garlic-powder" className="bg-primary">Garlic Powder</option>
-                    <option value="onion-powder" className="bg-primary">Onion Powder</option>
                   </select>
                 </div>
                 <div className="space-y-1.5">

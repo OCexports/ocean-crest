@@ -24,8 +24,8 @@ const contactInfo = [
   {
     icon: Phone,
     title: "Call Us",
-    details: [companyInfo.phone],
-    href: `tel:${companyInfo.phone}`,
+    details: [companyInfo.phone || "To be updated"],
+    href: companyInfo.phone ? `tel:${companyInfo.phone}` : undefined,
   },
   {
     icon: Mail,
@@ -104,28 +104,30 @@ export default function ContactPage() {
               ))}
 
               {/* WhatsApp CTA */}
-              <ScrollReveal>
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 bg-whatsapp/10 border border-whatsapp/20 rounded-[var(--radius-md)] p-5 hover:bg-whatsapp/15 transition-colors"
-                >
-                  <div className="w-11 h-11 rounded-full bg-whatsapp flex items-center justify-center shrink-0">
-                    <MessageCircle className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-primary font-[family-name:var(--font-display)]">WhatsApp Us</h3>
-                    <p className="text-sm text-ink-muted">Quick response on WhatsApp</p>
-                  </div>
-                </a>
-              </ScrollReveal>
+              {companyInfo.whatsapp && (
+                <ScrollReveal>
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 bg-whatsapp/10 border border-whatsapp/20 rounded-[var(--radius-md)] p-5 hover:bg-whatsapp/15 transition-colors"
+                  >
+                    <div className="w-11 h-11 rounded-full bg-whatsapp flex items-center justify-center shrink-0">
+                      <MessageCircle className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-primary font-[family-name:var(--font-display)]">WhatsApp Us</h3>
+                      <p className="text-sm text-ink-muted">Quick response on WhatsApp</p>
+                    </div>
+                  </a>
+                </ScrollReveal>
+              )}
 
               {/* Map */}
               <ScrollReveal>
                 <div className="rounded-[var(--radius-md)] overflow-hidden border border-edge shadow-card">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3672.0234567890123!2d72.5713621!3d23.0225035!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDAxJzIxLjAiTiA3MsKwMzQnMTcuMCJF!5e0!3m2!1sen!2sin!4v1700000000000"
+                    src="https://www.google.com/maps?q=Zodiac+Aarish+Sundervan+Epitome+Jodhpur+Ahmedabad+380015&output=embed"
                     width="100%"
                     height="280"
                     className="border-0 block"

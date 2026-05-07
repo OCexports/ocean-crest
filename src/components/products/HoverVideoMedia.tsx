@@ -76,7 +76,7 @@ export function HoverVideoMedia({
           muted
           loop
           playsInline
-          preload="none"
+          preload="metadata"
           aria-hidden="true"
           tabIndex={-1}
           className={cn(

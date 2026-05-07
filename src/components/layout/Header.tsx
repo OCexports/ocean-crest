@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { Menu, X, ChevronDown, Mail, Phone, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -56,35 +57,26 @@ export function Header() {
         )}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-[70px] lg:h-20">
-            {/* Logo */}
+          <div className="flex items-center justify-between h-24 lg:h-32">
+            {/* Logo — text composite (circle + wordmark) */}
             <Link href="/" className="flex items-center gap-3 cursor-pointer group">
-              {/* Logo mark */}
-              <div className={cn(
-                "w-9 h-9 rounded-full border-2 flex items-center justify-center transition-all duration-300",
-                isScrolled ? "border-gold" : "border-white/60 group-hover:border-gold"
-              )}>
-                <span className={cn(
-                  "text-sm font-bold font-[family-name:var(--font-display)] transition-colors",
-                  isScrolled ? "text-gold" : "text-white"
-                )}>
-                  OC
-                </span>
-              </div>
-              <div className="flex flex-col">
-                <span className={cn(
-                  "text-[15px] font-semibold font-[family-name:var(--font-display)] tracking-[0.08em] uppercase transition-colors leading-none",
-                  isScrolled ? "text-primary" : "text-white"
-                )}>
-                  Ocean Crest Exports
-                </span>
-                <span className={cn(
-                  "text-[9px] font-medium tracking-[0.25em] uppercase transition-colors mt-0.5",
-                  isScrolled ? "text-gold" : "text-gold-light"
-                )}>
-                  Part of Sheth &amp; Bhatt&apos;s LLP
-                </span>
-              </div>
+              <Image
+                src="/images/brand/OC MONOGRAM.png"
+                alt="OC monogram"
+                unoptimized
+                width={120}
+                height={120}
+                priority
+                className="h-14 lg:h-20 w-auto object-contain [filter:drop-shadow(0_0_1px_rgba(212,166,74,1))_drop-shadow(0_0_1px_rgba(212,166,74,1))_drop-shadow(0_0_2px_rgba(212,166,74,0.7))]"
+              />
+              <span
+                className={cn(
+                  "text-[13px] lg:text-[16px] font-semibold tracking-[0.1em] uppercase font-[family-name:var(--font-display)] transition-colors duration-300 leading-none",
+                  isScrolled ? "text-primary" : "text-white",
+                )}
+              >
+                Ocean Crest Exports
+              </span>
             </Link>
 
             {/* Desktop Nav */}
@@ -203,18 +195,18 @@ export function Header() {
               <div className="p-8">
                 {/* Close */}
                 <div className="flex items-center justify-between mb-12">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full border border-gold/30 flex items-center justify-center">
-                      <span className="text-xs font-bold text-gold font-[family-name:var(--font-display)]">OC</span>
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-sm font-semibold text-white font-[family-name:var(--font-display)] tracking-wider uppercase leading-none">
-                        Ocean Crest Exports
-                      </span>
-                      <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-gold mt-0.5">
-                        Part of Sheth &amp; Bhatt&apos;s LLP
-                      </span>
-                    </div>
+                  <div className="flex items-center gap-2.5">
+                    <Image
+                      src="/images/brand/OC MONOGRAM.png"
+                      alt="OC monogram"
+                      unoptimized
+                      width={96}
+                      height={96}
+                      className="h-12 w-auto object-contain [filter:drop-shadow(0_0_1px_rgba(212,166,74,1))_drop-shadow(0_0_1px_rgba(212,166,74,1))_drop-shadow(0_0_2px_rgba(212,166,74,0.7))]"
+                    />
+                    <span className="text-sm font-semibold tracking-[0.1em] uppercase font-[family-name:var(--font-display)] text-white leading-none">
+                      Ocean Crest Exports
+                    </span>
                   </div>
                   <button
                     onClick={() => setIsMobileOpen(false)}
@@ -277,15 +269,17 @@ export function Header() {
                       {t.nav.inquiry}
                     </button>
                   </Link>
-                  <a
-                    href={`https://wa.me/${companyInfo.whatsapp}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <button className="w-full mt-2 py-3.5 bg-whatsapp/10 border border-whatsapp/20 text-whatsapp font-semibold text-sm rounded-full hover:bg-whatsapp/20 transition-colors cursor-pointer">
-                      WhatsApp Us
-                    </button>
-                  </a>
+                  {companyInfo.whatsapp && (
+                    <a
+                      href={`https://wa.me/${companyInfo.whatsapp}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <button className="w-full mt-2 py-3.5 bg-whatsapp/10 border border-whatsapp/20 text-whatsapp font-semibold text-sm rounded-full hover:bg-whatsapp/20 transition-colors cursor-pointer">
+                        WhatsApp Us
+                      </button>
+                    </a>
+                  )}
                 </motion.div>
 
                 {/* Contact info */}
@@ -293,9 +287,11 @@ export function Header() {
                   <a href={`mailto:${companyInfo.email}`} className="flex items-center gap-3 hover:text-gold transition-colors cursor-pointer">
                     <Mail className="w-4 h-4" /> {companyInfo.email}
                   </a>
-                  <a href={`tel:${companyInfo.phone}`} className="flex items-center gap-3 hover:text-gold transition-colors cursor-pointer">
-                    <Phone className="w-4 h-4" /> {companyInfo.phone}
-                  </a>
+                  {companyInfo.phone && (
+                    <a href={`tel:${companyInfo.phone}`} className="flex items-center gap-3 hover:text-gold transition-colors cursor-pointer">
+                      <Phone className="w-4 h-4" /> {companyInfo.phone}
+                    </a>
+                  )}
                 </div>
               </div>
             </motion.div>

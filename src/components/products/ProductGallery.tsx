@@ -95,8 +95,9 @@ export function ProductGallery({
                 muted
                 loop
                 playsInline
+                autoPlay
                 controls
-                preload="none"
+                preload="auto"
                 className="absolute inset-0 w-full h-full object-cover bg-black"
               />
             )}

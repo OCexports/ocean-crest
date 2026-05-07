@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import {
   Target,
   Eye,
@@ -166,65 +166,6 @@ export default function AboutPage() {
               </p>
             </div>
           </ScrollReveal>
-        </div>
-      </section>
-
-      {/* Leadership — placeholder content, replace with real founder/team details */}
-      <section className="py-20 lg:py-28 bg-stone">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <ScrollReveal>
-            <div className="text-center mb-14 lg:mb-16">
-              <span className="text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
-                Leadership
-              </span>
-              <h2 className="mt-3 text-3xl lg:text-4xl font-semibold text-primary font-[family-name:var(--font-display)]">
-                The people behind Ocean Crest
-              </h2>
-              <div className="gold-line mx-auto mt-5 max-w-[80px]" />
-            </div>
-          </ScrollReveal>
-
-          <div className="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto">
-            {[
-              {
-                name: "Founder Name",
-                role: "Founder & Managing Partner",
-                bio: "Three decades of experience in agri-commodity sourcing and international trade compliance across the Gulf and East Africa corridors.",
-                img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80",
-              },
-              {
-                name: "Co-Founder Name",
-                role: "Director of Quality & Operations",
-                bio: "Leads lab verification, export packaging, and partner relationships with producers across Gujarat, Karnataka, and Andhra Pradesh.",
-                img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80",
-              },
-            ].map((p) => (
-              <ScrollReveal key={p.name}>
-                <figure className="bg-warm-white rounded-[var(--radius-lg)] overflow-hidden shadow-border hover:shadow-card-hover transition-all duration-300 border border-edge-light">
-                  <div className="aspect-[4/3] relative bg-stone-200">
-                    <Image
-                      src={p.img}
-                      alt={p.name}
-                      fill
-                      className="object-cover"
-                      unoptimized
-                    />
-                  </div>
-                  <figcaption className="p-6 lg:p-8">
-                    <h3 className="text-xl font-semibold text-primary font-[family-name:var(--font-display)]">
-                      {p.name}
-                    </h3>
-                    <p className="mt-1 text-[11px] tracking-[0.2em] uppercase text-gold-muted font-medium">
-                      {p.role}
-                    </p>
-                    <p className="mt-4 text-sm text-ink-muted leading-relaxed">
-                      {p.bio}
-                    </p>
-                  </figcaption>
-                </figure>
-              </ScrollReveal>
-            ))}
-          </div>
         </div>
       </section>
 

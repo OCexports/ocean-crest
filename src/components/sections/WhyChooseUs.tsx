@@ -5,8 +5,8 @@ import { StaggerChildren, StaggerItem } from "@/components/animations/StaggerChi
 const features = [
   {
     icon: ShieldCheck,
-    title: "Certified Quality",
-    desc: "ISO 22000, HACCP, FSSAI, and FDA registered facilities",
+    title: "Verified Quality",
+    desc: "Lab-tested batches and rigorous in-house quality controls before every shipment",
   },
   {
     icon: TrendingDown,
