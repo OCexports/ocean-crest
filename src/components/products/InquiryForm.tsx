@@ -82,7 +82,7 @@ export function InquiryForm() {
       </div>
       <div className="grid sm:grid-cols-2 gap-5">
         <Input label="Phone" name="phone" type="tel" placeholder="+1 234 567 890" required />
-        <Input label="Company" name="company" placeholder="Your company name" required />
+        <Input label="Company" name="company" placeholder="Your company name" />
       </div>
       <div className="grid sm:grid-cols-2 gap-5">
         <Select

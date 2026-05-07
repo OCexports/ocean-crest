@@ -32,6 +32,14 @@ const COUNTRY_LINE = "#9DBFD7";
 const GRID_LINE = "#3A6B95";
 const HEAD_COLOR = "#FFFFFF";
 
+/** Damping rate for mouse parallax — framerate-independent. */
+const PARALLAX_LAMBDA = 5;
+
+// Module-level reusable geometries (avoid recreating each render).
+const OCEAN_GEOMETRY = new THREE.SphereGeometry(1, 48, 48);
+const HALO_INNER_GEOMETRY = new THREE.SphereGeometry(1, 24, 24);
+const HALO_OUTER_GEOMETRY = new THREE.SphereGeometry(1, 24, 24);
+
 interface City {
   name: string;
   lat: number;
@@ -203,8 +211,7 @@ function Ocean() {
   // Translucent — lets the radial glow behind the canvas bleed through, so
   // the globe appears to float in open space rather than sitting on a card.
   return (
-    <mesh>
-      <sphereGeometry args={[1, 64, 64]} />
+    <mesh geometry={OCEAN_GEOMETRY}>
       <meshBasicMaterial color={OCEAN} transparent opacity={0.78} />
     </mesh>
   );
@@ -214,8 +221,7 @@ function Atmosphere() {
   // Two-layer halo for soft depth: a tight inner band + a wider outer glow.
   return (
     <>
-      <mesh scale={1.045}>
-        <sphereGeometry args={[1, 32, 32]} />
+      <mesh scale={1.045} geometry={HALO_INNER_GEOMETRY}>
         <meshBasicMaterial
           color={GOLD_BRIGHT}
           transparent
@@ -224,8 +230,7 @@ function Atmosphere() {
           depthWrite={false}
         />
       </mesh>
-      <mesh scale={1.18}>
-        <sphereGeometry args={[1, 32, 32]} />
+      <mesh scale={1.18} geometry={HALO_OUTER_GEOMETRY}>
         <meshBasicMaterial
           color={GOLD_BRIGHT}
           transparent
@@ -272,11 +277,11 @@ function HubMarker({
   return (
     <group position={position}>
       <mesh ref={dotRef}>
-        <sphereGeometry args={[baseSize, 16, 16]} />
+        <sphereGeometry args={[baseSize, 12, 12]} />
         <meshBasicMaterial color={GOLD_BRIGHT} toneMapped={false} />
       </mesh>
       <mesh ref={haloRef}>
-        <sphereGeometry args={[haloSize, 16, 16]} />
+        <sphereGeometry args={[haloSize, 12, 12]} />
         <meshBasicMaterial
           color={GOLD_BRIGHT}
           transparent
@@ -486,10 +491,18 @@ function Globe() {
     baseY.current += delta * AUTO_ROTATE_RATE;
     const targetX = state.pointer.y * 0.12;
     const targetY = baseY.current + state.pointer.x * 0.14;
-    groupRef.current.rotation.x +=
-      (targetX - groupRef.current.rotation.x) * 0.04;
-    groupRef.current.rotation.y +=
-      (targetY - groupRef.current.rotation.y) * 0.04;
+    groupRef.current.rotation.x = THREE.MathUtils.damp(
+      groupRef.current.rotation.x,
+      targetX,
+      PARALLAX_LAMBDA,
+      delta,
+    );
+    groupRef.current.rotation.y = THREE.MathUtils.damp(
+      groupRef.current.rotation.y,
+      targetY,
+      PARALLAX_LAMBDA,
+      delta,
+    );
   });
 
   const originVec = useMemo(() => latLngToVec3(ORIGIN.lat, ORIGIN.lng), []);
@@ -537,9 +550,9 @@ export default function Globe3DScene() {
   return (
     <Canvas
       className="absolute inset-0"
-      camera={{ position: [0, 0.25, 2.6], fov: 45 }}
+      camera={{ position: [0, 0.05, 2.7], fov: 45 }}
       gl={{ antialias: true, alpha: true }}
-      dpr={[1, 2]}
+      dpr={[1, 1.5]}
     >
       <Globe />
     </Canvas>

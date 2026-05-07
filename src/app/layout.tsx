@@ -12,7 +12,7 @@ const cormorant = Cormorant({
   variable: "--font-cormorant",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600", "700"],
 });
 
 const montserrat = Montserrat({
@@ -33,7 +33,6 @@ export const metadata: Metadata = {
     "dehydrated garlic exporter",
     "garlic powder wholesale",
     "garlic flakes supplier",
-    "dehydrated onion powder",
     "Indian spice exporter",
     "bulk spice supplier",
   ],

@@ -1,15 +1,20 @@
 "use client";
 
-import { motion } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import {
   ArrowRight,
-  Globe as GlobeIcon,
-  ShieldCheck,
   Award,
   Clock,
+  Globe as GlobeIcon,
   Plane,
+  ShieldCheck,
   Ship,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -33,6 +38,18 @@ const capabilities = [
   "Global Distribution",
 ];
 
+interface FloatingIcon {
+  Icon: typeof Plane;
+  anchor: string;
+  size: number;
+  delay: number;
+}
+
+const floatingIcons: FloatingIcon[] = [
+  { Icon: Plane, anchor: "top-[18%] left-[14%] -rotate-[20deg]", size: 34, delay: 0 },
+  { Icon: Ship, anchor: "bottom-[26%] right-[18%]", size: 32, delay: 1.2 },
+];
+
 interface InfoCard {
   icon: typeof GlobeIcon;
   label: string;
@@ -43,59 +60,80 @@ interface InfoCard {
   delay: number;
 }
 
-// Honest copy for a new brand — no fabricated counts.
 const infoCards: InfoCard[] = [
   {
     icon: GlobeIcon,
     label: "Global Reach",
     description: "Delivering worldwide",
-    anchor: "top-2 left-0 xl:left-4",
+    anchor: "top-0 left-0",
     delay: 1.0,
   },
   {
     icon: ShieldCheck,
     label: "Verified Quality",
     description: "Lab-tested & assured",
-    anchor: "top-2 right-0 xl:right-4",
+    anchor: "top-0 right-0",
     delay: 1.15,
   },
   {
     icon: Award,
     label: "Trust & Compliance",
     description: "Ethical. Transparent. Reliable.",
-    anchor: "bottom-2 left-0 xl:left-4",
+    anchor: "bottom-0 left-0",
     delay: 1.3,
   },
   {
     icon: Clock,
     label: "Timely Delivery",
     description: "On-time. Every time.",
-    anchor: "bottom-2 right-0 xl:right-4",
+    anchor: "bottom-0 right-0",
     delay: 1.45,
   },
 ];
 
-interface FloatingIcon {
-  Icon: typeof Plane;
-  anchor: string;
-  size: number;
-  delay: number;
-}
+const lineVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.04, delayChildren: 0.25 } },
+};
 
-const floatingIcons: FloatingIcon[] = [
-  { Icon: Plane, anchor: "top-[18%] left-[14%] -rotate-[20deg]", size: 34, delay: 0 },
-  { Icon: Plane, anchor: "top-[20%] right-[15%] rotate-[20deg]", size: 34, delay: 1.5 },
-  { Icon: Ship, anchor: "bottom-[28%] left-[18%]", size: 32, delay: 0.8 },
-  { Icon: Ship, anchor: "bottom-[18%] left-[42%]", size: 32, delay: 2 },
-  { Icon: Ship, anchor: "bottom-[26%] right-[18%]", size: 32, delay: 1.2 },
-];
+const charVariants = {
+  hidden: { opacity: 0, y: 14 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
+  },
+};
 
 export function HeroSection() {
   const { t } = useLanguage();
 
+  // Outer-tilt parallax for the entire globe composition
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rotateX = useSpring(useTransform(my, [-1, 1], [3, -3]), {
+    stiffness: 100,
+    damping: 20,
+  });
+  const rotateY = useSpring(useTransform(mx, [-1, 1], [-3, 3]), {
+    stiffness: 100,
+    damping: 20,
+  });
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    mx.set(((e.clientX - r.left) / r.width) * 2 - 1);
+    my.set(((e.clientY - r.top) / r.height) * 2 - 1);
+  };
+
+  const onPointerLeave = () => {
+    mx.set(0);
+    my.set(0);
+  };
+
   return (
     <section className="relative h-screen min-h-[640px] flex flex-col overflow-hidden bg-primary">
-      {/* Layered backdrop — deep navy radial gradient + faint grid + central gold glow */}
+      {/* Layered backdrop — base radial gradient + grid + drifting aurora blobs */}
       <div className="absolute inset-0">
         <div
           className="absolute inset-0"
@@ -112,60 +150,72 @@ export function HeroSection() {
             backgroundSize: "80px 80px",
           }}
         />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] max-w-[700px] max-h-[700px] rounded-full bg-gold/[0.06] blur-3xl pointer-events-none" />
+        {/* Aurora blob 1 — gold, slow drift */}
+        <motion.div
+          animate={{ x: ["-10%", "10%", "-10%"], y: ["0%", "8%", "0%"] }}
+          transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[20%] left-[20%] w-[60vw] h-[60vw] max-w-[700px] max-h-[700px] rounded-full bg-gold/[0.06] blur-3xl pointer-events-none"
+        />
+        {/* Aurora blob 2 — teal, slower counter-drift */}
+        <motion.div
+          animate={{ x: ["6%", "-8%", "6%"], y: ["4%", "-4%", "4%"] }}
+          transition={{ duration: 36, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-[10%] right-[15%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] rounded-full bg-teal/[0.04] blur-3xl pointer-events-none"
+        />
       </div>
 
-      {/*
-        3-row grid: header / globe (1fr) / footer.
-        minmax(0, 1fr) lets the middle row shrink below intrinsic content size,
-        so the aspect-square globe always honors the row's available height.
-      */}
+      {/* 3-row grid: header / globe (1fr) / footer */}
       <div className="relative z-10 flex-1 min-h-0 grid grid-rows-[auto_minmax(0,1fr)_auto] gap-2 sm:gap-3 px-4 sm:px-6 pt-16 pb-3 sm:pt-20 sm:pb-4 lg:pt-24 lg:pb-5">
-        {/* Top: headline cluster */}
+        {/* Top: eyebrow → headline → divider → trust pills */}
         <div className="flex flex-col items-center text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 14 }}
+          <motion.p
+            initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
+            transition={{ delay: 0.15, duration: 0.5 }}
+            className="mb-3 text-[9.5px] sm:text-[11px] font-medium tracking-[0.3em] uppercase text-gold"
+          >
+            {t.hero.eyebrow}
+          </motion.p>
+
+          <motion.h1
+            variants={lineVariants}
+            initial="hidden"
+            animate="visible"
             className="font-[family-name:var(--font-display)]"
           >
             <span className="block text-[34px] sm:text-5xl lg:text-[60px] font-light text-white leading-[1] tracking-tight">
-              Ocean Crest
+              {"Ocean Crest".split("").map((c, i) => (
+                <motion.span key={i} variants={charVariants} className="inline-block">
+                  {c === " " ? " " : c}
+                </motion.span>
+              ))}
             </span>
             <span className="block text-[34px] sm:text-5xl lg:text-[60px] italic font-light text-gradient-copper leading-[1] tracking-tight mt-0.5">
-              Exports
+              {"Exports".split("").map((c, i) => (
+                <motion.span key={i} variants={charVariants} className="inline-block">
+                  {c}
+                </motion.span>
+              ))}
             </span>
           </motion.h1>
 
           <motion.div
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 1 }}
-            transition={{ delay: 0.55, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-2 sm:mt-3 w-20 sm:w-24 h-px bg-gradient-to-r from-transparent via-gold to-transparent origin-center"
+            transition={{ delay: 0.85, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-3 sm:mt-4 w-20 sm:w-24 h-px bg-gradient-to-r from-transparent via-gold to-transparent origin-center"
           />
-
-          <motion.p
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.65, duration: 0.5 }}
-            className="mt-2 text-[9.5px] sm:text-[11px] font-medium tracking-[0.3em] uppercase text-gold"
-          >
-            {t.hero.eyebrow}
-          </motion.p>
         </div>
 
-        {/*
-          Middle: globe occupies the 1fr row.
-          The wrapper uses flex+items-center to vertically center the square.
-          The square uses aspect-square + max-w-full + max-h-full + h-full so
-          the browser fits the largest square that fits in available width OR
-          height — whichever is smaller — never overflowing.
-        */}
-        <div className="relative w-full max-w-[1100px] mx-auto self-stretch flex items-center justify-center min-h-0">
+        {/* Middle: globe with mouse-tilt parallax */}
+        <div className="relative w-full max-w-[1300px] mx-auto self-stretch flex items-center justify-center min-h-0">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4, duration: 1.0, ease: [0.16, 1, 0.3, 1] as const }}
+            onPointerMove={onPointerMove}
+            onPointerLeave={onPointerLeave}
+            style={{ rotateX, rotateY, transformPerspective: 1200 }}
             className="relative aspect-square h-full max-h-full max-w-full"
           >
             <Globe3DScene />
@@ -195,7 +245,7 @@ export function HeroSection() {
             </div>
 
             {/* Floating info cards anchored to the corners of the globe area — lg+ only */}
-            <div className="hidden lg:block pointer-events-none absolute -inset-x-12 xl:-inset-x-20 inset-y-0">
+            <div className="hidden lg:block pointer-events-none absolute -inset-x-16 xl:-inset-x-24 -inset-y-2">
               {infoCards.map((card) => {
                 const { icon: Icon } = card;
                 return (
@@ -235,7 +285,7 @@ export function HeroSection() {
           <motion.p
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.5 }}
+            transition={{ delay: 1.2, duration: 0.5 }}
             className="text-base sm:text-lg lg:text-[24px] font-light text-white font-[family-name:var(--font-display)] tracking-tight leading-snug"
           >
             Premium Indian{" "}
@@ -246,11 +296,14 @@ export function HeroSection() {
           <motion.div
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.5 }}
-            className="mt-3 sm:mt-4 flex flex-wrap gap-2.5 sm:gap-3 justify-center"
+            transition={{ delay: 1.3, duration: 0.5 }}
+            className="mt-3 sm:mt-4 flex flex-wrap gap-2.5 sm:gap-3 justify-center items-center"
           >
             <Link href="/products">
-              <Button>
+              <Button
+                size="lg"
+                className="px-7 py-3.5 shadow-gold hover:shadow-gold-lg transition-shadow"
+              >
                 {t.hero.cta1}
                 <ArrowRight className="w-4 h-4" />
               </Button>
@@ -258,7 +311,8 @@ export function HeroSection() {
             <Link href="/about">
               <Button
                 variant="outline"
-                className="border-white/25 text-white hover:bg-white/10 hover:text-white"
+                size="sm"
+                className="border-white/15 text-white/80 hover:bg-white/8 hover:text-white"
               >
                 {t.hero.cta2}
               </Button>
@@ -268,7 +322,7 @@ export function HeroSection() {
       </div>
 
       {/* Capability ticker */}
-      <div className="relative z-10 border-t border-white/10 py-2.5 sm:py-3 overflow-hidden">
+      <div className="relative z-10 py-2.5 sm:py-3 overflow-hidden bg-primary">
         <div className="animate-marquee flex whitespace-nowrap">
           {[...capabilities, ...capabilities, ...capabilities, ...capabilities].map(
             (name, i) => (
@@ -276,12 +330,31 @@ export function HeroSection() {
                 <span className="text-[9.5px] sm:text-[11px] tracking-[0.2em] uppercase text-white/40 font-medium">
                   {name}
                 </span>
-                <span className="ml-6 sm:ml-8 w-1 h-1 rounded-full bg-gold/60" />
+                <span className="ml-6 sm:ml-8 w-1.5 h-1.5 rounded-full bg-gold/80" />
               </span>
             ),
           )}
         </div>
       </div>
+
+      {/* Scroll cue — subtle indicator that there's content below */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.6, duration: 0.6 }}
+        className="absolute bottom-14 left-1/2 -translate-x-1/2 z-20 hidden md:flex flex-col items-center gap-1.5 pointer-events-none"
+        aria-hidden="true"
+      >
+        <span className="text-[9px] tracking-[0.3em] uppercase text-white/40">
+          Scroll
+        </span>
+        <motion.div
+          animate={{ y: [0, 6, 0], opacity: [0.4, 0.9, 0.4] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="w-[1px] h-6 bg-gradient-to-b from-gold/0 via-gold to-gold/0"
+        />
+      </motion.div>
+
     </section>
   );
 }

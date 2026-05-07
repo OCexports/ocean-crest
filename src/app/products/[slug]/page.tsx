@@ -14,31 +14,33 @@ import { StructuredData, productSchema } from "@/components/seo/StructuredData";
 import { ProductGallery } from "@/components/products/ProductGallery";
 import { ProductImagePlaceholder } from "@/components/products/ProductImagePlaceholder";
 
+// Image naming convention: /images/products/garlic/{variant}-{n}.webp
+// The {variant}-1 image is also surfaced on the homepage Bento grid (ProductShowcase.tsx).
+// Drop additional variants (-2, -3, ...) here to grow each product's detail gallery.
 const galleryByProduct: Record<string, string[]> = {
   "dehydrated-garlic-flakes": [
-    "/images/products/garlic/chopped-1.png",
-    "/images/products/garlic/chopped-2.png",
-    "/images/products/garlic/chopped-3.png",
+    "/images/products/garlic/flakes-1.webp",
+    "/images/products/garlic/flakes-2.webp",
+    "/images/products/garlic/flakes-3.webp",
+    "/images/products/garlic/flakes-4.webp",
+    "/images/products/garlic/flakes-5.webp",
   ],
   "dehydrated-garlic-chopped": [
-    "/images/products/garlic/chopped-2.png",
-    "/images/products/garlic/chopped-1.png",
-    "/images/products/garlic/chopped-3.png",
+    "/images/products/garlic/chopped-1.webp",
+    "/images/products/garlic/chopped-2.webp",
+    "/images/products/garlic/chopped-3.webp",
   ],
   "dehydrated-garlic-minced": [
-    "/images/products/garlic/chopped-3.png",
-    "/images/products/garlic/chopped-1.png",
-    "/images/products/garlic/chopped-2.png",
+    "/images/products/garlic/minced-1.webp",
+    "/images/products/garlic/minced-2.webp",
   ],
   "dehydrated-garlic-granules": [
-    "/images/products/garlic/powder-1.png",
-    "/images/products/garlic/chopped-1.png",
+    "/images/products/garlic/granules-1.webp",
+    "/images/products/garlic/granules-2.webp",
   ],
   "dehydrated-garlic-powder": [
-    "/images/products/garlic/powder-1.png",
+    "/images/products/garlic/powder-1.webp",
   ],
-  // Onion: empty array → placeholder card. Real photography pending.
-  "onion-powder": [],
 };
 
 function getGalleryImages(slug: string): string[] {
@@ -105,8 +107,6 @@ export default async function ProductDetailPage({ params }: Props) {
             <ScrollReveal direction="left">
               <ProductGallery
                 images={getGalleryImages(product.slug)}
-                video={product.video}
-                videoPoster={product.image}
                 alt={product.name}
               />
             </ScrollReveal>

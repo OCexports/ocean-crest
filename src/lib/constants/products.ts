@@ -33,7 +33,8 @@ export const products: Product[] = [
     category: "Dehydrated",
     categorySlug: "dehydrated",
     hasPhotography: true,
-    image: "/images/products/garlic/chopped-1.png",
+    image: "/images/products/garlic/flakes-1.webp",
+    video: "/videos/products/garlic/flakes.mp4",
     meshBadge: "8–15 mm",
     shortDescription:
       "The closest form to fresh garlic — premium 8–15 mm flakes processed from selected Indian crops.",
@@ -72,7 +73,7 @@ export const products: Product[] = [
     category: "Dehydrated",
     categorySlug: "dehydrated",
     hasPhotography: true,
-    image: "/images/products/garlic/chopped-2.png",
+    image: "/images/products/garlic/chopped-2.webp",
     video: "/videos/products/garlic/chopped.mp4",
     meshBadge: "3–5 mm · 8–20 mesh",
     shortDescription:
@@ -112,7 +113,8 @@ export const products: Product[] = [
     category: "Dehydrated",
     categorySlug: "dehydrated",
     hasPhotography: true,
-    image: "/images/products/garlic/chopped-3.png",
+    image: "/images/products/garlic/minced-1.webp",
+    video: "/videos/products/garlic/minced.mp4",
     meshBadge: "1–3 mm · 20–40 mesh",
     shortDescription:
       "Uniformly cut 1–3 mm minced garlic — a cost-effective replacement for fresh minced in high-speed production lines.",
@@ -151,7 +153,8 @@ export const products: Product[] = [
     category: "Dehydrated",
     categorySlug: "dehydrated",
     hasPhotography: true,
-    image: "/images/products/garlic/powder-1.png",
+    image: "/images/products/garlic/granules-1.webp",
+    video: "/videos/products/garlic/granules.mp4",
     meshBadge: "0.5–1 mm · 40–80 mesh",
     shortDescription:
       "Sandy, consistent 0.5–1 mm granules — the bridge between minced and powder, ideal for spice blends and dry marinades.",
@@ -190,7 +193,7 @@ export const products: Product[] = [
     category: "Dehydrated",
     categorySlug: "dehydrated",
     hasPhotography: true,
-    image: "/images/products/garlic/powder-1.png",
+    image: "/images/products/garlic/powder-1.webp",
     video: "/videos/products/garlic/powder.mp4",
     meshBadge: "80–100+ mesh",
     shortDescription:
@@ -221,35 +224,6 @@ export const products: Product[] = [
       Texture: "Fine, free-flowing dust",
       Color: "Pristine Snow White to Pale Yellow",
       Packaging: "Export-grade, moisture-resistant",
-      "Lab Testing": "Accredited laboratory verified",
-    },
-  },
-  {
-    slug: "onion-powder",
-    name: "Onion Powder",
-    category: "Dehydrated",
-    categorySlug: "dehydrated",
-    hasPhotography: false,
-    image: "/images/products/onion-powder.jpg",
-    shortDescription:
-      "Premium dehydrated onion powder with rich pungent flavor, ideal for food manufacturing and seasoning applications.",
-    description:
-      "Our onion powder is made from fresh, premium-quality Indian onions processed under strict quality controls. Perfect for food manufacturers, seasoning companies, and instant food producers worldwide.",
-    origin: "India",
-    features: [
-      "Premium dehydrated onion",
-      "Strong pungent natural flavor",
-      "Lab tested before dispatch",
-      "Custom particle sizes available",
-      "Export-compliant packaging",
-      "No artificial colors or preservatives",
-    ],
-    specifications: {
-      Product: "Onion Powder",
-      Origin: "India",
-      Moisture: "< 5%",
-      Color: "White to light cream",
-      Packaging: "Export-grade packaging",
       "Lab Testing": "Accredited laboratory verified",
     },
   },

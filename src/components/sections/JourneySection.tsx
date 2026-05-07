@@ -1,10 +1,7 @@
-"use client";
-
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
 import { MapPin, FlaskConical, FileCheck, Package, Truck } from "lucide-react";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { StaggerChildren, StaggerItem } from "@/components/animations/StaggerChildren";
+import { JourneyScrollLine } from "./JourneyScrollLine";
 
 const steps = [
   {
@@ -45,13 +42,6 @@ const steps = [
 ];
 
 export function JourneySection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start 70%", "end 60%"],
-  });
-  const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
-
   return (
     <section className="py-28 lg:py-36 bg-primary relative overflow-hidden">
       <div className="absolute inset-0 gradient-mesh opacity-20" />
@@ -72,14 +62,8 @@ export function JourneySection() {
           </div>
         </ScrollReveal>
 
-        <div ref={sectionRef} className="relative">
-          {/* Static track — subtle base line */}
-          <div className="hidden lg:block absolute top-[60px] left-[10%] right-[10%] h-px bg-white/10" />
-          {/* Animated gold line — fills as user scrolls */}
-          <motion.div
-            style={{ scaleX: lineScale }}
-            className="hidden lg:block absolute top-[60px] left-[10%] right-[10%] h-px origin-left bg-gradient-to-r from-gold via-gold to-gold/60"
-          />
+        <div className="relative">
+          <JourneyScrollLine />
 
           <StaggerChildren
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-y-12 gap-x-4 lg:gap-x-6"
@@ -90,11 +74,6 @@ export function JourneySection() {
               return (
                 <StaggerItem key={step.num}>
                   <div className="relative text-center px-2">
-                    {/* Faded background number */}
-                    <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-[100px] lg:text-[130px] font-bold text-white/[0.05] font-[family-name:var(--font-display)] leading-none select-none pointer-events-none">
-                      {step.num}
-                    </span>
-
                     {/* Icon circle */}
                     <div className="relative z-10 w-[100px] h-[100px] mx-auto rounded-full border border-gold/30 flex items-center justify-center bg-primary">
                       <div className="w-14 h-14 rounded-full bg-gold/15 flex items-center justify-center">
