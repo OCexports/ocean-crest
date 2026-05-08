@@ -97,7 +97,7 @@ export function ProductGallery({
                 playsInline
                 autoPlay
                 controls
-                preload="auto"
+                preload="metadata"
                 className="absolute inset-0 w-full h-full object-cover bg-black"
               />
             )}

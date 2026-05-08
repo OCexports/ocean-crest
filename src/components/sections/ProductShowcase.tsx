@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
@@ -61,6 +64,7 @@ const featured: {
 ];
 
 export function ProductShowcase() {
+  const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
   return (
     <section className="py-28 lg:py-36 bg-stone">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -89,6 +93,8 @@ export function ProductShowcase() {
               <Link
                 href={`/products/${product.slug}`}
                 className="group block h-full"
+                onMouseEnter={() => setHoveredSlug(product.slug)}
+                onMouseLeave={() => setHoveredSlug(null)}
               >
                 <div className={`relative ${product.height} rounded-[var(--radius-lg)] overflow-hidden cursor-pointer shadow-card hover:shadow-card-hover transition-shadow duration-300`}>
                   <HoverVideoMedia
@@ -96,6 +102,7 @@ export function ProductShowcase() {
                     video={product.video}
                     alt={product.name}
                     sizes={i === 0 ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1024px) 25vw, 50vw"}
+                    isHovered={hoveredSlug === product.slug}
                   />
                   <div
                     className={`absolute inset-0 bg-gradient-to-t ${product.color} transition-opacity duration-300 group-hover:opacity-90 pointer-events-none`}

@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFab } from "@/components/layout/WhatsAppFab";
 import { ContactSideTab } from "@/components/layout/ContactSideTab";
+import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { LanguageProvider } from "@/lib/i18n/LanguageContext";
 import { StructuredData, organizationSchema } from "@/components/seo/StructuredData";
 
@@ -55,6 +56,7 @@ export default function RootLayout({
           Skip to main content
         </a>
         <LanguageProvider>
+          <SmoothScroll />
           <StructuredData data={organizationSchema} />
           <Header />
           <main id="main-content" className="flex-1">{children}</main>

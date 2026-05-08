@@ -13,6 +13,7 @@ import { HoverVideoMedia } from "./HoverVideoMedia";
 
 export function ProductsSection() {
   const [active, setActive] = useState("all");
+  const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
   const filtered = getProductsByCategory(active);
 
   return (
@@ -55,6 +56,8 @@ export function ProductsSection() {
               <Link
                 href={`/products/${product.slug}`}
                 className="group block h-full"
+                onMouseEnter={() => setHoveredSlug(product.slug)}
+                onMouseLeave={() => setHoveredSlug(null)}
               >
                 <Card className="h-full">
                   <div className="aspect-[4/3] relative overflow-hidden bg-stone-100">
@@ -65,6 +68,7 @@ export function ProductsSection() {
                           video={product.video}
                           alt={product.name}
                           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                          isHovered={hoveredSlug === product.slug}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent group-hover:from-black/10 transition-colors duration-300 pointer-events-none" />
                       </>

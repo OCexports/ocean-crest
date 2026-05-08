@@ -2,20 +2,21 @@
 
 import {
   motion,
+  useInView,
   useMotionValue,
   useSpring,
   useTransform,
 } from "framer-motion";
+import { useRef } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import {
   ArrowRight,
   Award,
+  ChevronDown,
   Clock,
   Globe as GlobeIcon,
-  Plane,
   ShieldCheck,
-  Ship,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
@@ -38,58 +39,91 @@ const capabilities = [
   "Global Distribution",
 ];
 
-interface FloatingIcon {
-  Icon: typeof Plane;
-  anchor: string;
-  size: number;
-  delay: number;
-}
-
-const floatingIcons: FloatingIcon[] = [
-  { Icon: Plane, anchor: "top-[18%] left-[14%] -rotate-[20deg]", size: 34, delay: 0 },
-  { Icon: Ship, anchor: "bottom-[26%] right-[18%]", size: 32, delay: 1.2 },
-];
-
 interface InfoCard {
   icon: typeof GlobeIcon;
   label: string;
   description: string;
-  /** Anchor class — corner of the globe area (lg+ only). */
+  /** Anchor class — left/right rail of the globe area (lg+ only). */
   anchor: string;
   /** Entrance delay, seconds. */
   delay: number;
+  /** When true, card receives stronger emphasis. */
+  primary?: boolean;
 }
 
 const infoCards: InfoCard[] = [
   {
     icon: GlobeIcon,
     label: "Global Reach",
-    description: "Delivering worldwide",
-    anchor: "top-0 left-0",
+    description: "8 ports • 6 continents",
+    anchor: "top-[8%] left-0",
     delay: 1.0,
   },
   {
     icon: ShieldCheck,
     label: "Verified Quality",
-    description: "Lab-tested & assured",
-    anchor: "top-0 right-0",
+    description: "FSSAI + ISO 22000",
+    anchor: "top-[8%] right-0",
     delay: 1.15,
+    primary: true,
   },
   {
     icon: Award,
     label: "Trust & Compliance",
-    description: "Ethical. Transparent. Reliable.",
-    anchor: "bottom-0 left-0",
+    description: "Direct from source",
+    anchor: "bottom-[8%] left-0",
     delay: 1.3,
   },
   {
     icon: Clock,
     label: "Timely Delivery",
-    description: "On-time. Every time.",
-    anchor: "bottom-0 right-0",
+    description: "Container & LCL ready",
+    anchor: "bottom-[8%] right-0",
     delay: 1.45,
   },
 ];
+
+const PARTICLES = Array.from({ length: 24 }).map((_, i) => {
+  const seed = (Math.sin(i * 12.9898) * 43758.5453) % 1;
+  const leftRaw = ((seed + 1) % 1) * 100;
+  return {
+    left: Math.round(leftRaw * 100) / 100,
+    size: 1 + ((i * 7) % 3),
+    delay: (i % 6) * -3,
+    duration: 14 + (i % 5) * 3,
+    drift: (i % 2 === 0 ? 1 : -1) * (4 + (i % 3) * 2),
+  };
+});
+
+function HeroParticles() {
+  return (
+    <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
+      {PARTICLES.map((p, i) => (
+        <motion.span
+          key={i}
+          className="absolute rounded-full bg-gold/40 blur-[0.5px]"
+          style={{
+            left: `${p.left}%`,
+            bottom: "-10px",
+            width: `${p.size}px`,
+            height: `${p.size}px`,
+          }}
+          animate={{
+            y: ["0vh", "-110vh"],
+            x: [0, p.drift, 0],
+            opacity: [0, 0.6, 0],
+          }}
+          transition={{
+            duration: p.duration,
+            delay: p.delay,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
 
 const lineVariants = {
   hidden: {},
@@ -107,6 +141,8 @@ const charVariants = {
 
 export function HeroSection() {
   const { t } = useLanguage();
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { amount: 0 });
 
   // Outer-tilt parallax for the entire globe composition
   const mx = useMotionValue(0);
@@ -132,7 +168,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative h-screen min-h-[640px] flex flex-col overflow-hidden bg-primary">
+    <section ref={sectionRef} className="relative h-screen min-h-[640px] flex flex-col overflow-hidden bg-primary">
       {/* Layered backdrop — base radial gradient + grid + drifting aurora blobs */}
       <div className="absolute inset-0">
         <div
@@ -142,25 +178,46 @@ export function HeroSection() {
               "radial-gradient(circle at 50% 45%, var(--color-primary-light) 0%, var(--color-primary) 55%, var(--color-primary-deep) 100%)",
           }}
         />
-        <div
-          className="absolute inset-0 opacity-[0.04]"
+        <motion.div
+          aria-hidden="true"
+          animate={{ opacity: [1, 0.85, 1] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[35vw] h-[35vw] max-w-[460px] max-h-[460px] rounded-full pointer-events-none"
           style={{
-            backgroundImage:
-              "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
-            backgroundSize: "80px 80px",
+            background:
+              "radial-gradient(circle, rgba(212,166,74,0.22) 0%, rgba(212,166,74,0.06) 45%, transparent 70%)",
           }}
         />
-        {/* Aurora blob 1 — gold, slow drift */}
-        <motion.div
-          animate={{ x: ["-10%", "10%", "-10%"], y: ["0%", "8%", "0%"] }}
-          transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[20%] left-[20%] w-[60vw] h-[60vw] max-w-[700px] max-h-[700px] rounded-full bg-gold/[0.06] blur-3xl pointer-events-none"
+        {/* Aurora blob 1 — gold (static) */}
+        <div
+          aria-hidden="true"
+          className="absolute top-[20%] left-[20%] w-[60vw] h-[60vw] max-w-[700px] max-h-[700px] rounded-full bg-gold/[0.06] blur-2xl pointer-events-none"
         />
-        {/* Aurora blob 2 — teal, slower counter-drift */}
-        <motion.div
-          animate={{ x: ["6%", "-8%", "6%"], y: ["4%", "-4%", "4%"] }}
-          transition={{ duration: 36, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-[10%] right-[15%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] rounded-full bg-teal/[0.04] blur-3xl pointer-events-none"
+        {/* Aurora blob 2 — teal (static) */}
+        <div
+          aria-hidden="true"
+          className="absolute bottom-[10%] right-[15%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] rounded-full bg-teal/[0.04] blur-2xl pointer-events-none"
+        />
+        {/* Drifting gold particles — only when hero is in view */}
+        {isInView && <HeroParticles />}
+        {/* Subtle noise grain overlay */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+            backgroundSize: "200px 200px",
+          }}
+        />
+        {/* Vignette */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, transparent 65%, rgba(0,0,0,0.18) 100%)",
+          }}
         />
       </div>
 
@@ -168,14 +225,17 @@ export function HeroSection() {
       <div className="relative z-10 flex-1 min-h-0 grid grid-rows-[auto_minmax(0,1fr)_auto] gap-2 sm:gap-3 px-4 sm:px-6 pt-16 pb-3 sm:pt-20 sm:pb-4 lg:pt-24 lg:pb-5">
         {/* Top: eyebrow → headline → divider → trust pills */}
         <div className="flex flex-col items-center text-center">
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.5 }}
-            className="mb-3 text-[9.5px] sm:text-[11px] font-medium tracking-[0.3em] uppercase text-gold"
+            className="mb-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold/25 bg-gold/[0.04]"
           >
-            {t.hero.eyebrow}
-          </motion.p>
+            <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
+            <span className="text-[10px] tracking-[0.3em] uppercase text-gold/90 font-medium">
+              {t.hero.eyebrow}
+            </span>
+          </motion.div>
 
           <motion.h1
             variants={lineVariants}
@@ -190,7 +250,7 @@ export function HeroSection() {
                 </motion.span>
               ))}
             </span>
-            <span className="block text-[34px] sm:text-5xl lg:text-[60px] italic font-light text-gradient-copper leading-[1] tracking-tight mt-0.5">
+            <span className="block text-[34px] sm:text-5xl lg:text-[60px] font-semibold text-white leading-[1] tracking-tight mt-0.5">
               {"Exports".split("").map((c, i) => (
                 <motion.span key={i} variants={charVariants} className="inline-block">
                   {c}
@@ -200,54 +260,45 @@ export function HeroSection() {
           </motion.h1>
 
           <motion.div
-            initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ scaleX: 1, opacity: 1 }}
-            transition={{ delay: 0.85, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-3 sm:mt-4 w-20 sm:w-24 h-px bg-gradient-to-r from-transparent via-gold to-transparent origin-center"
-          />
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.85, duration: 0.6 }}
+            className="mt-3 sm:mt-4 flex items-center justify-center gap-3"
+          >
+            <span className="block w-12 h-px bg-gradient-to-r from-transparent to-gold/60" />
+            <span className="text-gold/80 text-[10px]">◆</span>
+            <span className="block w-12 h-px bg-gradient-to-l from-transparent to-gold/60" />
+          </motion.div>
         </div>
 
         {/* Middle: globe with mouse-tilt parallax */}
         <div className="relative w-full max-w-[1300px] mx-auto self-stretch flex items-center justify-center min-h-0">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 1.0, ease: [0.16, 1, 0.3, 1] as const }}
             onPointerMove={onPointerMove}
             onPointerLeave={onPointerLeave}
             style={{ rotateX, rotateY, transformPerspective: 1200 }}
             className="relative aspect-square h-full max-h-full max-w-full"
           >
-            <Globe3DScene />
-
-            {/* Floating wireframe transport icons — lg+ only */}
-            <div className="hidden lg:block pointer-events-none absolute inset-0">
-              {floatingIcons.map((f, i) => {
-                const { Icon } = f;
-                return (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 0.5 }}
-                    transition={{ delay: 0.9 + i * 0.08, duration: 0.6 }}
-                    className={`absolute ${f.anchor}`}
-                    style={{ animation: `float 5.5s ease-in-out ${f.delay}s infinite` }}
-                  >
-                    <Icon
-                      className="text-white/55"
-                      strokeWidth={1.2}
-                      width={f.size}
-                      height={f.size}
-                    />
-                  </motion.div>
-                );
-              })}
+            <div
+              className="absolute inset-0"
+              style={{
+                WebkitMaskImage:
+                  "radial-gradient(circle, black 60%, transparent 92%)",
+                maskImage:
+                  "radial-gradient(circle, black 60%, transparent 92%)",
+              }}
+            >
+              <Globe3DScene />
             </div>
 
-            {/* Floating info cards anchored to the corners of the globe area — lg+ only */}
-            <div className="hidden lg:block pointer-events-none absolute -inset-x-16 xl:-inset-x-24 -inset-y-2">
+            {/* Floating info cards on left/right rails — lg+ only */}
+            <div className="hidden lg:block pointer-events-none absolute -inset-x-24 xl:-inset-x-36 -inset-y-4">
               {infoCards.map((card) => {
                 const { icon: Icon } = card;
+                const isPrimary = card.primary;
                 return (
                   <motion.div
                     key={card.label}
@@ -260,15 +311,22 @@ export function HeroSection() {
                     }}
                     className={`absolute ${card.anchor} pointer-events-auto`}
                   >
-                    <div className="flex items-center gap-2.5 px-3 py-2 rounded-[var(--radius-md)] bg-primary/70 border border-gold/25 backdrop-blur-md shadow-card hover:border-gold/50 hover:bg-primary/85 transition-all duration-200">
-                      <div className="w-8 h-8 rounded-md bg-gold/12 border border-gold/30 flex items-center justify-center shrink-0">
-                        <Icon className="w-3.5 h-3.5 text-gold" strokeWidth={1.6} />
-                      </div>
+                    <div
+                      className={`flex items-center gap-3 px-3 py-2 rounded-[var(--radius-md)] backdrop-blur-sm transition-all duration-200 ${
+                        isPrimary
+                          ? "bg-primary/85 border border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] hover:border-gold/60"
+                          : "bg-primary/65 border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] hover:border-white/20"
+                      }`}
+                    >
+                      <Icon
+                        className={`w-4 h-4 shrink-0 ${isPrimary ? "text-gold" : "text-gold/80"}`}
+                        strokeWidth={1.7}
+                      />
                       <div className="leading-tight">
-                        <p className="text-[9.5px] font-semibold tracking-[0.18em] uppercase text-white">
+                        <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-white">
                           {card.label}
                         </p>
-                        <p className="mt-0.5 text-[10px] text-white/55 font-light">
+                        <p className="mt-0.5 text-[12px] text-white/60 font-light">
                           {card.description}
                         </p>
                       </div>
@@ -289,7 +347,7 @@ export function HeroSection() {
             className="text-base sm:text-lg lg:text-[24px] font-light text-white font-[family-name:var(--font-display)] tracking-tight leading-snug"
           >
             Premium Indian{" "}
-            <span className="font-semibold text-gradient-copper">Commodities</span>
+            <span className="font-semibold text-gold">Commodities</span>
             ,<br className="sm:hidden" /> Globally Delivered.
           </motion.p>
 
@@ -321,20 +379,22 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Capability ticker */}
+      {/* Capability ticker — only animates when hero is in view */}
       <div className="relative z-10 py-2.5 sm:py-3 overflow-hidden bg-primary">
-        <div className="animate-marquee flex whitespace-nowrap">
-          {[...capabilities, ...capabilities, ...capabilities, ...capabilities].map(
-            (name, i) => (
-              <span key={i} className="flex items-center mx-6 sm:mx-8">
-                <span className="text-[9.5px] sm:text-[11px] tracking-[0.2em] uppercase text-white/40 font-medium">
-                  {name}
+        {isInView && (
+          <div className="animate-marquee flex whitespace-nowrap">
+            {[...capabilities, ...capabilities, ...capabilities, ...capabilities].map(
+              (name, i) => (
+                <span key={i} className="flex items-center mx-6 sm:mx-8">
+                  <span className="text-[9.5px] sm:text-[11px] tracking-[0.2em] uppercase text-white/40 font-medium">
+                    {name}
+                  </span>
+                  <span className="ml-6 sm:ml-8 w-1.5 h-1.5 rounded-full bg-gold/80" />
                 </span>
-                <span className="ml-6 sm:ml-8 w-1.5 h-1.5 rounded-full bg-gold/80" />
-              </span>
-            ),
-          )}
-        </div>
+              ),
+            )}
+          </div>
+        )}
       </div>
 
       {/* Scroll cue — subtle indicator that there's content below */}
@@ -342,17 +402,16 @@ export function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.6, duration: 0.6 }}
-        className="absolute bottom-14 left-1/2 -translate-x-1/2 z-20 hidden md:flex flex-col items-center gap-1.5 pointer-events-none"
+        className="absolute bottom-14 left-1/2 -translate-x-1/2 z-20 hidden md:flex flex-col items-center gap-2 pointer-events-none"
         aria-hidden="true"
       >
-        <span className="text-[9px] tracking-[0.3em] uppercase text-white/40">
-          Scroll
-        </span>
         <motion.div
-          animate={{ y: [0, 6, 0], opacity: [0.4, 0.9, 0.4] }}
+          animate={{ y: [0, 4, 0], opacity: [0.4, 0.9, 0.4] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="w-[1px] h-6 bg-gradient-to-b from-gold/0 via-gold to-gold/0"
-        />
+        >
+          <ChevronDown className="w-4 h-4 text-gold/80" strokeWidth={1.5} />
+        </motion.div>
+        <span className="w-1 h-1 rounded-full bg-gold/40" />
       </motion.div>
 
     </section>
