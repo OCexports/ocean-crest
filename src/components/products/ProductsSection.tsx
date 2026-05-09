@@ -76,13 +76,13 @@ export function ProductsSection() {
                       <ProductImagePlaceholder />
                     )}
                     {product.meshBadge && (
-                      <span className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-sm text-[10px] font-semibold tracking-[0.15em] uppercase text-primary shadow-border">
+                      <span className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-sm text-[12px] lg:text-[10px] font-semibold tracking-[0.15em] uppercase text-primary shadow-border">
                         {product.meshBadge}
                       </span>
                     )}
                     {product.video && (
                       <span
-                        className="absolute top-3 right-3 z-10 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-ink/70 backdrop-blur-sm text-[9px] font-semibold tracking-[0.15em] uppercase text-white"
+                        className="absolute top-3 right-3 z-10 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-ink/70 backdrop-blur-sm text-[12px] lg:text-[9px] font-semibold tracking-[0.15em] uppercase text-white"
                         aria-hidden="true"
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />

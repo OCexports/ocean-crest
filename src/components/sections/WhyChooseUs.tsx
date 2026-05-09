@@ -37,7 +37,7 @@ export function WhyChooseUs() {
         <div className="grid lg:grid-cols-2 gap-20 lg:gap-28 items-start">
           {/* Left: Heading */}
           <ScrollReveal>
-            <span className="text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
+            <span className="text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
               Why Ocean Crest
             </span>
             <h2 className="mt-4 text-3xl lg:text-[44px] font-semibold text-primary font-[family-name:var(--font-display)] leading-tight">

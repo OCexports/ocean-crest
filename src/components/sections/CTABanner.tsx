@@ -31,7 +31,7 @@ export function CTABanner() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left: Text */}
           <ScrollReveal>
-            <span className="text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
+            <span className="text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
               {t.common.getInTouch}
             </span>
             <h2 className="mt-4 text-3xl lg:text-5xl font-bold text-white font-[family-name:var(--font-display)] leading-tight">
@@ -73,7 +73,7 @@ export function CTABanner() {
               >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label htmlFor="cta-name" className="text-[11px] font-medium tracking-wider uppercase text-white/85">
+                    <label htmlFor="cta-name" className="text-[12px] lg:text-[11px] font-medium tracking-wider uppercase text-white/85">
                       {t.contact.name} *
                     </label>
                     <input
@@ -86,7 +86,7 @@ export function CTABanner() {
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <label htmlFor="cta-email" className="text-[11px] font-medium tracking-wider uppercase text-white/85">
+                    <label htmlFor="cta-email" className="text-[12px] lg:text-[11px] font-medium tracking-wider uppercase text-white/85">
                       {t.contact.email} *
                     </label>
                     <input
@@ -102,7 +102,7 @@ export function CTABanner() {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label htmlFor="cta-phone" className="text-[11px] font-medium tracking-wider uppercase text-white/85">
+                    <label htmlFor="cta-phone" className="text-[12px] lg:text-[11px] font-medium tracking-wider uppercase text-white/85">
                       {t.contact.phone} *
                     </label>
                     <input
@@ -117,7 +117,7 @@ export function CTABanner() {
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <label htmlFor="cta-company" className="text-[11px] font-medium tracking-wider uppercase text-white/85">
+                    <label htmlFor="cta-company" className="text-[12px] lg:text-[11px] font-medium tracking-wider uppercase text-white/85">
                       {t.contact.company}
                     </label>
                     <input
@@ -130,7 +130,7 @@ export function CTABanner() {
                   </div>
                 </div>
                 <div className="space-y-1.5">
-                  <label htmlFor="cta-product" className="text-[11px] font-medium tracking-wider uppercase text-white/85">
+                  <label htmlFor="cta-product" className="text-[12px] lg:text-[11px] font-medium tracking-wider uppercase text-white/85">
                     {t.contact.product}
                   </label>
                   <select id="cta-product" name="product" className="w-full px-3 py-2.5 bg-white/8 border border-white/15 rounded-[var(--radius-sm)] text-white text-sm focus:outline-none focus:ring-2 focus:ring-gold/40 focus:border-gold focus:bg-white/10 transition-colors cursor-pointer">
@@ -143,7 +143,7 @@ export function CTABanner() {
                   </select>
                 </div>
                 <div className="space-y-1.5">
-                  <label htmlFor="cta-message" className="text-[11px] font-medium tracking-wider uppercase text-white/85">
+                  <label htmlFor="cta-message" className="text-[12px] lg:text-[11px] font-medium tracking-wider uppercase text-white/85">
                     {t.contact.message} *
                   </label>
                   <textarea

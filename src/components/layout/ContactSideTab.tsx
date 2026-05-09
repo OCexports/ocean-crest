@@ -7,10 +7,10 @@ import { Mail } from "lucide-react";
 
 /**
  * Vertical "Get in Touch" tab pinned mid-right on desktop. A persistent
- * inquiry CTA for B2B buyers — sits alongside the WhatsApp FAB but
+ * inquiry CTA for B2B buyers â€” sits alongside the WhatsApp FAB but
  * communicates "formal inquiry" rather than "quick chat".
  *
- * Hidden on small screens — mobile already has a bottom WhatsApp FAB and
+ * Hidden on small screens â€” mobile already has a bottom WhatsApp FAB and
  * the in-page mobile menu CTA covers the same intent without occupying
  * scarce horizontal space.
  */
@@ -37,7 +37,7 @@ export function ContactSideTab() {
       >
         <Mail className="w-3.5 h-3.5 shrink-0" strokeWidth={2.2} />
         <span
-          className="text-[9.5px] font-semibold tracking-[0.2em] uppercase leading-none"
+          className="text-[12px] lg:text-[9.5px] font-semibold tracking-[0.2em] uppercase leading-none"
           style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
         >
           Get in Touch

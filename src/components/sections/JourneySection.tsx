@@ -49,7 +49,7 @@ export function JourneySection() {
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16 lg:mb-20">
-            <span className="text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
+            <span className="text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
               Our Process
             </span>
             <h2 className="mt-3 text-3xl lg:text-5xl font-semibold text-white font-[family-name:var(--font-display)]">

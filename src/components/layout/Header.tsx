@@ -43,7 +43,7 @@ export function Header() {
   }, [isMobileOpen]);
 
   // Esc closes the drawer; focus moves to the close button on open and
-  // returns to the hamburger on close — keyboard users should never get lost.
+  // returns to the hamburger on close â€” keyboard users should never get lost.
   useEffect(() => {
     if (!isMobileOpen) return;
     const onKey = (e: KeyboardEvent) => {
@@ -76,15 +76,15 @@ export function Header() {
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-24 lg:h-32">
-            {/* Logo — text composite (circle + wordmark) */}
+            {/* Logo â€” text composite (circle + wordmark) */}
             <Link href="/" className="flex items-center gap-3 cursor-pointer group">
               <Image
                 src="/images/brand/OC MONOGRAM.png"
                 alt="OC monogram"
-                unoptimized
                 width={120}
                 height={120}
                 priority
+                sizes="(min-width: 1024px) 80px, 56px"
                 className="h-14 lg:h-20 w-auto object-contain [filter:drop-shadow(0_0_1px_rgba(212,166,74,1))_drop-shadow(0_0_1px_rgba(212,166,74,1))_drop-shadow(0_0_2px_rgba(212,166,74,0.7))]"
               />
               <span
@@ -171,7 +171,7 @@ export function Header() {
             <div className="hidden lg:flex items-center gap-2">
               <LanguageSwitcher isScrolled={isScrolled} />
               <Link href="/contact">
-                <button className="px-5 py-2.5 bg-gold text-white text-[11px] font-semibold tracking-[0.15em] uppercase rounded-full hover:bg-gold-muted transition-all duration-200 cursor-pointer hover:shadow-gold">
+                <button className="px-5 py-2.5 bg-gold text-white text-[12px] lg:text-[11px] font-semibold tracking-[0.15em] uppercase rounded-full hover:bg-gold-muted transition-all duration-200 cursor-pointer hover:shadow-gold">
                   {t.nav.inquiry}
                 </button>
               </Link>
@@ -224,9 +224,9 @@ export function Header() {
                     <Image
                       src="/images/brand/OC MONOGRAM.png"
                       alt="OC monogram"
-                      unoptimized
                       width={96}
                       height={96}
+                      sizes="48px"
                       className="h-12 w-auto object-contain [filter:drop-shadow(0_0_1px_rgba(212,166,74,1))_drop-shadow(0_0_1px_rgba(212,166,74,1))_drop-shadow(0_0_2px_rgba(212,166,74,0.7))]"
                     />
                     <span className="text-sm font-semibold tracking-[0.1em] uppercase font-[family-name:var(--font-display)] text-white leading-none">
@@ -267,7 +267,7 @@ export function Header() {
                               key={child.name}
                               href={child.href}
                               onClick={() => setIsMobileOpen(false)}
-                              className="block px-2 py-2.5 text-sm text-white/40 hover:text-gold transition-colors cursor-pointer"
+                              className="block px-2 py-2.5 text-sm text-white/70 hover:text-gold transition-colors cursor-pointer"
                             >
                               {child.name}
                             </Link>
@@ -278,7 +278,7 @@ export function Header() {
                   ))}
                 </nav>
 
-                {/* Language Switcher — Mobile */}
+                {/* Language Switcher â€” Mobile */}
                 <div className="mt-4 border-t border-white/10 pt-4">
                   <LanguageSwitcher isScrolled={false} />
                 </div>
@@ -309,7 +309,7 @@ export function Header() {
                 </motion.div>
 
                 {/* Contact info */}
-                <div className="mt-10 pt-8 border-t border-white/5 text-sm text-white/30 space-y-3">
+                <div className="mt-10 pt-8 border-t border-white/5 text-sm text-white/60 space-y-3">
                   <a href={`mailto:${companyInfo.email}`} className="flex items-center gap-3 hover:text-gold transition-colors cursor-pointer">
                     <Mail className="w-4 h-4" /> {companyInfo.email}
                   </a>
@@ -328,7 +328,7 @@ export function Header() {
   );
 }
 
-/* Scroll Progress Bar — like Everest */
+/* Scroll Progress Bar â€” like Everest */
 function ScrollProgress() {
   const { scrollYProgress } = useScroll();
 
