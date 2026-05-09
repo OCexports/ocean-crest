@@ -65,6 +65,52 @@ const PARTICLES = Array.from({ length: 24 }).map((_, i) => {
   };
 });
 
+/**
+ * CSS-only globe placeholder. Used on mobile (where we never load Three.js)
+ * and on desktop until requestIdleCallback fires. Zero JS, zero network —
+ * just radial gradients + a dot pattern that reads as a stylized planet.
+ */
+function StaticGlobePlaceholder() {
+  return (
+    <div
+      aria-hidden="true"
+      className="absolute inset-0 flex items-center justify-center"
+    >
+      <div
+        className="relative aspect-square w-[78%]"
+        style={{
+          background: [
+            "radial-gradient(circle at 36% 32%, rgba(232,193,88,0.32) 0%, rgba(212,175,55,0.16) 28%, rgba(10,30,45,0.0) 60%)",
+            "radial-gradient(circle at 50% 50%, #0F2A40 0%, #07182B 65%, #050F1C 100%)",
+          ].join(", "),
+          borderRadius: "50%",
+          boxShadow:
+            "inset 0 0 80px rgba(255,255,255,0.04), inset 0 0 160px rgba(212,175,55,0.06), 0 0 60px rgba(212,175,55,0.10)",
+        }}
+      >
+        <div
+          className="absolute inset-0 rounded-full opacity-[0.18]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(232,193,88,0.9) 0.5px, transparent 1.2px)",
+            backgroundSize: "10px 10px",
+            WebkitMaskImage:
+              "radial-gradient(circle, black 55%, transparent 92%)",
+            maskImage: "radial-gradient(circle, black 55%, transparent 92%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 rounded-full pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(115deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 35%)",
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
 function HeroParticles() {
   return (
     <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -114,11 +160,24 @@ export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { amount: 0 });
   const reducedMotion = useReducedMotion();
-  // Defer globe mount until after first paint so the heavy Three.js work
-  // doesn't compete for the main thread during LCP. Falls back to setTimeout
-  // when requestIdleCallback is unavailable (Safari < 16.4).
+  // Viewport-aware mount gates:
+  // - Mobile/tablet (<1024px): never mount Globe3DScene or HeroParticles.
+  //   Three.js + react-three-fiber is ~600 KB and dominates bootup time on
+  //   mid-range phones; 24 framer-motion infinite animations (particles)
+  //   compound the CPU pressure. Static placeholder reads as intentional.
+  // - Desktop (>=1024px): mount Globe3DScene after requestIdleCallback so
+  //   the heavy chunk loads only once the main thread is idle.
+  const [isLgUp, setIsLgUp] = useState(false);
   const [globeReady, setGlobeReady] = useState(false);
   useEffect(() => {
+    const lgMQ = window.matchMedia("(min-width: 1024px)");
+    setIsLgUp(lgMQ.matches);
+    const onChange = (e: MediaQueryListEvent) => setIsLgUp(e.matches);
+    lgMQ.addEventListener("change", onChange);
+    return () => lgMQ.removeEventListener("change", onChange);
+  }, []);
+  useEffect(() => {
+    if (!isLgUp) return;
     type IdleWindow = Window &
       typeof globalThis & {
         requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
@@ -131,7 +190,7 @@ export function HeroSection() {
     }
     const t = window.setTimeout(() => setGlobeReady(true), 400);
     return () => window.clearTimeout(t);
-  }, []);
+  }, [isLgUp]);
 
   // Outer-tilt parallax for the entire globe composition
   const mx = useMotionValue(0);
@@ -188,7 +247,12 @@ export function HeroSection() {
           className="absolute bottom-[10%] right-[15%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] rounded-full bg-teal/[0.04] blur-2xl pointer-events-none"
         />
         {/* Drifting gold particles â€” only when hero is in view */}
-        {isInView && !reducedMotion && <HeroParticles />}
+        {/* Particles only render on lg+ — 24 infinite framer-motion animations
+            cost too much main-thread time on mid-range mobile CPUs. The CSS
+            `hidden lg:block` would only hide them visually; the animation
+            loop still runs. We use the matchMedia-driven `isLgUp` flag so
+            the components don't mount on mobile at all. */}
+        {isInView && !reducedMotion && isLgUp && <HeroParticles />}
         {/* Subtle noise grain overlay */}
         <div
           aria-hidden="true"
@@ -403,13 +467,7 @@ export function HeroSection() {
                   "radial-gradient(circle, black 60%, transparent 92%)",
               }}
             >
-              {globeReady ? (
-                <Globe3DScene />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-12 h-12 rounded-full border-2 border-gold/30 border-t-gold animate-spin" />
-                </div>
-              )}
+              {globeReady ? <Globe3DScene /> : <StaticGlobePlaceholder />}
             </div>
           </motion.div>
         </div>

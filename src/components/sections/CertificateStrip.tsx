@@ -47,7 +47,7 @@ export function CertificateStrip() {
         <ScrollReveal>
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12">
             <div>
-              <span className="text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
+              <span className="text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase text-gold-deep">
                 Quality Assured
               </span>
               <h2 className="mt-2 text-3xl lg:text-4xl font-semibold text-primary font-[family-name:var(--font-display)]">

@@ -9,7 +9,12 @@ const nextConfig: NextConfig = {
     root: projectRoot,
   },
   experimental: {
-    optimizePackageImports: ["lucide-react", "framer-motion"],
+    optimizePackageImports: [
+      "lucide-react",
+      "framer-motion",
+      "three",
+      "@react-three/fiber",
+    ],
   },
   images: {
     formats: ["image/avif", "image/webp"],
