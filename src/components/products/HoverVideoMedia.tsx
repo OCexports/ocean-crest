@@ -18,17 +18,23 @@ interface Props {
    * Externally controlled hover state for hover-capable devices. When provided,
    * the parent owns the play/pause signal — useful when you want the entire
    * card (image + title + description) to act as the hover target instead of
-   * just the image. On touch devices the prop is ignored and an
-   * IntersectionObserver drives playback instead.
+   * just the image.
    */
   isHovered?: boolean;
 }
 
 /**
  * Renders a product still that swaps to a muted, looping clip.
- * Desktop: plays on hover. Touch / no-hover devices: plays when the card is
- * the most-visible item in the viewport (IntersectionObserver, threshold 0.6).
- * Honors prefers-reduced-motion by staying on the still image.
+ *
+ * Triggers (OR'd together):
+ *   - Hover (mouse devices). Uses `(any-hover: hover)` so hybrid Windows
+ *     touchscreen laptops still recognize the connected mouse — the older
+ *     `(hover: hover)` returns false on those even with a mouse plugged in.
+ *   - IntersectionObserver: plays when the card sits roughly center-of-viewport.
+ *     Always attached so hybrid devices being used in touch mode still see motion
+ *     while scrolling.
+ *
+ * Honors prefers-reduced-motion by leaving the still image up.
  */
 export function HoverVideoMedia({
   src,
@@ -44,7 +50,7 @@ export function HoverVideoMedia({
   const [isVisible, setIsVisible] = useState(false);
   const [canHover, setCanHover] = useState(() => {
     if (typeof window === "undefined") return true;
-    return window.matchMedia("(hover: hover)").matches;
+    return window.matchMedia("(any-hover: hover)").matches;
   });
   const [reducedMotion, setReducedMotion] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -52,7 +58,7 @@ export function HoverVideoMedia({
   });
 
   useEffect(() => {
-    const hoverMQ = window.matchMedia("(hover: hover)");
+    const hoverMQ = window.matchMedia("(any-hover: hover)");
     const motionMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
     const onHoverChange = (e: MediaQueryListEvent) => setCanHover(e.matches);
     const onMotionChange = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
@@ -64,10 +70,10 @@ export function HoverVideoMedia({
     };
   }, []);
 
-  // Touch / no-hover path: play when the card is roughly center-of-viewport.
-  // rootMargin trims top/bottom 15% so a card peeking in at the edge doesn't qualify.
+  // IntersectionObserver runs on every device; it's a fallback for touch-only
+  // and a no-op on desktop unless the card centers in the viewport.
   useEffect(() => {
-    if (canHover || reducedMotion || !video || !interactive) return;
+    if (reducedMotion || !video || !interactive) return;
     const el = containerRef.current;
     if (!el) return;
     const obs = new IntersectionObserver(
@@ -81,13 +87,11 @@ export function HoverVideoMedia({
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, [canHover, reducedMotion, video, interactive]);
+  }, [reducedMotion, video, interactive]);
 
-  const isPlaying = (() => {
-    if (!video || !interactive || reducedMotion) return false;
-    if (canHover) return isHovered !== undefined ? isHovered : internalHover;
-    return isVisible;
-  })();
+  const hoverSignal = isHovered !== undefined ? isHovered : internalHover;
+  const isPlaying =
+    !!video && interactive && !reducedMotion && (hoverSignal || isVisible);
 
   // Drive the video element off the effective playing state.
   // If autoplay is rejected (some browsers require a user gesture even for muted),
@@ -103,9 +107,11 @@ export function HoverVideoMedia({
             el.play().catch(() => {});
             window.removeEventListener("touchstart", retry);
             window.removeEventListener("scroll", retry);
+            window.removeEventListener("pointerdown", retry);
           };
           window.addEventListener("touchstart", retry, { once: true, passive: true });
           window.addEventListener("scroll", retry, { once: true, passive: true });
+          window.addEventListener("pointerdown", retry, { once: true, passive: true });
         });
       }
     } else {
@@ -114,6 +120,8 @@ export function HoverVideoMedia({
     }
   }, [isPlaying, video]);
 
+  // Hover handlers are gated on canHover so a synthetic mouseenter from a tap
+  // (some touch browsers fire one after a tap) doesn't briefly play the video.
   const onEnter = () => {
     if (!canHover || isHovered !== undefined) return;
     setInternalHover(true);
