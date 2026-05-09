@@ -160,13 +160,14 @@ export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { amount: 0 });
   const reducedMotion = useReducedMotion();
-  // Viewport-aware mount gates:
-  // - Mobile/tablet (<1024px): never mount Globe3DScene or HeroParticles.
-  //   Three.js + react-three-fiber is ~600 KB and dominates bootup time on
-  //   mid-range phones; 24 framer-motion infinite animations (particles)
-  //   compound the CPU pressure. Static placeholder reads as intentional.
-  // - Desktop (>=1024px): mount Globe3DScene after requestIdleCallback so
-  //   the heavy chunk loads only once the main thread is idle.
+  // Mount strategy:
+  // - Globe3DScene runs everywhere now — it's the brand. The scene was
+  //   tuned down (named imports, lower segment counts, antialias off on
+  //   touch, DPR capped at 1) so it's light enough for mobile.
+  // - HeroParticles still desktop-only; 24 framer-motion infinite loops
+  //   are pure CPU cost without the visual payoff on small screens.
+  // - In both cases we mount after requestIdleCallback so the chunk loads
+  //   AFTER the hero text + CTAs have painted (LCP / TBT win).
   const [isLgUp, setIsLgUp] = useState(false);
   const [globeReady, setGlobeReady] = useState(false);
   useEffect(() => {
@@ -177,7 +178,6 @@ export function HeroSection() {
     return () => lgMQ.removeEventListener("change", onChange);
   }, []);
   useEffect(() => {
-    if (!isLgUp) return;
     type IdleWindow = Window &
       typeof globalThis & {
         requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
@@ -185,12 +185,12 @@ export function HeroSection() {
       };
     const w = window as IdleWindow;
     if (typeof w.requestIdleCallback === "function") {
-      const id = w.requestIdleCallback(() => setGlobeReady(true), { timeout: 1500 });
+      const id = w.requestIdleCallback(() => setGlobeReady(true), { timeout: 2000 });
       return () => w.cancelIdleCallback?.(id);
     }
-    const t = window.setTimeout(() => setGlobeReady(true), 400);
+    const t = window.setTimeout(() => setGlobeReady(true), 600);
     return () => window.clearTimeout(t);
-  }, [isLgUp]);
+  }, []);
 
   // Outer-tilt parallax for the entire globe composition
   const mx = useMotionValue(0);
