@@ -70,12 +70,12 @@ export function HoverVideoMedia({
     };
   }, []);
 
-  // IntersectionObserver runs on every device; it's a fallback for touch-only
-  // and a no-op on desktop unless the card centers in the viewport.
-  // Reduced-motion users skip the observer entirely (autoplay is the part of the
-  // experience that "reduce motion" is about — explicit hover is still allowed).
+  // IntersectionObserver only attaches on touch-only devices (no hover
+  // capability). On desktop / hybrid laptops with a mouse, hover is the sole
+  // play trigger — otherwise videos auto-play as the user scrolls past,
+  // which surprised real users in production.
   useEffect(() => {
-    if (reducedMotion || !video || !interactive) return;
+    if (canHover || reducedMotion || !video || !interactive) return;
     const el = containerRef.current;
     if (!el) return;
     const obs = new IntersectionObserver(
@@ -89,12 +89,15 @@ export function HoverVideoMedia({
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, [reducedMotion, video, interactive]);
+  }, [canHover, reducedMotion, video, interactive]);
 
   const hoverSignal = isHovered !== undefined ? isHovered : internalHover;
   // Hover is an explicit user action — allow it even with reduced motion.
   // Intersection autoplay is the implicit motion that reduced-motion targets.
-  const isPlaying = !!video && interactive && (hoverSignal || isVisible);
+  // canHover decides which signal drives playback so desktop never auto-plays
+  // while scrolling and touch never sits silent waiting for a hover.
+  const isPlaying =
+    !!video && interactive && (canHover ? hoverSignal : !reducedMotion && isVisible);
 
   // Drive the video element off the effective playing state.
   // If autoplay is rejected (some browsers require a user gesture even for muted),
