@@ -11,18 +11,18 @@ const certificatesDescription =
   "Ocean Crest holds FSSAI, ISO 22000, HACCP, FDA, APEDA, Halal and other international certifications for food safety and quality. Verified compliance for global B2B buyers.";
 
 export const metadata: Metadata = {
-  title: "Quality & Certifications — FSSAI, APEDA, Halal",
+  title: "Quality & Certifications â€” FSSAI, APEDA, Halal",
   description: certificatesDescription,
   alternates: { canonical: "/certificates" },
   openGraph: {
     type: "website",
-    title: "Ocean Crest Certifications — FSSAI, APEDA, Halal",
+    title: "Ocean Crest Certifications â€” FSSAI, APEDA, Halal",
     description: certificatesDescription,
     url: "/certificates",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ocean Crest Certifications — FSSAI, APEDA, Halal",
+    title: "Ocean Crest Certifications â€” FSSAI, APEDA, Halal",
     description: certificatesDescription,
   },
 };
@@ -54,7 +54,7 @@ export default function CertificatesPage() {
               <span className="text-white/60">/</span>
               <span className="text-white/80">Certificates</span>
             </nav>
-            <span className="text-[11px] font-medium tracking-[0.3em] uppercase text-gold">Quality Assurance</span>
+            <span className="text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase text-gold">Quality Assurance</span>
             <h1 className="mt-3 text-4xl lg:text-5xl font-bold text-white font-[family-name:var(--font-display)]">
               Quality & <span className="text-gold">Certifications</span>
             </h1>
@@ -136,7 +136,7 @@ export default function CertificatesPage() {
             <SectionHeader
               eyebrow="Our Promise"
               title="Committed to Food Safety"
-              subtitle="At Ocean Crest, quality isn't a department — it's embedded in our culture. Every team member understands their role in maintaining the highest standards of food safety and quality."
+              subtitle="At Ocean Crest, quality isn't a department â€” it's embedded in our culture. Every team member understands their role in maintaining the highest standards of food safety and quality."
             />
             <div className="grid sm:grid-cols-3 gap-6 mt-8">
               {[

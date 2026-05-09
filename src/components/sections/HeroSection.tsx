@@ -47,7 +47,7 @@ interface Stat {
 }
 
 const stats: Stat[] = [
-  { icon: GlobeIcon, label: "Global Reach", description: "8 ports · 6 continents" },
+  { icon: GlobeIcon, label: "Global Reach", description: "8 ports Â· 6 continents" },
   { icon: ShieldCheck, label: "Verified Quality", description: "FSSAI + ISO 22000" },
   { icon: Award, label: "Direct Source", description: "Farm-to-port traceability" },
   { icon: Clock, label: "Timely Delivery", description: "Container & LCL ready" },
@@ -158,7 +158,7 @@ export function HeroSection() {
 
   return (
     <section ref={sectionRef} className="relative h-screen min-h-[560px] sm:min-h-[640px] flex flex-col overflow-hidden bg-primary">
-      {/* Layered backdrop — base radial gradient + grid + drifting aurora blobs */}
+      {/* Layered backdrop â€” base radial gradient + grid + drifting aurora blobs */}
       <div className="absolute inset-0">
         <div
           className="absolute inset-0"
@@ -177,17 +177,17 @@ export function HeroSection() {
               "radial-gradient(circle, rgba(212,166,74,0.22) 0%, rgba(212,166,74,0.06) 45%, transparent 70%)",
           }}
         />
-        {/* Aurora blob 1 — gold (static) */}
+        {/* Aurora blob 1 â€” gold (static) */}
         <div
           aria-hidden="true"
           className="absolute top-[20%] left-[20%] w-[60vw] h-[60vw] max-w-[700px] max-h-[700px] rounded-full bg-gold/[0.06] blur-2xl pointer-events-none"
         />
-        {/* Aurora blob 2 — teal (static) */}
+        {/* Aurora blob 2 â€” teal (static) */}
         <div
           aria-hidden="true"
           className="absolute bottom-[10%] right-[15%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] rounded-full bg-teal/[0.04] blur-2xl pointer-events-none"
         />
-        {/* Drifting gold particles — only when hero is in view */}
+        {/* Drifting gold particles â€” only when hero is in view */}
         {isInView && !reducedMotion && <HeroParticles />}
         {/* Subtle noise grain overlay */}
         <div
@@ -212,7 +212,7 @@ export function HeroSection() {
 
       {/* Mobile: 3-row stacked center | lg+: asymmetric 12-col split */}
       <div className="relative z-10 flex-1 min-h-0 grid grid-rows-[auto_minmax(0,1fr)_auto] lg:grid-rows-1 lg:grid-cols-12 gap-2 sm:gap-3 lg:gap-8 xl:gap-12 px-4 sm:px-6 lg:px-10 xl:px-14 pt-16 pb-3 sm:pt-20 sm:pb-4 lg:pt-24 lg:pb-5 max-w-[1500px] mx-auto w-full">
-        {/* MOBILE-ONLY: top eyebrow → headline → divider */}
+        {/* MOBILE-ONLY: top eyebrow â†’ headline â†’ divider */}
         <div className="lg:hidden flex flex-col items-center text-center">
           <motion.div
             initial={{ opacity: 0, y: 6 }}
@@ -221,7 +221,7 @@ export function HeroSection() {
             className="mb-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold/25 bg-gold/[0.04]"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
-            <span className="text-[10px] tracking-[0.3em] uppercase text-gold/90 font-medium">
+            <span className="text-[12px] lg:text-[10px] tracking-[0.3em] uppercase text-gold/90 font-medium">
               {t.hero.eyebrow}
             </span>
           </motion.div>
@@ -255,12 +255,12 @@ export function HeroSection() {
             className="mt-3 sm:mt-4 flex items-center justify-center gap-3"
           >
             <span className="block w-12 h-px bg-gradient-to-r from-transparent to-gold/60" />
-            <span className="text-gold/80 text-[10px]">◆</span>
+            <span className="text-gold/80 text-[12px] lg:text-[10px]">â—†</span>
             <span className="block w-12 h-px bg-gradient-to-l from-transparent to-gold/60" />
           </motion.div>
         </div>
 
-        {/* DESKTOP-ONLY (lg+): LEFT column — eyebrow / headline / divider / lede / CTAs / stat block */}
+        {/* DESKTOP-ONLY (lg+): LEFT column â€” eyebrow / headline / divider / lede / CTAs / stat block */}
         <div className="hidden lg:flex lg:col-span-5 flex-col justify-center text-left">
           <motion.div
             initial={{ opacity: 0, y: 6 }}
@@ -269,7 +269,7 @@ export function HeroSection() {
             className="self-start mb-5 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold/25 bg-gold/[0.04]"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
-            <span className="text-[10px] tracking-[0.3em] uppercase text-gold/90 font-medium">
+            <span className="text-[12px] lg:text-[10px] tracking-[0.3em] uppercase text-gold/90 font-medium">
               {t.hero.eyebrow}
             </span>
           </motion.div>
@@ -341,7 +341,7 @@ export function HeroSection() {
             </Link>
           </motion.div>
 
-          {/* Stat block — 2x2 grid replacing the orbiting info cards */}
+          {/* Stat block â€” 2x2 grid replacing the orbiting info cards */}
           <motion.dl
             initial="hidden"
             animate="visible"
@@ -370,7 +370,7 @@ export function HeroSection() {
                     <Icon className="h-3.5 w-3.5 text-gold" strokeWidth={1.8} />
                   </span>
                   <div className="leading-tight">
-                    <dt className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/95">
+                    <dt className="text-[12px] lg:text-[10px] font-semibold tracking-[0.2em] uppercase text-white/95">
                       {s.label}
                     </dt>
                     <dd className="mt-1 text-[12px] text-white/55 font-light">
@@ -455,14 +455,14 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Capability ticker — only animates when hero is in view */}
+      {/* Capability ticker â€” only animates when hero is in view */}
       <div className="relative z-10 py-2.5 sm:py-3 overflow-hidden bg-primary">
         {isInView && (
           <div className="animate-marquee flex whitespace-nowrap">
             {[...capabilities, ...capabilities, ...capabilities, ...capabilities].map(
               (name, i) => (
                 <span key={i} className="flex items-center mx-6 sm:mx-8">
-                  <span className="text-[9.5px] sm:text-[11px] tracking-[0.2em] uppercase text-white/70 font-medium">
+                  <span className="text-[12px] sm:text-[11px] lg:text-[9.5px] tracking-[0.2em] uppercase text-white/70 font-medium">
                     {name}
                   </span>
                   <span className="ml-6 sm:ml-8 w-1.5 h-1.5 rounded-full bg-gold/80" />
@@ -473,7 +473,7 @@ export function HeroSection() {
         )}
       </div>
 
-      {/* Scroll cue — subtle indicator that there's content below */}
+      {/* Scroll cue â€” subtle indicator that there's content below */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

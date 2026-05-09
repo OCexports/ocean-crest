@@ -5,21 +5,21 @@ import { CTABanner } from "@/components/sections/CTABanner";
 import { ProductsSection } from "@/components/products/ProductsSection";
 
 const productsDescription =
-  "Browse Ocean Crest's premium dehydrated garlic range — flakes, chopped, minced, granules, and powder — plus Indian spices, grains, seeds, and dehydrated vegetables for global B2B export. FSSAI and APEDA certified.";
+  "Browse Ocean Crest's premium dehydrated garlic range â€” flakes, chopped, minced, granules, and powder â€” plus Indian spices, grains, seeds, and dehydrated vegetables for global B2B export. FSSAI and APEDA certified.";
 
 export const metadata: Metadata = {
-  title: "Products — Dehydrated Garlic & Indian Spices",
+  title: "Products â€” Dehydrated Garlic & Indian Spices",
   description: productsDescription,
   alternates: { canonical: "/products" },
   openGraph: {
     type: "website",
-    title: "Ocean Crest Products — Dehydrated Garlic & Indian Spices",
+    title: "Ocean Crest Products â€” Dehydrated Garlic & Indian Spices",
     description: productsDescription,
     url: "/products",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ocean Crest Products — Dehydrated Garlic & Indian Spices",
+    title: "Ocean Crest Products â€” Dehydrated Garlic & Indian Spices",
     description: productsDescription,
   },
 };
@@ -47,7 +47,7 @@ export default function ProductsPage() {
               <span className="text-white/60">/</span>
               <span className="text-white/80">Products</span>
             </nav>
-            <span className="text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
+            <span className="text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
               Our Products
             </span>
             <h1 className="mt-3 text-4xl lg:text-5xl font-bold text-white font-[family-name:var(--font-display)]">
@@ -62,7 +62,7 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* Products — fully client-side filtering */}
+      {/* Products â€” fully client-side filtering */}
       <section className="py-16 lg:py-24 bg-stone">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <ProductsSection />

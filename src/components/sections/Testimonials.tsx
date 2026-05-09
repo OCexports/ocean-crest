@@ -10,7 +10,7 @@ const testimonials = [
     role: "Procurement Head",
     company: "Al Waha Foods",
     country: "UAE",
-    flag: "🇦🇪",
+    flag: "ðŸ‡¦ðŸ‡ª",
   },
   {
     quote:
@@ -19,7 +19,7 @@ const testimonials = [
     role: "Director of Sourcing",
     company: "Heritage Spice Co.",
     country: "United Kingdom",
-    flag: "🇬🇧",
+    flag: "ðŸ‡¬ðŸ‡§",
   },
 ];
 
@@ -29,7 +29,7 @@ export function Testimonials() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-14 lg:mb-16">
-            <span className="text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
+            <span className="text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
               In their words
             </span>
             <h2 className="mt-3 text-3xl lg:text-4xl font-semibold text-primary font-[family-name:var(--font-display)]">
@@ -67,7 +67,7 @@ export function Testimonials() {
                     <p className="text-xs text-ink-muted mt-0.5">
                       {t.role} &middot; {t.company}
                     </p>
-                    <p className="text-[10px] tracking-[0.2em] uppercase text-gold-muted font-medium mt-1">
+                    <p className="text-[12px] lg:text-[10px] tracking-[0.2em] uppercase text-gold-muted font-medium mt-1">
                       {t.country}
                     </p>
                   </div>

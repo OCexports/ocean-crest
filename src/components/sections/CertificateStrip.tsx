@@ -47,7 +47,7 @@ export function CertificateStrip() {
         <ScrollReveal>
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12">
             <div>
-              <span className="text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
+              <span className="text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
                 Quality Assured
               </span>
               <h2 className="mt-2 text-3xl lg:text-4xl font-semibold text-primary font-[family-name:var(--font-display)]">
@@ -77,13 +77,13 @@ export function CertificateStrip() {
                   <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-3 transition-colors shrink-0 ${v.accent}`}>
                     <Icon className="w-7 h-7" />
                   </div>
-                  <span className={`text-[9px] font-bold tracking-[0.25em] uppercase mb-1.5 ${v.accent.split(" ")[0]}`}>
+                  <span className={`text-[12px] lg:text-[9px] font-bold tracking-[0.25em] uppercase mb-1.5 ${v.accent.split(" ")[0]}`}>
                     {v.mono}
                   </span>
                   <h3 className="text-[13px] font-semibold text-primary font-[family-name:var(--font-display)] leading-tight">
                     {cert.name}
                   </h3>
-                  <p className="mt-1 text-[10px] text-ink-muted leading-tight">
+                  <p className="mt-1 text-[12px] lg:text-[10px] text-ink-muted leading-tight">
                     {cert.issuingBody}
                   </p>
                 </div>

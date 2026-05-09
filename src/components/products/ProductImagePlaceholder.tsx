@@ -23,7 +23,7 @@ export function ProductImagePlaceholder({ className, compact = false }: Props) {
         className,
       )}
     >
-      {/* Decorative gold corner accents — brand cue, signals intentional state */}
+      {/* Decorative gold corner accents â€” brand cue, signals intentional state */}
       <div className="absolute top-3 left-3 w-6 h-6 border-l border-t border-gold/30" />
       <div className="absolute bottom-3 right-3 w-6 h-6 border-r border-b border-gold/30" />
 
@@ -41,7 +41,7 @@ export function ProductImagePlaceholder({ className, compact = false }: Props) {
       <p
         className={cn(
           "font-medium tracking-[0.25em] uppercase text-ink-light px-3",
-          compact ? "text-[9px]" : "text-[10px]",
+          compact ? "text-[12px] lg:text-[9px]" : "text-[12px] lg:text-[10px]",
         )}
       >
         Photography coming soon

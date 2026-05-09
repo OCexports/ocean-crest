@@ -70,7 +70,7 @@ export function ProductShowcase() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16">
           <div>
-            <span className="text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
+            <span className="text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
               Products
             </span>
             <h2 className="mt-3 text-3xl lg:text-5xl font-semibold text-primary font-[family-name:var(--font-display)]">
@@ -86,7 +86,7 @@ export function ProductShowcase() {
           </Link>
         </div>
 
-        {/* Bento grid — 1 hero card + 3 supporting cards */}
+        {/* Bento grid â€” 1 hero card + 3 supporting cards */}
         <div className="grid grid-cols-1 lg:grid-cols-4 lg:grid-rows-2 gap-5 lg:gap-6 lg:auto-rows-fr">
           {featured.map((product, i) => (
             <ScrollReveal key={product.slug} delay={i * 0.08} className={product.span}>
@@ -109,10 +109,10 @@ export function ProductShowcase() {
                   />
 
                   <div className="absolute top-5 left-5 z-10 flex items-center gap-2">
-                    <span className="text-[9px] tracking-[0.2em] uppercase font-semibold px-3 py-1.5 rounded-full bg-gold/90 backdrop-blur-sm text-white border border-gold/30">
+                    <span className="text-[12px] lg:text-[9px] tracking-[0.2em] uppercase font-semibold px-3 py-1.5 rounded-full bg-gold/90 backdrop-blur-sm text-white border border-gold/30">
                       {product.tag}
                     </span>
-                    <span className="text-[9px] tracking-[0.15em] uppercase font-medium px-2.5 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-white/90 border border-white/15">
+                    <span className="text-[12px] lg:text-[9px] tracking-[0.15em] uppercase font-medium px-2.5 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-white/90 border border-white/15">
                       {product.moq}
                     </span>
                   </div>
@@ -128,7 +128,7 @@ export function ProductShowcase() {
                       {product.name}
                     </h3>
                     <span className="inline-block mt-1 text-xs text-white/80 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
-                      View Details →
+                      View Details â†’
                     </span>
                   </div>
                 </div>

@@ -37,6 +37,9 @@ const nextConfig: NextConfig = {
       { key: "X-Content-Type-Options", value: "nosniff" },
       { key: "X-Frame-Options", value: "SAMEORIGIN" },
       { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      // Origin isolation for cross-window references — flagged by Lighthouse
+      // "Best Practices > Ensure proper origin isolation with COOP".
+      { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
       {
         key: "Permissions-Policy",
         value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",

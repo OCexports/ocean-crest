@@ -20,21 +20,21 @@ import { StaggerChildren, StaggerItem } from "@/components/animations/StaggerChi
 import { CTABanner } from "@/components/sections/CTABanner";
 
 const aboutDescription =
-  "Ocean Crest Exports — a specialized export brand under Sheth & Bhatt's LLP, dedicated to the global distribution of high-quality Indian commodities with verified supply, FSSAI/APEDA certification, and B2B trust.";
+  "Ocean Crest Exports â€” a specialized export brand under Sheth & Bhatt's LLP, dedicated to the global distribution of high-quality Indian commodities with verified supply, FSSAI/APEDA certification, and B2B trust.";
 
 export const metadata: Metadata = {
-  title: "About Ocean Crest — Verified Indian Exporter",
+  title: "About Ocean Crest â€” Verified Indian Exporter",
   description: aboutDescription,
   alternates: { canonical: "/about" },
   openGraph: {
     type: "website",
-    title: "About Ocean Crest — Verified Indian Exporter",
+    title: "About Ocean Crest â€” Verified Indian Exporter",
     description: aboutDescription,
     url: "/about",
   },
   twitter: {
     card: "summary_large_image",
-    title: "About Ocean Crest — Verified Indian Exporter",
+    title: "About Ocean Crest â€” Verified Indian Exporter",
     description: aboutDescription,
   },
 };
@@ -119,7 +119,7 @@ export default function AboutPage() {
               <span className="text-white/60">/</span>
               <span className="text-white/80">About Us</span>
             </nav>
-            <span className="text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
+            <span className="text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
               About Us
             </span>
             <h1 className="mt-3 text-4xl lg:text-5xl font-bold text-white font-[family-name:var(--font-display)]">
@@ -140,11 +140,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* About Us — Long Form */}
+      {/* About Us â€” Long Form */}
       <section className="py-20 lg:py-28 bg-stone">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <ScrollReveal>
-            <span className="text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
+            <span className="text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
               Who We Are
             </span>
             <h2 className="mt-3 text-3xl lg:text-4xl font-semibold text-primary font-[family-name:var(--font-display)]">
@@ -197,7 +197,7 @@ export default function AboutPage() {
                 </h2>
                 <p className="mt-4 text-ink-muted leading-relaxed">
                   To serve as a reliable bridge between local Indian production
-                  and international market requirements — delivering verified
+                  and international market requirements â€” delivering verified
                   quality, transparent dealings, and customized compliance for
                   every client.
                 </p>
@@ -254,7 +254,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Our Process — Detailed */}
+      {/* Our Process â€” Detailed */}
       <section className="py-20 lg:py-28 bg-warm-white">
         <div className="max-w-5xl mx-auto px-6 lg:px-8">
           <SectionHeader
