@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
@@ -14,15 +14,20 @@ interface Props {
   sizes?: string;
   /** When true, hover / playback handlers are wired up. */
   interactive?: boolean;
+  /**
+   * Externally controlled hover state. When provided, the parent owns the
+   * play/pause signal — useful when you want the entire card (image + title
+   * + description) to act as the hover target instead of just the image.
+   * When omitted, the component falls back to its own internal mouseenter /
+   * mouseleave handlers on the image area only.
+   */
+  isHovered?: boolean;
 }
 
 /**
  * Renders a product still that swaps to a muted, looping clip on hover.
- * Video uses preload="none" so the file is only downloaded once a user
- * actually intends to view it — no bandwidth cost on initial load.
- *
- * On touch devices (no hover) the still image is the only thing rendered,
- * so we never autoplay 5 MB of video on a mobile data plan.
+ * Video uses preload="metadata" so the first frame is ready without
+ * downloading the full file until the user hovers.
  */
 export function HoverVideoMedia({
   src,
@@ -30,23 +35,42 @@ export function HoverVideoMedia({
   alt,
   sizes,
   interactive = true,
+  isHovered,
 }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [internalPlaying, setInternalPlaying] = useState(false);
 
-  const onEnter = () => {
+  // External-control mode: react to the isHovered prop from the parent.
+  useEffect(() => {
+    if (isHovered === undefined) return; // fall back to internal handlers
     if (!video || !interactive) return;
     const el = videoRef.current;
     if (!el) return;
-    setIsPlaying(true);
-    // play() can reject if interrupted; ignore — UI state will heal on next event.
-    el.play().catch(() => setIsPlaying(false));
+    if (isHovered) {
+      el.play().catch(() => {});
+    } else {
+      el.pause();
+      el.currentTime = 0;
+    }
+  }, [isHovered, video, interactive]);
+
+  // Effective playing state — driven by the prop when controlled, otherwise local.
+  const isPlaying = isHovered !== undefined ? isHovered : internalPlaying;
+
+  const onEnter = () => {
+    if (isHovered !== undefined) return; // controlled by parent
+    if (!video || !interactive) return;
+    const el = videoRef.current;
+    if (!el) return;
+    setInternalPlaying(true);
+    el.play().catch(() => setInternalPlaying(false));
   };
 
   const onLeave = () => {
+    if (isHovered !== undefined) return; // controlled by parent
     if (!video || !interactive) return;
     const el = videoRef.current;
-    setIsPlaying(false);
+    setInternalPlaying(false);
     if (el) {
       el.pause();
       el.currentTime = 0;

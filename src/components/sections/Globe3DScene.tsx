@@ -38,7 +38,6 @@ const PARALLAX_LAMBDA = 5;
 // Module-level reusable geometries (avoid recreating each render).
 const OCEAN_GEOMETRY = new THREE.SphereGeometry(1, 48, 48);
 const HALO_INNER_GEOMETRY = new THREE.SphereGeometry(1, 24, 24);
-const HALO_OUTER_GEOMETRY = new THREE.SphereGeometry(1, 24, 24);
 
 interface City {
   name: string;
@@ -78,7 +77,7 @@ function greatCircleArc(
   start: THREE.Vector3,
   end: THREE.Vector3,
   segments = 80,
-  liftHeight = 0.32,
+  liftHeight = 0.18,
 ): THREE.Vector3[] {
   const points: THREE.Vector3[] = [];
   const angle = start.angleTo(end);
@@ -131,6 +130,51 @@ const countryLinePositions = (() => {
   }
   return new Float32Array(positions);
 })();
+
+function Continents() {
+  const lineObj = useMemo(() => {
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(countryLinePositions, 3),
+    );
+    const material = new THREE.LineBasicMaterial({
+      color: COUNTRY_LINE,
+      transparent: true,
+      opacity: 0.7,
+      toneMapped: false,
+    });
+    return new THREE.LineSegments(geometry, material);
+  }, []);
+  return <primitive object={lineObj} />;
+}
+
+function Ocean() {
+  // Translucent — lets the radial glow behind the canvas bleed through, so
+  // the globe appears to float in open space rather than sitting on a card.
+  return (
+    <mesh geometry={OCEAN_GEOMETRY}>
+      <meshBasicMaterial color={OCEAN} transparent opacity={0.92} />
+    </mesh>
+  );
+}
+
+function Atmosphere() {
+  // Two-layer halo for soft depth: a tight inner band + a wider outer glow.
+  return (
+    <>
+      <mesh scale={1.045} geometry={HALO_INNER_GEOMETRY}>
+        <meshBasicMaterial
+          color={GOLD_BRIGHT}
+          transparent
+          opacity={0.07}
+          side={THREE.BackSide}
+          depthWrite={false}
+        />
+      </mesh>
+    </>
+  );
+}
 
 /* ─── Lat / long wireframe sphere ─────────────────────────────────────── */
 
@@ -189,60 +233,6 @@ function Wireframe() {
   return <primitive object={lineObj} />;
 }
 
-function Continents() {
-  const lineObj = useMemo(() => {
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute(
-      "position",
-      new THREE.BufferAttribute(countryLinePositions, 3),
-    );
-    const material = new THREE.LineBasicMaterial({
-      color: COUNTRY_LINE,
-      transparent: true,
-      opacity: 0.7,
-      toneMapped: false,
-    });
-    return new THREE.LineSegments(geometry, material);
-  }, []);
-  return <primitive object={lineObj} />;
-}
-
-function Ocean() {
-  // Translucent — lets the radial glow behind the canvas bleed through, so
-  // the globe appears to float in open space rather than sitting on a card.
-  return (
-    <mesh geometry={OCEAN_GEOMETRY}>
-      <meshBasicMaterial color={OCEAN} transparent opacity={0.78} />
-    </mesh>
-  );
-}
-
-function Atmosphere() {
-  // Two-layer halo for soft depth: a tight inner band + a wider outer glow.
-  return (
-    <>
-      <mesh scale={1.045} geometry={HALO_INNER_GEOMETRY}>
-        <meshBasicMaterial
-          color={GOLD_BRIGHT}
-          transparent
-          opacity={0.07}
-          side={THREE.BackSide}
-          depthWrite={false}
-        />
-      </mesh>
-      <mesh scale={1.18} geometry={HALO_OUTER_GEOMETRY}>
-        <meshBasicMaterial
-          color={GOLD_BRIGHT}
-          transparent
-          opacity={0.025}
-          side={THREE.BackSide}
-          depthWrite={false}
-        />
-      </mesh>
-    </>
-  );
-}
-
 /* ─── Hub markers ─────────────────────────────────────────────────────── */
 
 function HubMarker({
@@ -271,8 +261,8 @@ function HubMarker({
     }
   });
 
-  const baseSize = isPrimary ? 0.045 : 0.022;
-  const haloSize = isPrimary ? 0.1 : 0.05;
+  const baseSize = isPrimary ? 0.032 : 0.022;
+  const haloSize = isPrimary ? 0.075 : 0.05;
 
   return (
     <group position={position}>
@@ -331,8 +321,21 @@ function ShippingLane({
 
   const pulseRef = useRef<THREE.Mesh>(null);
   const pulseHaloRef = useRef<THREE.Mesh>(null);
+  const mountTimeRef = useRef<number | null>(null);
 
   useFrame((state) => {
+    if (mountTimeRef.current === null) {
+      mountTimeRef.current = state.clock.elapsedTime;
+    }
+    const local = state.clock.elapsedTime - mountTimeRef.current;
+    const revealStart = laneOffset / 5;
+    const reveal = THREE.MathUtils.smoothstep(
+      local,
+      revealStart,
+      revealStart + 0.6,
+    );
+    (arcLine.material as THREE.LineBasicMaterial).opacity = baseOpacity * reveal;
+
     const elapsed = state.clock.elapsedTime + laneOffset;
     const phase = (elapsed / laneDuration) % 1;
 
@@ -347,7 +350,7 @@ function ShippingLane({
     const y = p0.y + (p1.y - p0.y) * frac;
     const z = p0.z + (p1.z - p0.z) * frac;
 
-    const opacity = Math.sin(phase * Math.PI);
+    const opacity = Math.sin(phase * Math.PI) * reveal;
 
     if (pulseRef.current) {
       pulseRef.current.position.set(x, y, z);
@@ -392,15 +395,6 @@ const FEATURED_FLIGHT_DURATION = 14; // seconds for one full transit
 /** Active fraction of the cycle; remainder is invisible rest before next flight. */
 const FEATURED_ACTIVE_RATIO = 0.85;
 
-const aircraftGeometry = (() => {
-  // A slim cone — small fuselage shape, anchored back-of-aircraft so it
-  // appears to depart the port (not float past it).
-  const len = 0.06;
-  const g = new THREE.ConeGeometry(0.012, len, 10);
-  g.rotateX(-Math.PI / 2); // tip → -Z (forward, matches lookAt convention)
-  g.translate(0, 0, -len / 2);
-  return g;
-})();
 const _featuredFwd = new THREE.Vector3(0, 0, -1);
 const _featuredVel = new THREE.Vector3();
 
@@ -411,8 +405,8 @@ function FeaturedAircraft({
   start: THREE.Vector3;
   end: THREE.Vector3;
 }) {
-  const points = useMemo(() => greatCircleArc(start, end, 100, 0.36), [start, end]);
-  const planeRef = useRef<THREE.Mesh>(null);
+  const points = useMemo(() => greatCircleArc(start, end, 100, 0.20), [start, end]);
+  const planeRef = useRef<THREE.Group>(null);
   const haloRef = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
@@ -439,7 +433,12 @@ function FeaturedAircraft({
         .set(p1.x - p0.x, p1.y - p0.y, p1.z - p0.z)
         .normalize();
       plane.quaternion.setFromUnitVectors(_featuredFwd, _featuredVel);
-      (plane.material as THREE.MeshBasicMaterial).opacity = opacity;
+      plane.traverse((child) => {
+        const mesh = child as THREE.Mesh;
+        if (mesh.isMesh) {
+          (mesh.material as THREE.MeshBasicMaterial).opacity = opacity;
+        }
+      });
     }
     const halo = haloRef.current;
     if (halo && plane) {
@@ -458,18 +457,29 @@ function FeaturedAircraft({
           color={GOLD_BRIGHT}
           transparent
           opacity={0}
-          toneMapped={false}
           depthWrite={false}
         />
       </mesh>
-      <mesh ref={planeRef} geometry={aircraftGeometry}>
-        <meshBasicMaterial
-          color={HEAD_COLOR}
-          transparent
-          opacity={0}
-          toneMapped={false}
-        />
-      </mesh>
+      <group ref={planeRef}>
+        {/* Fuselage: long along -Z (forward) */}
+        <mesh position={[0, 0, -0.03]}>
+          <boxGeometry args={[0.012, 0.012, 0.06]} />
+          <meshBasicMaterial
+            color={HEAD_COLOR}
+            transparent
+            opacity={0}
+          />
+        </mesh>
+        {/* Wings: wide along X */}
+        <mesh position={[0, 0, -0.03]}>
+          <boxGeometry args={[0.04, 0.003, 0.012]} />
+          <meshBasicMaterial
+            color={HEAD_COLOR}
+            transparent
+            opacity={0}
+          />
+        </mesh>
+      </group>
     </>
   );
 }
@@ -481,30 +491,6 @@ const FACE_INDIA_Y = -((ORIGIN.lng * Math.PI) / 180 + Math.PI / 2);
 const AUTO_ROTATE_RATE = 0.007;
 
 function Globe() {
-  const groupRef = useRef<THREE.Group>(null);
-
-  // Slow rotation + soft mouse parallax. Both lerped so the globe feels
-  // alive without ever appearing jittery.
-  const baseY = useRef(FACE_INDIA_Y);
-  useFrame((state, delta) => {
-    if (!groupRef.current) return;
-    baseY.current += delta * AUTO_ROTATE_RATE;
-    const targetX = state.pointer.y * 0.12;
-    const targetY = baseY.current + state.pointer.x * 0.14;
-    groupRef.current.rotation.x = THREE.MathUtils.damp(
-      groupRef.current.rotation.x,
-      targetX,
-      PARALLAX_LAMBDA,
-      delta,
-    );
-    groupRef.current.rotation.y = THREE.MathUtils.damp(
-      groupRef.current.rotation.y,
-      targetY,
-      PARALLAX_LAMBDA,
-      delta,
-    );
-  });
-
   const originVec = useMemo(() => latLngToVec3(ORIGIN.lat, ORIGIN.lng), []);
   const hubVecs = useMemo(
     () => HUBS.map((h) => ({ ...h, vec: latLngToVec3(h.lat, h.lng) })),
@@ -521,7 +507,7 @@ function Globe() {
   const featured = hubVecs.find((h) => h.name === FEATURED_HUB_NAME);
 
   return (
-    <group ref={groupRef} rotation={[0, FACE_INDIA_Y, 0]}>
+    <group rotation={[0, FACE_INDIA_Y, 0]}>
       <Ocean />
       <Wireframe />
       <Continents />
@@ -552,7 +538,7 @@ export default function Globe3DScene() {
       className="absolute inset-0"
       camera={{ position: [0, 0.05, 2.7], fov: 45 }}
       gl={{ antialias: true, alpha: true }}
-      dpr={[1, 1.5]}
+      dpr={[1, 1.25]}
     >
       <Globe />
     </Canvas>
