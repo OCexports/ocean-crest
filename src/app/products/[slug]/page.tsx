@@ -126,7 +126,7 @@ export default async function ProductDetailPage({ params }: Props) {
           <path d="M0,24 C360,48 720,0 1080,24 C1260,36 1380,36 1440,30 L1440,48 L0,48 Z" />
         </svg>
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-          <nav className="flex items-center gap-2 text-sm text-white/60 mb-6">
+          <nav className="flex items-center gap-2 text-sm text-white/80 mb-6">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
             <span>/</span>
             <Link href="/products" className="hover:text-white transition-colors">Products</Link>

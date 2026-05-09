@@ -40,7 +40,7 @@ export function CTABanner() {
               <span className="text-gradient-copper">Quality Products?</span>
             </h2>
             <div className="gold-line-left mt-6" />
-            <p className="mt-6 text-base text-white/60 leading-relaxed max-w-md font-light">
+            <p className="mt-6 text-base text-white/80 leading-relaxed max-w-md font-light">
               Fill in your details and our team will get back to you with a
               customized quote within 24 hours.
             </p>
@@ -56,7 +56,7 @@ export function CTABanner() {
                 <h3 className="text-2xl font-semibold text-white font-[family-name:var(--font-display)]">
                   {t.contact.success}
                 </h3>
-                <p className="mt-2 text-white/60 text-sm">
+                <p className="mt-2 text-white/80 text-sm">
                   {t.contact.successMsg}
                 </p>
                 <button

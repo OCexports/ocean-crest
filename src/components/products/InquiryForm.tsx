@@ -54,22 +54,44 @@ export function InquiryForm() {
 
   if (isSubmitted) {
     return (
-      <div className="text-center py-12">
+      <div role="status" aria-live="polite" className="text-center py-10">
         <div className="w-16 h-16 mx-auto rounded-full bg-teal/20 flex items-center justify-center mb-4">
           <CheckCircle className="w-8 h-8 text-teal" />
         </div>
         <h3 className="text-xl font-semibold text-primary font-[family-name:var(--font-display)]">
-          Inquiry Sent Successfully!
+          Inquiry sent successfully
         </h3>
-        <p className="mt-2 text-ink-muted">
-          Thank you for your interest. Our export team will respond within 24 hours.
+        <p className="mt-2 text-ink-muted max-w-md mx-auto">
+          Our export team will reach out within{" "}
+          <span className="font-semibold text-primary">24 business hours</span>{" "}
+          with pricing, lead times, and a sample request form.
         </p>
-        <button
-          onClick={() => setIsSubmitted(false)}
-          className="mt-4 text-sm text-gold hover:text-primary transition-colors underline cursor-pointer"
-        >
-          Send another inquiry
-        </button>
+        <ul className="mt-6 max-w-md mx-auto text-left text-sm text-ink-muted space-y-2">
+          <li className="flex items-start gap-2">
+            <span className="mt-1 inline-block w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
+            <span>You&apos;ll receive an email confirmation shortly.</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="mt-1 inline-block w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
+            <span>Need it faster? Message us on WhatsApp for same-day reply.</span>
+          </li>
+        </ul>
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+          <a
+            href={`https://wa.me/919274811041?text=${encodeURIComponent("Hello Ocean Crest! I just submitted an inquiry — can we discuss it on WhatsApp?")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-whatsapp text-white text-sm font-semibold hover:bg-whatsapp/90 transition-colors"
+          >
+            Continue on WhatsApp
+          </a>
+          <button
+            onClick={() => setIsSubmitted(false)}
+            className="text-sm text-gold hover:text-primary transition-colors underline cursor-pointer"
+          >
+            Send another inquiry
+          </button>
+        </div>
       </div>
     );
   }
