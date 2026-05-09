@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import {
   BackSide,
@@ -15,10 +15,11 @@ import {
   SphereGeometry,
   Vector3,
 } from "three";
-import { feature } from "topojson-client";
-import type { Topology } from "topojson-specification";
-import type { Feature, MultiPolygon, Polygon } from "geojson";
-import countriesTopologyRaw from "world-atlas/countries-110m.json";
+
+// Country outlines + their world-atlas JSON live in a separate chunk.
+// Mobile / tablet never imports this — mobile globe = wireframe + ocean +
+// arcs + markers, which still reads as a globe. Desktop only.
+const GlobeContinents = lazy(() => import("./GlobeContinents"));
 
 /**
  * Hero centerpiece: a wireframe globe with live trade routes.
@@ -48,7 +49,6 @@ import countriesTopologyRaw from "world-atlas/countries-110m.json";
 const GOLD = "#D4A64A";
 const GOLD_BRIGHT = "#F4C75D";
 const OCEAN = "#0B1D2A";
-const COUNTRY_LINE = "#9DBFD7";
 const GRID_LINE = "#3A6B95";
 const HEAD_COLOR = "#FFFFFF";
 
@@ -123,56 +123,7 @@ function greatCircleArc(
   return points;
 }
 
-/* ─── Country outlines from Natural Earth ─────────────────────────────── */
-
-const countriesTopology = countriesTopologyRaw as unknown as Topology;
-const countriesGeoJson = feature(
-  countriesTopology,
-  countriesTopology.objects.countries as Topology["objects"][string],
-) as unknown as { features: Feature<Polygon | MultiPolygon>[] };
-
-const countryLinePositions = (() => {
-  const positions: number[] = [];
-  for (const f of countriesGeoJson.features) {
-    const geom = f.geometry;
-    const polygons: number[][][][] =
-      geom.type === "Polygon"
-        ? [geom.coordinates as number[][][]]
-        : geom.type === "MultiPolygon"
-        ? (geom.coordinates as number[][][][])
-        : [];
-    for (const polygon of polygons) {
-      for (const ring of polygon) {
-        for (let i = 0; i < ring.length - 1; i++) {
-          const [lng1, lat1] = ring[i];
-          const [lng2, lat2] = ring[i + 1];
-          const v1 = latLngToVec3(lat1, lng1, 1.003);
-          const v2 = latLngToVec3(lat2, lng2, 1.003);
-          positions.push(v1.x, v1.y, v1.z, v2.x, v2.y, v2.z);
-        }
-      }
-    }
-  }
-  return new Float32Array(positions);
-})();
-
-function Continents() {
-  const lineObj = useMemo(() => {
-    const geometry = new BufferGeometry();
-    geometry.setAttribute(
-      "position",
-      new BufferAttribute(countryLinePositions, 3),
-    );
-    const material = new LineBasicMaterial({
-      color: COUNTRY_LINE,
-      transparent: true,
-      opacity: 0.7,
-      toneMapped: false,
-    });
-    return new LineSegments(geometry, material);
-  }, []);
-  return <primitive object={lineObj} />;
-}
+/* Country outlines moved to ./GlobeContinents.tsx — see lazy() at top. */
 
 function Ocean() {
   // Translucent — lets the radial glow behind the canvas bleed through, so
@@ -538,7 +489,7 @@ const FACE_INDIA_Y = -((ORIGIN.lng * Math.PI) / 180 + Math.PI / 2);
 /** Very slow auto-rotation, rad/sec. ~0.4° per second. */
 const AUTO_ROTATE_RATE = 0.007;
 
-function Globe() {
+function Globe({ richDetail }: { richDetail: boolean }) {
   const originVec = useMemo(() => latLngToVec3(ORIGIN.lat, ORIGIN.lng), []);
   const hubVecs = useMemo(
     () => HUBS.map((h) => ({ ...h, vec: latLngToVec3(h.lat, h.lng) })),
@@ -558,7 +509,14 @@ function Globe() {
     <group rotation={[0, FACE_INDIA_Y, 0]}>
       <Ocean />
       <Wireframe />
-      <Continents />
+      {/* Country outlines parse a ~110 KB topojson file on mount — desktop
+          only. Wireframe + arcs + markers still read clearly as a globe on
+          phones, just without the continent line detail. */}
+      {richDetail && (
+        <Suspense fallback={null}>
+          <GlobeContinents />
+        </Suspense>
+      )}
       <Atmosphere />
       <HubMarker position={originVec} isPrimary />
       {hubVecs.map((h, i) => (
@@ -573,7 +531,8 @@ function Globe() {
           baseOpacity={laneOpacities[i]}
         />
       ))}
-      {featured && (
+      {/* The 3D aircraft is an additional moving group; desktop-only too. */}
+      {richDetail && featured && (
         <FeaturedAircraft start={originVec} end={featured.vec} />
       )}
     </group>
@@ -581,9 +540,11 @@ function Globe() {
 }
 
 export default function Globe3DScene() {
-  // Heavy-quality settings on desktop; lighter on touch / smaller screens.
-  // Antialias on a 412 px-wide screen with 1.5–2 DPR is invisible but costs
-  // ~30 % GPU. DPR cap at 1 (vs 1.25) further halves fragment shader work.
+  // Two performance dials gated on viewport:
+  //   - Continents + FeaturedAircraft only on lg+ (saves a 110 KB topojson
+  //     parse + extra per-frame group on mobile)
+  //   - Antialias only on lg+ — invisible at phone DPR but ~30 % GPU
+  //   - DPR capped at 1 on touch (vs 1.25) halves fragment-shader work
   const [isLgUp, setIsLgUp] = useState(false);
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
@@ -600,7 +561,7 @@ export default function Globe3DScene() {
       gl={{ antialias: isLgUp, alpha: true, powerPreference: "low-power" }}
       dpr={isLgUp ? [1, 1.25] : [1, 1]}
     >
-      <Globe />
+      <Globe richDetail={isLgUp} />
     </Canvas>
   );
 }
