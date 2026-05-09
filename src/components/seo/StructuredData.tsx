@@ -1,3 +1,6 @@
+import { siteUrl } from "@/lib/seo/site";
+import { companyInfo } from "@/lib/constants/navigation";
+
 interface StructuredDataProps {
   data: Record<string, unknown>;
 }
@@ -15,28 +18,36 @@ export const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Ocean Crest Exports",
-  description: "Premium Indian spice and food product exporter serving 25+ countries worldwide.",
-  url: "https://ocexports.com",
-  logo: "https://ocexports.com/logo.png",
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: "+91-98765-43210",
-    contactType: "sales",
-    availableLanguage: ["English", "Hindi", "Arabic", "Spanish"],
-  },
+  legalName: companyInfo.parentCompany,
+  description:
+    "Verified Indian exporter of dehydrated garlic, premium spices, grains, and dehydrated vegetables. FSSAI and APEDA registered, serving B2B buyers across 25+ countries.",
+  url: siteUrl,
+  logo: `${siteUrl}/logo.png`,
+  email: companyInfo.email,
+  telephone: companyInfo.phone,
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      telephone: companyInfo.phone,
+      email: companyInfo.email,
+      contactType: "sales",
+      areaServed: "Worldwide",
+      availableLanguage: ["English", "Hindi", "Arabic", "Spanish", "French", "German", "Italian"],
+    },
+  ],
   address: {
     "@type": "PostalAddress",
-    streetAddress: "42 Marine Drive, Export Zone",
-    addressLocality: "Mumbai",
-    addressRegion: "Maharashtra",
-    postalCode: "400001",
+    streetAddress: companyInfo.address.street,
+    addressLocality: companyInfo.address.city,
+    addressRegion: companyInfo.address.state,
+    postalCode: companyInfo.address.zip,
     addressCountry: "IN",
   },
   sameAs: [
-    "https://linkedin.com/company/oceancrest",
-    "https://facebook.com/oceancrest",
-    "https://instagram.com/oceancrest",
-    "https://twitter.com/oceancrest",
+    companyInfo.social.linkedin,
+    companyInfo.social.facebook,
+    companyInfo.social.instagram,
+    companyInfo.social.twitter,
   ],
 };
 
@@ -61,10 +72,50 @@ export function productSchema(product: {
       "@type": "Country",
       name: product.origin,
     },
-    url: `https://ocexports.com/products/${product.slug}`,
+    url: `${siteUrl}/products/${product.slug}`,
+    image: `${siteUrl}/og-image.png`,
     manufacturer: {
       "@type": "Organization",
       name: "Ocean Crest Exports",
+      url: siteUrl,
     },
+    offers: {
+      "@type": "Offer",
+      availability: "https://schema.org/InStock",
+      priceCurrency: "USD",
+      price: "0",
+      priceSpecification: {
+        "@type": "PriceSpecification",
+        priceCurrency: "USD",
+        valueAddedTaxIncluded: false,
+      },
+      url: `${siteUrl}/products/${product.slug}`,
+      seller: {
+        "@type": "Organization",
+        name: "Ocean Crest Exports",
+      },
+      businessFunction: "https://purl.org/goodrelations/v1#Sell",
+      eligibleQuantity: {
+        "@type": "QuantitativeValue",
+        minValue: 1,
+        unitCode: "TNE",
+        unitText: "metric ton",
+      },
+    },
+  };
+}
+
+export function breadcrumbSchema(
+  items: { name: string; url: string }[],
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: item.url.startsWith("http") ? item.url : `${siteUrl}${item.url}`,
+    })),
   };
 }

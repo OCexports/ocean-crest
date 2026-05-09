@@ -4,10 +4,24 @@ import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { CTABanner } from "@/components/sections/CTABanner";
 import { ProductsSection } from "@/components/products/ProductsSection";
 
+const productsDescription =
+  "Browse Ocean Crest's premium dehydrated garlic range — flakes, chopped, minced, granules, and powder — plus Indian spices, grains, seeds, and dehydrated vegetables for global B2B export. FSSAI and APEDA certified.";
+
 export const metadata: Metadata = {
-  title: "Products",
-  description:
-    "Explore Ocean Crest's premium range of Indian spices, grains, seeds, dehydrated vegetables, and oils for global export.",
+  title: "Products — Dehydrated Garlic & Indian Spices",
+  description: productsDescription,
+  alternates: { canonical: "/products" },
+  openGraph: {
+    type: "website",
+    title: "Ocean Crest Products — Dehydrated Garlic & Indian Spices",
+    description: productsDescription,
+    url: "/products",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ocean Crest Products — Dehydrated Garlic & Indian Spices",
+    description: productsDescription,
+  },
 };
 
 export default function ProductsPage() {

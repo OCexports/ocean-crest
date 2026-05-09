@@ -71,7 +71,7 @@ export function CTABanner() {
                 onSubmit={handleSubmit}
                 className="glass rounded-[var(--radius-lg)] p-6 lg:p-8 space-y-4"
               >
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label htmlFor="cta-name" className="text-[11px] font-medium tracking-wider uppercase text-white/85">
                       {t.contact.name} *
@@ -79,6 +79,7 @@ export function CTABanner() {
                     <input
                       id="cta-name"
                       name="name"
+                      autoComplete="name"
                       required
                       className="w-full px-3 py-2.5 bg-white/8 border border-white/15 rounded-[var(--radius-sm)] text-white text-sm placeholder:text-white/45 focus:outline-none focus:ring-2 focus:ring-gold/40 focus:border-gold focus:bg-white/10 transition-colors"
                       placeholder="Your name"
@@ -99,7 +100,7 @@ export function CTABanner() {
                     />
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label htmlFor="cta-phone" className="text-[11px] font-medium tracking-wider uppercase text-white/85">
                       {t.contact.phone} *

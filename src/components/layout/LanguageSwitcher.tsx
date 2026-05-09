@@ -33,12 +33,14 @@ export function LanguageSwitcher({ isScrolled = false }: Props) {
       <button
         onClick={() => setOpen(!open)}
         className={cn(
-          "flex items-center gap-1.5 px-3 py-2 text-[11px] font-medium tracking-[0.1em] uppercase transition-colors cursor-pointer rounded-full",
+          "flex items-center gap-1.5 min-h-11 px-3 py-2.5 text-[11px] font-medium tracking-[0.1em] uppercase transition-colors cursor-pointer rounded-full",
           isScrolled
             ? "text-ink-muted hover:text-primary hover:bg-stone-100"
             : "text-white/80 hover:text-white hover:bg-white/10"
         )}
         aria-label="Change language"
+        aria-expanded={open}
+        aria-haspopup="listbox"
       >
         <Globe className="w-3.5 h-3.5" />
         <span>{locale.toUpperCase()}</span>

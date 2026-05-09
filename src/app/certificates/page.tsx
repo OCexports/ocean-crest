@@ -7,9 +7,24 @@ import { StaggerChildren, StaggerItem } from "@/components/animations/StaggerChi
 import { CTABanner } from "@/components/sections/CTABanner";
 import { certificates } from "@/lib/constants/certificates";
 
+const certificatesDescription =
+  "Ocean Crest holds FSSAI, ISO 22000, HACCP, FDA, APEDA, Halal and other international certifications for food safety and quality. Verified compliance for global B2B buyers.";
+
 export const metadata: Metadata = {
-  title: "Quality & Certifications",
-  description: "Ocean Crest holds FSSAI, ISO 22000, HACCP, FDA, APEDA, Halal and other international certifications for food safety and quality.",
+  title: "Quality & Certifications — FSSAI, APEDA, Halal",
+  description: certificatesDescription,
+  alternates: { canonical: "/certificates" },
+  openGraph: {
+    type: "website",
+    title: "Ocean Crest Certifications — FSSAI, APEDA, Halal",
+    description: certificatesDescription,
+    url: "/certificates",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ocean Crest Certifications — FSSAI, APEDA, Halal",
+    description: certificatesDescription,
+  },
 };
 
 const qualityProcess = [
