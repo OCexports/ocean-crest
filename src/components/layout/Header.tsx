@@ -17,6 +17,8 @@ export function Header() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const lastScrollY = useRef(0);
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
+  const drawerCloseRef = useRef<HTMLButtonElement>(null);
 
   // Hide header on scroll down, show on scroll up (like Everest)
   useEffect(() => {
@@ -38,6 +40,22 @@ export function Header() {
   useEffect(() => {
     document.body.style.overflow = isMobileOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
+  }, [isMobileOpen]);
+
+  // Esc closes the drawer; focus moves to the close button on open and
+  // returns to the hamburger on close — keyboard users should never get lost.
+  useEffect(() => {
+    if (!isMobileOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMobileOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    const focusTimer = window.setTimeout(() => drawerCloseRef.current?.focus(), 50);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.clearTimeout(focusTimer);
+      hamburgerRef.current?.focus();
+    };
   }, [isMobileOpen]);
 
   return (
@@ -161,9 +179,12 @@ export function Header() {
 
             {/* Mobile Hamburger */}
             <button
+              ref={hamburgerRef}
               className="lg:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 cursor-pointer"
               onClick={() => setIsMobileOpen(true)}
               aria-label="Open menu"
+              aria-expanded={isMobileOpen}
+              aria-controls="mobile-drawer"
             >
               <div className="flex flex-col gap-1.5">
                 <span className={cn("block w-6 h-[1.5px] transition-colors", isScrolled ? "bg-primary" : "bg-white")} />
@@ -186,6 +207,10 @@ export function Header() {
               onClick={() => setIsMobileOpen(false)}
             />
             <motion.div
+              id="mobile-drawer"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Site navigation"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
@@ -209,11 +234,12 @@ export function Header() {
                     </span>
                   </div>
                   <button
+                    ref={drawerCloseRef}
                     onClick={() => setIsMobileOpen(false)}
                     aria-label="Close menu"
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 hover:border-gold/30 transition-colors cursor-pointer"
+                    className="w-11 h-11 flex items-center justify-center rounded-full border border-white/10 hover:border-gold/30 transition-colors cursor-pointer"
                   >
-                    <X className="w-4 h-4 text-white/60" />
+                    <X className="w-4 h-4 text-white/80" />
                   </button>
                 </div>
 

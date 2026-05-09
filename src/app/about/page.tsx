@@ -126,7 +126,7 @@ export default function AboutPage() {
               Ocean Crest <span className="text-gradient-copper">Exports</span>
             </h1>
             <div className="gold-line-left mt-6" />
-            <p className="mt-6 text-base text-white/60 max-w-2xl leading-relaxed">
+            <p className="mt-6 text-base text-white/80 max-w-2xl leading-relaxed">
               A specialized export brand under{" "}
               <span className="text-white/80 font-medium">
                 Sheth &amp; Bhatt&apos;s LLP

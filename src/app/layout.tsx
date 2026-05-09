@@ -12,14 +12,16 @@ import { siteUrl, siteName, defaultOgImage } from "@/lib/seo/site";
 
 const cormorant = Cormorant({
   variable: "--font-cormorant",
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
   display: "swap",
   weight: ["400", "600", "700"],
 });
 
+// Montserrat covers latin + latin-ext; Hindi/Arabic/Urdu locales fall back to
+// the system stack until we ship dedicated Devanagari/Arabic font families.
 const montserrat = Montserrat({
   variable: "--font-montserrat",
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
   display: "swap",
   weight: ["300", "400", "500", "600", "700"],
 });

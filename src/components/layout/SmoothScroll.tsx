@@ -6,6 +6,14 @@ import "lenis/dist/lenis.css";
 
 export function SmoothScroll() {
   useEffect(() => {
+    // Respect reduced-motion: skip Lenis entirely so the browser's native
+    // (snappy) scrolling stays in effect — Lenis adds 1.1s ease that
+    // motion-sensitive users would experience as latency, not polish.
+    if (typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
     const lenis = new Lenis({
       duration: 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),

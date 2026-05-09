@@ -4,6 +4,7 @@ import {
   motion,
   useInView,
   useMotionValue,
+  useReducedMotion,
   useSpring,
   useTransform,
 } from "framer-motion";
@@ -112,6 +113,7 @@ export function HeroSection() {
   const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { amount: 0 });
+  const reducedMotion = useReducedMotion();
 
   // Outer-tilt parallax for the entire globe composition
   const mx = useMotionValue(0);
@@ -168,7 +170,7 @@ export function HeroSection() {
           className="absolute bottom-[10%] right-[15%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] rounded-full bg-teal/[0.04] blur-2xl pointer-events-none"
         />
         {/* Drifting gold particles — only when hero is in view */}
-        {isInView && <HeroParticles />}
+        {isInView && !reducedMotion && <HeroParticles />}
         {/* Subtle noise grain overlay */}
         <div
           aria-hidden="true"

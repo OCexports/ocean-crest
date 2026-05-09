@@ -102,7 +102,7 @@ export function Footer() {
 
             {/* Quick Links */}
             <div>
-              <h3 className="text-sm font-semibold tracking-wider uppercase text-white/60 mb-4">
+              <h3 className="text-sm font-semibold tracking-wider uppercase text-white/80 mb-4">
                 Quick Links
               </h3>
               <ul className="space-y-2.5">
@@ -121,7 +121,7 @@ export function Footer() {
 
             {/* Products */}
             <div>
-              <h3 className="text-sm font-semibold tracking-wider uppercase text-white/60 mb-4">
+              <h3 className="text-sm font-semibold tracking-wider uppercase text-white/80 mb-4">
                 Our Products
               </h3>
               <ul className="space-y-2.5">
@@ -140,7 +140,7 @@ export function Footer() {
 
             {/* Contact + Map */}
             <div>
-              <h3 className="text-sm font-semibold tracking-wider uppercase text-white/60 mb-4">
+              <h3 className="text-sm font-semibold tracking-wider uppercase text-white/80 mb-4">
                 Contact Us
               </h3>
               <div className="space-y-3 text-sm text-white/80">
@@ -180,6 +180,7 @@ export function Footer() {
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
+                  sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms"
                   title="Ocean Crest Exports Location"
                 />
               </div>
@@ -188,11 +189,11 @@ export function Footer() {
 
           {/* Bottom */}
           <div className="mt-12 pt-8 border-t border-gold/10 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-white/80">
               &copy; {new Date().getFullYear()} Ocean Crest Exports. All rights
               reserved. Part of Sheth &amp; Bhatt&apos;s LLP.
             </p>
-            <div className="flex gap-6 text-sm text-white/60">
+            <div className="flex gap-6 text-sm text-white/80">
               <Link
                 href="/privacy"
                 className="hover:text-gold/60 transition-colors cursor-pointer"

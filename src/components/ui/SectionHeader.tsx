@@ -56,7 +56,7 @@ export function SectionHeader({
         <p
           className={cn(
             "mt-4 text-lg leading-relaxed",
-            light ? "text-white/60" : "text-ink-muted"
+            light ? "text-white/80" : "text-ink-muted"
           )}
         >
           {subtitle}
