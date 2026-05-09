@@ -383,7 +383,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.1, duration: 0.5 }}
-            className="mt-7 flex flex-wrap gap-3"
+            className="mt-7 flex flex-wrap gap-4"
           >
             <Link href="/products">
               <Button
@@ -405,8 +405,12 @@ export function HeroSection() {
             </Link>
           </motion.div>
 
-          {/* Stat block â€” 2x2 grid replacing the orbiting info cards */}
-          <motion.dl
+          {/* Stat block — 2x2 grid replacing the orbiting info cards.
+              Was a <dl>/<dt>/<dd>: Lighthouse rejects definition lists where
+              dt/dd aren't direct children of dl. Plain divs do the same job
+              visually and a11y-wise here (these are not glossary entries). */}
+          <motion.div
+            role="list"
             initial="hidden"
             animate="visible"
             variants={{
@@ -420,6 +424,7 @@ export function HeroSection() {
               return (
                 <motion.div
                   key={s.label}
+                  role="listitem"
                   variants={{
                     hidden: { opacity: 0, y: 8 },
                     visible: {
@@ -434,17 +439,17 @@ export function HeroSection() {
                     <Icon className="h-3.5 w-3.5 text-gold" strokeWidth={1.8} />
                   </span>
                   <div className="leading-tight">
-                    <dt className="text-[12px] lg:text-[10px] font-semibold tracking-[0.2em] uppercase text-white/95">
+                    <p className="text-[12px] lg:text-[10px] font-semibold tracking-[0.2em] uppercase text-white/95">
                       {s.label}
-                    </dt>
-                    <dd className="mt-1 text-[12px] text-white/55 font-light">
+                    </p>
+                    <p className="mt-1 text-[12px] text-white/75 font-light">
                       {s.description}
-                    </dd>
+                    </p>
                   </div>
                 </motion.div>
               );
             })}
-          </motion.dl>
+          </motion.div>
         </div>
 
         {/* RIGHT column on lg+, MIDDLE row on mobile: globe */}

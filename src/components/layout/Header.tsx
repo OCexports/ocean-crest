@@ -171,7 +171,7 @@ export function Header() {
             <div className="hidden lg:flex items-center gap-2">
               <LanguageSwitcher isScrolled={isScrolled} />
               <Link href="/contact">
-                <button className="px-5 py-2.5 bg-gold text-white text-[12px] lg:text-[11px] font-semibold tracking-[0.15em] uppercase rounded-full hover:bg-gold-muted transition-all duration-200 cursor-pointer hover:shadow-gold">
+                <button className="px-5 py-2.5 bg-gold text-primary text-[12px] lg:text-[11px] font-semibold tracking-[0.15em] uppercase rounded-full hover:bg-gold-muted transition-all duration-200 cursor-pointer hover:shadow-gold">
                   {t.nav.inquiry}
                 </button>
               </Link>

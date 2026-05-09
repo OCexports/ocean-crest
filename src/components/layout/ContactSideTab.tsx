@@ -33,7 +33,7 @@ export function ContactSideTab() {
       <Link
         href="/contact"
         aria-label="Get in touch with Ocean Crest"
-        className="group flex flex-col items-center gap-3 bg-gold text-white px-2 py-4 rounded-l-[var(--radius-sm)] shadow-modal hover:bg-gold-muted transition-colors duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+        className="group flex flex-col items-center gap-3 bg-gold text-primary px-2 py-4 rounded-l-[var(--radius-sm)] shadow-modal hover:bg-gold-muted transition-colors duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
       >
         <Mail className="w-3.5 h-3.5 shrink-0" strokeWidth={2.2} />
         <span
