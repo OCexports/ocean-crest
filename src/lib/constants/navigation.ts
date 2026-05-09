@@ -20,9 +20,9 @@ export const companyInfo = {
   name: "Ocean Crest Exports",
   parentCompany: "Sheth & Bhatt's LLP",
   tagline: "Your Verified Partner for Indian Commodities",
-  phone: "",
+  phone: "+91 92748 11041",
   email: "priyam.sheth@ocexports.com",
-  whatsapp: "",
+  whatsapp: "+919274811041",
   address: {
     street: "C 802 Zodiac Aarish, Opp. Sundervan Epitome, Besides Ratnamani Party Plot, Jodhpur",
     city: "Ahmedabad",

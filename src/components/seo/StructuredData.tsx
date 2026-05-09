@@ -20,7 +20,7 @@ export const organizationSchema = {
   logo: "https://ocexports.com/logo.png",
   contactPoint: {
     "@type": "ContactPoint",
-    telephone: "+91-98765-43210",
+    telephone: "+91-92748-11041",
     contactType: "sales",
     availableLanguage: ["English", "Hindi", "Arabic", "Spanish"],
   },
