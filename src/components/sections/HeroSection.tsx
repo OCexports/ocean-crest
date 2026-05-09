@@ -39,48 +39,17 @@ const capabilities = [
   "Global Distribution",
 ];
 
-interface InfoCard {
+interface Stat {
   icon: typeof GlobeIcon;
   label: string;
   description: string;
-  /** Anchor class — left/right rail of the globe area (lg+ only). */
-  anchor: string;
-  /** Entrance delay, seconds. */
-  delay: number;
-  /** When true, card receives stronger emphasis. */
-  primary?: boolean;
 }
 
-const infoCards: InfoCard[] = [
-  {
-    icon: GlobeIcon,
-    label: "Global Reach",
-    description: "8 ports • 6 continents",
-    anchor: "top-[8%] left-0",
-    delay: 1.0,
-  },
-  {
-    icon: ShieldCheck,
-    label: "Verified Quality",
-    description: "FSSAI + ISO 22000",
-    anchor: "top-[8%] right-0",
-    delay: 1.15,
-    primary: true,
-  },
-  {
-    icon: Award,
-    label: "Trust & Compliance",
-    description: "Direct from source",
-    anchor: "bottom-[8%] left-0",
-    delay: 1.3,
-  },
-  {
-    icon: Clock,
-    label: "Timely Delivery",
-    description: "Container & LCL ready",
-    anchor: "bottom-[8%] right-0",
-    delay: 1.45,
-  },
+const stats: Stat[] = [
+  { icon: GlobeIcon, label: "Global Reach", description: "8 ports · 6 continents" },
+  { icon: ShieldCheck, label: "Verified Quality", description: "FSSAI + ISO 22000" },
+  { icon: Award, label: "Direct Source", description: "Farm-to-port traceability" },
+  { icon: Clock, label: "Timely Delivery", description: "Container & LCL ready" },
 ];
 
 const PARTICLES = Array.from({ length: 24 }).map((_, i) => {
@@ -182,7 +151,7 @@ export function HeroSection() {
           aria-hidden="true"
           animate={{ opacity: [1, 0.85, 1] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[35vw] h-[35vw] max-w-[460px] max-h-[460px] rounded-full pointer-events-none"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[35vw] h-[35vw] max-w-[460px] max-h-[460px] rounded-full pointer-events-none lg:left-[72%]"
           style={{
             background:
               "radial-gradient(circle, rgba(212,166,74,0.22) 0%, rgba(212,166,74,0.06) 45%, transparent 70%)",
@@ -221,10 +190,10 @@ export function HeroSection() {
         />
       </div>
 
-      {/* 3-row grid: header / globe (1fr) / footer */}
-      <div className="relative z-10 flex-1 min-h-0 grid grid-rows-[auto_minmax(0,1fr)_auto] gap-2 sm:gap-3 px-4 sm:px-6 pt-16 pb-3 sm:pt-20 sm:pb-4 lg:pt-24 lg:pb-5">
-        {/* Top: eyebrow → headline → divider → trust pills */}
-        <div className="flex flex-col items-center text-center">
+      {/* Mobile: 3-row stacked center | lg+: asymmetric 12-col split */}
+      <div className="relative z-10 flex-1 min-h-0 grid grid-rows-[auto_minmax(0,1fr)_auto] lg:grid-rows-1 lg:grid-cols-12 gap-2 sm:gap-3 lg:gap-8 xl:gap-12 px-4 sm:px-6 lg:px-10 xl:px-14 pt-16 pb-3 sm:pt-20 sm:pb-4 lg:pt-24 lg:pb-5 max-w-[1500px] mx-auto w-full">
+        {/* MOBILE-ONLY: top eyebrow → headline → divider */}
+        <div className="lg:hidden flex flex-col items-center text-center">
           <motion.div
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
@@ -243,14 +212,14 @@ export function HeroSection() {
             animate="visible"
             className="font-[family-name:var(--font-display)]"
           >
-            <span className="block text-[34px] sm:text-5xl lg:text-[60px] font-light text-white leading-[1] tracking-tight">
+            <span className="block text-[34px] sm:text-5xl font-light text-white leading-[1] tracking-tight">
               {"Ocean Crest".split("").map((c, i) => (
                 <motion.span key={i} variants={charVariants} className="inline-block">
-                  {c === " " ? " " : c}
+                  {c === " " ? " " : c}
                 </motion.span>
               ))}
             </span>
-            <span className="block text-[34px] sm:text-5xl lg:text-[60px] font-semibold text-white leading-[1] tracking-tight mt-0.5">
+            <span className="block text-[34px] sm:text-5xl font-semibold text-white leading-[1] tracking-tight mt-0.5">
               {"Exports".split("").map((c, i) => (
                 <motion.span key={i} variants={charVariants} className="inline-block">
                   {c}
@@ -271,8 +240,131 @@ export function HeroSection() {
           </motion.div>
         </div>
 
-        {/* Middle: globe with mouse-tilt parallax */}
-        <div className="relative w-full max-w-[1300px] mx-auto self-stretch flex items-center justify-center min-h-0">
+        {/* DESKTOP-ONLY (lg+): LEFT column — eyebrow / headline / divider / lede / CTAs / stat block */}
+        <div className="hidden lg:flex lg:col-span-5 flex-col justify-center text-left">
+          <motion.div
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, duration: 0.5 }}
+            className="self-start mb-5 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold/25 bg-gold/[0.04]"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
+            <span className="text-[10px] tracking-[0.3em] uppercase text-gold/90 font-medium">
+              {t.hero.eyebrow}
+            </span>
+          </motion.div>
+
+          <motion.h1
+            variants={lineVariants}
+            initial="hidden"
+            animate="visible"
+            className="font-[family-name:var(--font-display)]"
+          >
+            <span className="block text-[clamp(48px,5.4vw,72px)] font-light text-white leading-[0.95] tracking-tight">
+              {"Ocean Crest".split("").map((c, i) => (
+                <motion.span key={i} variants={charVariants} className="inline-block">
+                  {c === " " ? " " : c}
+                </motion.span>
+              ))}
+            </span>
+            <span className="block text-[clamp(48px,5.4vw,72px)] font-semibold text-white leading-[0.95] tracking-tight mt-1">
+              {"Exports".split("").map((c, i) => (
+                <motion.span key={i} variants={charVariants} className="inline-block">
+                  {c}
+                </motion.span>
+              ))}
+            </span>
+          </motion.h1>
+
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ delay: 0.85, duration: 0.6 }}
+            className="origin-left mt-6 h-px w-24 bg-gradient-to-r from-gold via-gold/60 to-transparent"
+          />
+
+          <motion.p
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.95, duration: 0.5 }}
+            className="mt-6 max-w-md text-base xl:text-lg text-white/70 font-light leading-relaxed"
+          >
+            Premium Indian{" "}
+            <span className="font-medium text-white">commodities</span>, verified
+            at source and shipped from Ahmedabad to{" "}
+            <span className="font-medium text-white">25+ countries</span>.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.1, duration: 0.5 }}
+            className="mt-7 flex flex-wrap gap-3"
+          >
+            <Link href="/products">
+              <Button
+                size="lg"
+                className="px-7 py-3.5 shadow-gold hover:shadow-gold-lg transition-shadow"
+              >
+                {t.hero.cta1}
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+            </Link>
+            <Link href="/about">
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-white/15 text-white/80 hover:bg-white/8 hover:text-white"
+              >
+                {t.hero.cta2}
+              </Button>
+            </Link>
+          </motion.div>
+
+          {/* Stat block — 2x2 grid replacing the orbiting info cards */}
+          <motion.dl
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {},
+              visible: { transition: { staggerChildren: 0.08, delayChildren: 1.25 } },
+            }}
+            className="mt-10 grid grid-cols-2 gap-x-6 gap-y-4 max-w-md"
+          >
+            {stats.map((s) => {
+              const Icon = s.icon;
+              return (
+                <motion.div
+                  key={s.label}
+                  variants={{
+                    hidden: { opacity: 0, y: 8 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const },
+                    },
+                  }}
+                  className="flex items-start gap-2.5"
+                >
+                  <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-gold/30 bg-gold/[0.06]">
+                    <Icon className="h-3.5 w-3.5 text-gold" strokeWidth={1.8} />
+                  </span>
+                  <div className="leading-tight">
+                    <dt className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/95">
+                      {s.label}
+                    </dt>
+                    <dd className="mt-1 text-[12px] text-white/55 font-light">
+                      {s.description}
+                    </dd>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.dl>
+        </div>
+
+        {/* RIGHT column on lg+, MIDDLE row on mobile: globe */}
+        <div className="relative w-full lg:col-span-7 self-stretch flex items-center justify-center min-h-0">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -280,7 +372,7 @@ export function HeroSection() {
             onPointerMove={onPointerMove}
             onPointerLeave={onPointerLeave}
             style={{ rotateX, rotateY, transformPerspective: 1200 }}
-            className="relative aspect-square h-full max-h-full max-w-full"
+            className="relative aspect-square h-full max-h-full w-full max-w-[640px] lg:max-w-none"
           >
             <div
               className="absolute inset-0"
@@ -293,58 +385,16 @@ export function HeroSection() {
             >
               <Globe3DScene />
             </div>
-
-            {/* Floating info cards on left/right rails — lg+ only */}
-            <div className="hidden lg:block pointer-events-none absolute -inset-x-24 xl:-inset-x-36 -inset-y-4">
-              {infoCards.map((card) => {
-                const { icon: Icon } = card;
-                const isPrimary = card.primary;
-                return (
-                  <motion.div
-                    key={card.label}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      delay: card.delay,
-                      duration: 0.6,
-                      ease: [0.16, 1, 0.3, 1] as const,
-                    }}
-                    className={`absolute ${card.anchor} pointer-events-auto`}
-                  >
-                    <div
-                      className={`flex items-center gap-3 px-3 py-2 rounded-[var(--radius-md)] backdrop-blur-sm transition-all duration-200 ${
-                        isPrimary
-                          ? "bg-primary/85 border border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] hover:border-gold/60"
-                          : "bg-primary/65 border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] hover:border-white/20"
-                      }`}
-                    >
-                      <Icon
-                        className={`w-4 h-4 shrink-0 ${isPrimary ? "text-gold" : "text-gold/80"}`}
-                        strokeWidth={1.7}
-                      />
-                      <div className="leading-tight">
-                        <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-white">
-                          {card.label}
-                        </p>
-                        <p className="mt-0.5 text-[12px] text-white/60 font-light">
-                          {card.description}
-                        </p>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
           </motion.div>
         </div>
 
-        {/* Bottom: tagline + CTAs */}
-        <div className="flex flex-col items-center text-center">
+        {/* MOBILE-ONLY: tagline + CTAs */}
+        <div className="lg:hidden flex flex-col items-center text-center">
           <motion.p
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2, duration: 0.5 }}
-            className="text-base sm:text-lg lg:text-[24px] font-light text-white font-[family-name:var(--font-display)] tracking-tight leading-snug"
+            className="text-base sm:text-lg font-light text-white font-[family-name:var(--font-display)] tracking-tight leading-snug"
           >
             Premium Indian{" "}
             <span className="font-semibold text-gold">Commodities</span>
