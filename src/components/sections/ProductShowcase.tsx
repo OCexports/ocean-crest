@@ -70,7 +70,7 @@ export function ProductShowcase() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16">
           <div>
-            <span className="text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
+            <span className="text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase text-gold-deep">
               Products
             </span>
             <h2 className="mt-3 text-3xl lg:text-5xl font-semibold text-primary font-[family-name:var(--font-display)]">
@@ -80,7 +80,7 @@ export function ProductShowcase() {
           </div>
           <Link
             href="/products"
-            className="mt-4 lg:mt-0 inline-flex items-center gap-2 text-sm font-medium text-gold hover:text-gold-muted transition-colors cursor-pointer"
+            className="mt-4 lg:mt-0 inline-flex items-center gap-2 text-sm font-medium text-gold-deep hover:text-gold transition-colors cursor-pointer"
           >
             View All <ArrowUpRight className="w-4 h-4" />
           </Link>

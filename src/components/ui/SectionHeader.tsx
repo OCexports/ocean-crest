@@ -29,7 +29,7 @@ export function SectionHeader({
         <span
           className={cn(
             "inline-block text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase mb-3",
-            light ? "text-gold-light" : "text-gold"
+            light ? "text-gold-light" : "text-gold-deep"
           )}
         >
           {eyebrow}

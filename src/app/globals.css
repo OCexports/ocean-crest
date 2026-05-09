@@ -15,6 +15,10 @@
   --color-gold: #D4AF37;
   --color-gold-light: #E8C158;
   --color-gold-muted: #C49B2A;
+  /* Accessible gold for body-text use on stone/white backgrounds.
+     #D4AF37 fails WCAG AA at 1.85:1 on stone — this passes 4.5:1 while
+     reading as the same metallic family. Use text-gold-deep on light bg. */
+  --color-gold-deep: #7A5C1A;
 
   /* Warm spice tones */
   --color-spice: #C4724E;
