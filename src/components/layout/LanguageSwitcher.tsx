@@ -38,7 +38,7 @@ export function LanguageSwitcher({ isScrolled = false }: Props) {
             ? "text-ink-muted hover:text-primary hover:bg-stone-100"
             : "text-white/80 hover:text-white hover:bg-white/10"
         )}
-        aria-label="Change language"
+        aria-label={`${locale.toUpperCase()} — change language`}
         aria-expanded={open}
         aria-haspopup="listbox"
       >
