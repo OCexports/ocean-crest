@@ -63,9 +63,10 @@ export function Footer() {
                 <Image
                   src="/images/brand/sheth-bhatts-logo.png"
                   alt="Sheth & Bhatt's LLP"
-                  unoptimized
                   width={560}
                   height={168}
+                  sizes="(min-width: 1024px) 360px, 320px"
+                  loading="lazy"
                   className="h-32 lg:h-36 w-auto"
                 />
               </div>

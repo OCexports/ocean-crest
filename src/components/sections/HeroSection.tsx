@@ -8,7 +8,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import {
@@ -114,6 +114,24 @@ export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { amount: 0 });
   const reducedMotion = useReducedMotion();
+  // Defer globe mount until after first paint so the heavy Three.js work
+  // doesn't compete for the main thread during LCP. Falls back to setTimeout
+  // when requestIdleCallback is unavailable (Safari < 16.4).
+  const [globeReady, setGlobeReady] = useState(false);
+  useEffect(() => {
+    type IdleWindow = Window &
+      typeof globalThis & {
+        requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+        cancelIdleCallback?: (id: number) => void;
+      };
+    const w = window as IdleWindow;
+    if (typeof w.requestIdleCallback === "function") {
+      const id = w.requestIdleCallback(() => setGlobeReady(true), { timeout: 1500 });
+      return () => w.cancelIdleCallback?.(id);
+    }
+    const t = window.setTimeout(() => setGlobeReady(true), 400);
+    return () => window.clearTimeout(t);
+  }, []);
 
   // Outer-tilt parallax for the entire globe composition
   const mx = useMotionValue(0);
@@ -385,7 +403,13 @@ export function HeroSection() {
                   "radial-gradient(circle, black 60%, transparent 92%)",
               }}
             >
-              <Globe3DScene />
+              {globeReady ? (
+                <Globe3DScene />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full border-2 border-gold/30 border-t-gold animate-spin" />
+                </div>
+              )}
             </div>
           </motion.div>
         </div>
@@ -438,7 +462,7 @@ export function HeroSection() {
             {[...capabilities, ...capabilities, ...capabilities, ...capabilities].map(
               (name, i) => (
                 <span key={i} className="flex items-center mx-6 sm:mx-8">
-                  <span className="text-[9.5px] sm:text-[11px] tracking-[0.2em] uppercase text-white/40 font-medium">
+                  <span className="text-[9.5px] sm:text-[11px] tracking-[0.2em] uppercase text-white/70 font-medium">
                     {name}
                   </span>
                   <span className="ml-6 sm:ml-8 w-1.5 h-1.5 rounded-full bg-gold/80" />

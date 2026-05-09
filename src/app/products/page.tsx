@@ -42,9 +42,9 @@ export default function ProductsPage() {
         </svg>
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
           <ScrollReveal>
-            <nav className="flex items-center gap-2 text-[12px] text-white/50 mb-4">
+            <nav className="flex items-center gap-2 text-[12px] text-white/75 mb-4">
               <Link href="/" className="hover:text-white transition-colors">Home</Link>
-              <span className="text-white/30">/</span>
+              <span className="text-white/60">/</span>
               <span className="text-white/80">Products</span>
             </nav>
             <span className="text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
