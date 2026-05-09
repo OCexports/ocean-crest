@@ -41,16 +41,19 @@ export function HoverVideoMedia({
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [internalHover, setInternalHover] = useState(false);
-  const [isMostlyVisible, setIsMostlyVisible] = useState(false);
-  const [canHover, setCanHover] = useState(true);
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [canHover, setCanHover] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return window.matchMedia("(hover: hover)").matches;
+  });
+  const [reducedMotion, setReducedMotion] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  });
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
     const hoverMQ = window.matchMedia("(hover: hover)");
     const motionMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setCanHover(hoverMQ.matches);
-    setReducedMotion(motionMQ.matches);
     const onHoverChange = (e: MediaQueryListEvent) => setCanHover(e.matches);
     const onMotionChange = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
     hoverMQ.addEventListener("change", onHoverChange);
@@ -61,14 +64,20 @@ export function HoverVideoMedia({
     };
   }, []);
 
-  // Touch / no-hover path: observe viewport visibility and play when most-visible.
+  // Touch / no-hover path: play when the card is roughly center-of-viewport.
+  // rootMargin trims top/bottom 15% so a card peeking in at the edge doesn't qualify.
   useEffect(() => {
     if (canHover || reducedMotion || !video || !interactive) return;
     const el = containerRef.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([entry]) => setIsMostlyVisible(entry.intersectionRatio >= 0.6),
-      { threshold: [0, 0.3, 0.6, 0.9] },
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting && entry.intersectionRatio >= 0.4);
+      },
+      {
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+        rootMargin: "-15% 0px -15% 0px",
+      },
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -77,15 +86,28 @@ export function HoverVideoMedia({
   const isPlaying = (() => {
     if (!video || !interactive || reducedMotion) return false;
     if (canHover) return isHovered !== undefined ? isHovered : internalHover;
-    return isMostlyVisible;
+    return isVisible;
   })();
 
   // Drive the video element off the effective playing state.
+  // If autoplay is rejected (some browsers require a user gesture even for muted),
+  // queue a one-shot retry on the next touchstart/scroll.
   useEffect(() => {
     const el = videoRef.current;
     if (!el || !video) return;
     if (isPlaying) {
-      el.play().catch(() => {});
+      const promise = el.play();
+      if (promise && typeof promise.catch === "function") {
+        promise.catch(() => {
+          const retry = () => {
+            el.play().catch(() => {});
+            window.removeEventListener("touchstart", retry);
+            window.removeEventListener("scroll", retry);
+          };
+          window.addEventListener("touchstart", retry, { once: true, passive: true });
+          window.addEventListener("scroll", retry, { once: true, passive: true });
+        });
+      }
     } else {
       el.pause();
       el.currentTime = 0;
