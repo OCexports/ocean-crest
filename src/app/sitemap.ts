@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
 import { products } from "@/lib/constants/products";
+import { siteUrl } from "@/lib/seo/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://ocexports.com";
+  const baseUrl = siteUrl;
 
   const staticPages: MetadataRoute.Sitemap = [
     {

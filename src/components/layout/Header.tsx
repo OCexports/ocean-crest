@@ -161,7 +161,7 @@ export function Header() {
 
             {/* Mobile Hamburger */}
             <button
-              className="lg:hidden p-2 cursor-pointer"
+              className="lg:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 cursor-pointer"
               onClick={() => setIsMobileOpen(true)}
               aria-label="Open menu"
             >

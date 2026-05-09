@@ -6,9 +6,24 @@ import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { companyInfo } from "@/lib/constants/navigation";
 import { InquiryForm } from "@/components/products/InquiryForm";
 
+const contactDescription =
+  "Get in touch with Ocean Crest for bulk spice and dehydrated garlic export inquiries. Request quotes, product samples, and custom packaging. Response within 24 hours.";
+
 export const metadata: Metadata = {
-  title: "Contact Us",
-  description: "Get in touch with Ocean Crest for bulk spice export inquiries. Request quotes, product samples, and custom packaging solutions.",
+  title: "Contact Ocean Crest — Request a Quote",
+  description: contactDescription,
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    type: "website",
+    title: "Contact Ocean Crest — Request a Quote",
+    description: contactDescription,
+    url: "/contact",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact Ocean Crest — Request a Quote",
+    description: contactDescription,
+  },
 };
 
 const contactInfo = [

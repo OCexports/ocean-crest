@@ -168,7 +168,7 @@ export function HeroSection() {
   };
 
   return (
-    <section ref={sectionRef} className="relative h-screen min-h-[640px] flex flex-col overflow-hidden bg-primary">
+    <section ref={sectionRef} className="relative h-screen min-h-[560px] sm:min-h-[640px] flex flex-col overflow-hidden bg-primary">
       {/* Layered backdrop — base radial gradient + grid + drifting aurora blobs */}
       <div className="absolute inset-0">
         <div

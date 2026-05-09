@@ -10,9 +10,10 @@ import { Card, CardContent } from "@/components/ui/Card";
 import { StaggerChildren, StaggerItem } from "@/components/animations/StaggerChildren";
 import { products, getProductBySlug } from "@/lib/constants/products";
 import { companyInfo } from "@/lib/constants/navigation";
-import { StructuredData, productSchema } from "@/components/seo/StructuredData";
+import { StructuredData, productSchema, breadcrumbSchema } from "@/components/seo/StructuredData";
 import { ProductGallery } from "@/components/products/ProductGallery";
 import { ProductImagePlaceholder } from "@/components/products/ProductImagePlaceholder";
+import { siteUrl } from "@/lib/seo/site";
 
 // Image naming convention: /images/products/garlic/{variant}-{n}.webp
 // The {variant}-1 image is also surfaced on the homepage Bento grid (ProductShowcase.tsx).
@@ -56,9 +57,38 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = getProductBySlug(slug);
   if (!product) return { title: "Product Not Found" };
 
+  const url = `${siteUrl}/products/${product.slug}`;
+  const galleryImage = galleryByProduct[product.slug]?.[0];
+  const ogImage = galleryImage ? `${siteUrl}${galleryImage}` : `${siteUrl}/og-image.png`;
+  const description = `${product.shortDescription} Bulk B2B export from Ocean Crest, FSSAI/APEDA certified. Request quote and specs.`;
+
   return {
-    title: product.name,
-    description: product.shortDescription,
+    title: `${product.name} — Wholesale Export from India`,
+    description,
+    alternates: {
+      canonical: `/products/${product.slug}`,
+    },
+    openGraph: {
+      type: "website",
+      url,
+      title: product.name,
+      description,
+      siteName: "Ocean Crest Exports",
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: product.name,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: product.name,
+      description,
+      images: [ogImage],
+    },
   };
 }
 
@@ -83,6 +113,13 @@ export default async function ProductDetailPage({ params }: Props) {
   return (
     <>
       <StructuredData data={productSchema(product)} />
+      <StructuredData
+        data={breadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Products", url: "/products" },
+          { name: product.name, url: `/products/${product.slug}` },
+        ])}
+      />
       {/* Breadcrumb + Hero */}
       <section className="relative bg-primary pt-28 pb-16">
         <svg className="absolute bottom-0 left-0 w-full h-12 text-stone" viewBox="0 0 1440 48" preserveAspectRatio="none" fill="currentColor">

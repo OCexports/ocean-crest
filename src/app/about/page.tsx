@@ -19,10 +19,24 @@ import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { StaggerChildren, StaggerItem } from "@/components/animations/StaggerChildren";
 import { CTABanner } from "@/components/sections/CTABanner";
 
+const aboutDescription =
+  "Ocean Crest Exports — a specialized export brand under Sheth & Bhatt's LLP, dedicated to the global distribution of high-quality Indian commodities with verified supply, FSSAI/APEDA certification, and B2B trust.";
+
 export const metadata: Metadata = {
-  title: "About Us",
-  description:
-    "Ocean Crest Exports — A specialized export brand under Sheth & Bhatt's LLP, dedicated to the global distribution of high-quality Indian products with verified supply.",
+  title: "About Ocean Crest — Verified Indian Exporter",
+  description: aboutDescription,
+  alternates: { canonical: "/about" },
+  openGraph: {
+    type: "website",
+    title: "About Ocean Crest — Verified Indian Exporter",
+    description: aboutDescription,
+    url: "/about",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Ocean Crest — Verified Indian Exporter",
+    description: aboutDescription,
+  },
 };
 
 const values = [

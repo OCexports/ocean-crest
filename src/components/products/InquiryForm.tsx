@@ -77,12 +77,12 @@ export function InquiryForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div className="grid sm:grid-cols-2 gap-5">
-        <Input label="Full Name" name="name" placeholder="Your full name" required />
-        <Input label="Email" name="email" type="email" placeholder="your@email.com" required />
+        <Input label="Full Name" name="name" autoComplete="name" placeholder="Your full name" required />
+        <Input label="Email" name="email" type="email" inputMode="email" autoComplete="email" placeholder="your@email.com" required />
       </div>
       <div className="grid sm:grid-cols-2 gap-5">
-        <Input label="Phone" name="phone" type="tel" placeholder="+1 234 567 890" required />
-        <Input label="Company" name="company" placeholder="Your company name" />
+        <Input label="Phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="+91 92748 11041" required />
+        <Input label="Company" name="company" autoComplete="organization" placeholder="Your company name" />
       </div>
       <div className="grid sm:grid-cols-2 gap-5">
         <Select
