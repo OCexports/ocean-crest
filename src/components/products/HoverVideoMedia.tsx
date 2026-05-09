@@ -48,18 +48,18 @@ export function HoverVideoMedia({
   const videoRef = useRef<HTMLVideoElement>(null);
   const [internalHover, setInternalHover] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [canHover, setCanHover] = useState(() => {
-    if (typeof window === "undefined") return true;
-    return window.matchMedia("(any-hover: hover)").matches;
-  });
-  const [reducedMotion, setReducedMotion] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  });
+  // SSR-safe defaults — synced from matchMedia in the effect below.
+  // Reading matchMedia in useState's initializer would diverge between
+  // server (window undefined → fallback) and client (real value), causing
+  // hydration mismatches when those values gate any rendered output.
+  const [canHover, setCanHover] = useState(true);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
     const hoverMQ = window.matchMedia("(any-hover: hover)");
     const motionMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setCanHover(hoverMQ.matches);
+    setReducedMotion(motionMQ.matches);
     const onHoverChange = (e: MediaQueryListEvent) => setCanHover(e.matches);
     const onMotionChange = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
     hoverMQ.addEventListener("change", onHoverChange);
@@ -72,6 +72,8 @@ export function HoverVideoMedia({
 
   // IntersectionObserver runs on every device; it's a fallback for touch-only
   // and a no-op on desktop unless the card centers in the viewport.
+  // Reduced-motion users skip the observer entirely (autoplay is the part of the
+  // experience that "reduce motion" is about — explicit hover is still allowed).
   useEffect(() => {
     if (reducedMotion || !video || !interactive) return;
     const el = containerRef.current;
@@ -90,8 +92,9 @@ export function HoverVideoMedia({
   }, [reducedMotion, video, interactive]);
 
   const hoverSignal = isHovered !== undefined ? isHovered : internalHover;
-  const isPlaying =
-    !!video && interactive && !reducedMotion && (hoverSignal || isVisible);
+  // Hover is an explicit user action — allow it even with reduced motion.
+  // Intersection autoplay is the implicit motion that reduced-motion targets.
+  const isPlaying = !!video && interactive && (hoverSignal || isVisible);
 
   // Drive the video element off the effective playing state.
   // If autoplay is rejected (some browsers require a user gesture even for muted),
@@ -148,7 +151,10 @@ export function HoverVideoMedia({
           isPlaying ? "opacity-0" : "opacity-100",
         )}
       />
-      {video && !reducedMotion && (
+      {/* Always render when prop is set — the reducedMotion check used to live
+          here too, but reading matchMedia diverges between server and client and
+          caused a hydration mismatch that tore down the entire card subtree. */}
+      {video && (
         <video
           ref={videoRef}
           src={video}
