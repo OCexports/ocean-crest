@@ -383,7 +383,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.1, duration: 0.5 }}
-            className="mt-7 flex flex-wrap gap-4"
+            className="mt-7 flex flex-wrap gap-6"
           >
             <Link href="/products">
               <Button
@@ -494,7 +494,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.3, duration: 0.5 }}
-            className="mt-3 sm:mt-4 flex flex-wrap gap-2.5 sm:gap-3 justify-center items-center"
+            className="mt-3 sm:mt-4 flex flex-wrap gap-4 sm:gap-6 justify-center items-center"
           >
             <Link href="/products">
               <Button
