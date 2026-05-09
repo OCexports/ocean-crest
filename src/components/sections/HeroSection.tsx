@@ -385,7 +385,7 @@ export function HeroSection() {
             transition={{ delay: 1.1, duration: 0.5 }}
             className="mt-7 flex flex-wrap gap-6"
           >
-            <Link href="/products">
+            <Link href="/products" className="inline-flex">
               <Button
                 size="lg"
                 className="px-7 py-3.5 shadow-gold hover:shadow-gold-lg transition-shadow"
@@ -394,7 +394,7 @@ export function HeroSection() {
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
-            <Link href="/about">
+            <Link href="/about" className="inline-flex">
               <Button
                 variant="outline"
                 size="lg"
@@ -496,7 +496,7 @@ export function HeroSection() {
             transition={{ delay: 1.3, duration: 0.5 }}
             className="mt-3 sm:mt-4 flex flex-wrap gap-4 sm:gap-6 justify-center items-center"
           >
-            <Link href="/products">
+            <Link href="/products" className="inline-flex">
               <Button
                 size="lg"
                 className="px-7 py-3.5 shadow-gold hover:shadow-gold-lg transition-shadow"
@@ -505,7 +505,7 @@ export function HeroSection() {
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
-            <Link href="/about">
+            <Link href="/about" className="inline-flex">
               <Button
                 variant="outline"
                 size="sm"
