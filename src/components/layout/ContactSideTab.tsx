@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Mail } from "lucide-react";
 
 /**
@@ -24,7 +24,7 @@ export function ContactSideTab() {
   }, []);
 
   return (
-    <motion.div
+    <m.div
       initial={{ x: 64, opacity: 0 }}
       animate={isVisible ? { x: 0, opacity: 1 } : { x: 64, opacity: 0 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -43,6 +43,6 @@ export function ContactSideTab() {
           Get in Touch
         </span>
       </Link>
-    </motion.div>
+    </m.div>
   );
 }

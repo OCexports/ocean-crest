@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardContent } from "@/components/ui/Card";
@@ -38,7 +38,7 @@ export function ProductsSection() {
 
       {/* Product Grid with animation */}
       <AnimatePresence mode="wait">
-        <motion.div
+        <m.div
           key={active}
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -47,7 +47,7 @@ export function ProductsSection() {
           className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {filtered.map((product, i) => (
-            <motion.div
+            <m.div
               key={product.slug}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -107,9 +107,9 @@ export function ProductsSection() {
                   </CardContent>
                 </Card>
               </Link>
-            </motion.div>
+            </m.div>
           ))}
-        </motion.div>
+        </m.div>
       </AnimatePresence>
 
       {filtered.length === 0 && (

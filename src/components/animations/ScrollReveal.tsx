@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { m, type Variants } from "framer-motion";
 import { type ReactNode } from "react";
 
 type Direction = "up" | "down" | "left" | "right";
@@ -50,7 +50,7 @@ export function ScrollReveal({
   };
 
   return (
-    <motion.div
+    <m.div
       initial="hidden"
       whileInView="visible"
       viewport={{ once, amount: 0.2 }}
@@ -58,6 +58,6 @@ export function ScrollReveal({
       className={className}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

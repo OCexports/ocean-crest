@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { Globe, Check, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
@@ -54,7 +54,7 @@ export function LanguageSwitcher({ isScrolled = false }: Props) {
 
       <AnimatePresence>
         {open && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 10, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.98 }}
@@ -82,7 +82,7 @@ export function LanguageSwitcher({ isScrolled = false }: Props) {
               ))}
             </div>
             <div className="h-[2px] bg-gradient-to-r from-gold via-gold/50 to-transparent" />
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>
