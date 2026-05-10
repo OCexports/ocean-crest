@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  motion,
+  m,
   useInView,
   useMotionValue,
   useReducedMotion,
@@ -115,7 +115,7 @@ function HeroParticles() {
   return (
     <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
       {PARTICLES.map((p, i) => (
-        <motion.span
+        <m.span
           key={i}
           className="absolute rounded-full bg-gold/40 blur-[0.5px]"
           style={{
@@ -226,7 +226,7 @@ export function HeroSection() {
               "radial-gradient(circle at 50% 45%, var(--color-primary-light) 0%, var(--color-primary) 55%, var(--color-primary-deep) 100%)",
           }}
         />
-        <motion.div
+        <m.div
           aria-hidden="true"
           animate={{ opacity: [1, 0.85, 1] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -278,7 +278,7 @@ export function HeroSection() {
       <div className="relative z-10 flex-1 min-h-0 grid grid-rows-[auto_minmax(0,1fr)_auto] lg:grid-rows-1 lg:grid-cols-12 gap-2 sm:gap-3 lg:gap-8 xl:gap-12 px-4 sm:px-6 lg:px-10 xl:px-14 pt-16 pb-3 sm:pt-20 sm:pb-4 lg:pt-24 lg:pb-5 max-w-[1500px] mx-auto w-full">
         {/* MOBILE-ONLY: top eyebrow â†’ headline â†’ divider */}
         <div className="lg:hidden flex flex-col items-center text-center">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.5 }}
@@ -288,9 +288,9 @@ export function HeroSection() {
             <span className="text-[12px] lg:text-[10px] tracking-[0.3em] uppercase text-gold/90 font-medium">
               {t.hero.eyebrow}
             </span>
-          </motion.div>
+          </m.div>
 
-          <motion.h1
+          <m.h1
             variants={lineVariants}
             initial="hidden"
             animate="visible"
@@ -298,21 +298,21 @@ export function HeroSection() {
           >
             <span className="block text-[34px] sm:text-5xl font-light text-white leading-[1] tracking-tight">
               {"Ocean Crest".split("").map((c, i) => (
-                <motion.span key={i} variants={charVariants} className="inline-block">
+                <m.span key={i} variants={charVariants} className="inline-block">
                   {c === " " ? " " : c}
-                </motion.span>
+                </m.span>
               ))}
             </span>
             <span className="block text-[34px] sm:text-5xl font-semibold text-white leading-[1] tracking-tight mt-0.5">
               {"Exports".split("").map((c, i) => (
-                <motion.span key={i} variants={charVariants} className="inline-block">
+                <m.span key={i} variants={charVariants} className="inline-block">
                   {c}
-                </motion.span>
+                </m.span>
               ))}
             </span>
-          </motion.h1>
+          </m.h1>
 
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.85, duration: 0.6 }}
@@ -321,12 +321,12 @@ export function HeroSection() {
             <span className="block w-12 h-px bg-gradient-to-r from-transparent to-gold/60" />
             <span className="text-gold/80 text-[12px] lg:text-[10px]">◆</span>
             <span className="block w-12 h-px bg-gradient-to-l from-transparent to-gold/60" />
-          </motion.div>
+          </m.div>
         </div>
 
         {/* DESKTOP-ONLY (lg+): LEFT column — eyebrow / headline / divider / lede / CTAs / stat block */}
         <div className="hidden lg:flex lg:col-span-5 flex-col justify-center text-left">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.5 }}
@@ -336,9 +336,9 @@ export function HeroSection() {
             <span className="text-[12px] lg:text-[10px] tracking-[0.3em] uppercase text-gold/90 font-medium">
               {t.hero.eyebrow}
             </span>
-          </motion.div>
+          </m.div>
 
-          <motion.h1
+          <m.h1
             variants={lineVariants}
             initial="hidden"
             animate="visible"
@@ -346,28 +346,28 @@ export function HeroSection() {
           >
             <span className="block text-[clamp(48px,5.4vw,72px)] font-light text-white leading-[0.95] tracking-tight">
               {"Ocean Crest".split("").map((c, i) => (
-                <motion.span key={i} variants={charVariants} className="inline-block">
+                <m.span key={i} variants={charVariants} className="inline-block">
                   {c === " " ? " " : c}
-                </motion.span>
+                </m.span>
               ))}
             </span>
             <span className="block text-[clamp(48px,5.4vw,72px)] font-semibold text-white leading-[0.95] tracking-tight mt-1">
               {"Exports".split("").map((c, i) => (
-                <motion.span key={i} variants={charVariants} className="inline-block">
+                <m.span key={i} variants={charVariants} className="inline-block">
                   {c}
-                </motion.span>
+                </m.span>
               ))}
             </span>
-          </motion.h1>
+          </m.h1>
 
-          <motion.div
+          <m.div
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
             transition={{ delay: 0.85, duration: 0.6 }}
             className="origin-left mt-6 h-px w-24 bg-gradient-to-r from-gold via-gold/60 to-transparent"
           />
 
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.95, duration: 0.5 }}
@@ -377,9 +377,9 @@ export function HeroSection() {
             <span className="font-medium text-white">commodities</span>, verified
             at source and shipped from Ahmedabad to{" "}
             <span className="font-medium text-white">25+ countries</span>.
-          </motion.p>
+          </m.p>
 
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.1, duration: 0.5 }}
@@ -403,13 +403,13 @@ export function HeroSection() {
                 {t.hero.cta2}
               </Button>
             </Link>
-          </motion.div>
+          </m.div>
 
           {/* Stat block — 2x2 grid replacing the orbiting info cards.
               Was a <dl>/<dt>/<dd>: Lighthouse rejects definition lists where
               dt/dd aren't direct children of dl. Plain divs do the same job
               visually and a11y-wise here (these are not glossary entries). */}
-          <motion.div
+          <m.div
             role="list"
             initial="hidden"
             animate="visible"
@@ -422,7 +422,7 @@ export function HeroSection() {
             {stats.map((s) => {
               const Icon = s.icon;
               return (
-                <motion.div
+                <m.div
                   key={s.label}
                   role="listitem"
                   variants={{
@@ -446,15 +446,15 @@ export function HeroSection() {
                       {s.description}
                     </p>
                   </div>
-                </motion.div>
+                </m.div>
               );
             })}
-          </motion.div>
+          </m.div>
         </div>
 
         {/* RIGHT column on lg+, MIDDLE row on mobile: globe */}
         <div className="relative w-full lg:col-span-7 self-stretch flex items-center justify-center min-h-0">
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 1.0, ease: [0.16, 1, 0.3, 1] as const }}
@@ -474,12 +474,12 @@ export function HeroSection() {
             >
               {globeReady ? <Globe3DScene /> : <StaticGlobePlaceholder />}
             </div>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* MOBILE-ONLY: tagline + CTAs */}
         <div className="lg:hidden flex flex-col items-center text-center">
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2, duration: 0.5 }}
@@ -488,9 +488,9 @@ export function HeroSection() {
             Premium Indian{" "}
             <span className="font-semibold text-gold">Commodities</span>
             ,<br className="sm:hidden" /> Globally Delivered.
-          </motion.p>
+          </m.p>
 
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.3, duration: 0.5 }}
@@ -514,7 +514,7 @@ export function HeroSection() {
                 {t.hero.cta2}
               </Button>
             </Link>
-          </motion.div>
+          </m.div>
         </div>
       </div>
 
@@ -537,21 +537,21 @@ export function HeroSection() {
       </div>
 
       {/* Scroll cue — subtle indicator that there's content below */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.6, duration: 0.6 }}
         className="absolute bottom-14 left-1/2 -translate-x-1/2 z-20 hidden md:flex flex-col items-center gap-2 pointer-events-none"
         aria-hidden="true"
       >
-        <motion.div
+        <m.div
           animate={{ y: [0, 4, 0], opacity: [0.4, 0.9, 0.4] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
           <ChevronDown className="w-4 h-4 text-gold/80" strokeWidth={1.5} />
-        </motion.div>
+        </m.div>
         <span className="w-1 h-1 rounded-full bg-gold/40" />
-      </motion.div>
+      </m.div>
 
     </section>
   );

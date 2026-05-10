@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, AnimatePresence, useScroll } from "framer-motion";
+import { m, AnimatePresence, useScroll } from "framer-motion";
 import { Menu, X, ChevronDown, Mail, Phone, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { navigation, companyInfo } from "@/lib/constants/navigation";
@@ -63,7 +63,7 @@ export function Header() {
       {/* Scroll Progress Bar */}
       <ScrollProgress />
 
-      <motion.header
+      <m.header
         animate={{ y: isHidden ? "-100%" : "0%" }}
         transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
         style={{ paddingTop: "env(safe-area-inset-top)" }}
@@ -138,7 +138,7 @@ export function Header() {
                   {hasChildren && (
                     <AnimatePresence>
                       {isOpen && (
-                        <motion.div
+                        <m.div
                           initial={{ opacity: 0, y: 10, scale: 0.98 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 10, scale: 0.98 }}
@@ -158,7 +158,7 @@ export function Header() {
                             ))}
                           </div>
                           <div className="h-[2px] bg-gradient-to-r from-gold via-gold/50 to-transparent" />
-                        </motion.div>
+                        </m.div>
                       )}
                     </AnimatePresence>
                   )}
@@ -193,20 +193,20 @@ export function Header() {
             </button>
           </div>
         </div>
-      </motion.header>
+      </m.header>
 
       {/* Mobile Drawer */}
       <AnimatePresence>
         {isMobileOpen && (
           <>
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
               onClick={() => setIsMobileOpen(false)}
             />
-            <motion.div
+            <m.div
               id="mobile-drawer"
               role="dialog"
               aria-modal="true"
@@ -246,7 +246,7 @@ export function Header() {
                 {/* Nav Links */}
                 <nav className="space-y-1">
                   {navigation.map((item, i) => (
-                    <motion.div
+                    <m.div
                       key={item.name}
                       initial={{ opacity: 0, x: 30 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -274,7 +274,7 @@ export function Header() {
                           ))}
                         </div>
                       )}
-                    </motion.div>
+                    </m.div>
                   ))}
                 </nav>
 
@@ -284,7 +284,7 @@ export function Header() {
                 </div>
 
                 {/* CTA */}
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, duration: 0.3 }}
@@ -306,7 +306,7 @@ export function Header() {
                       </button>
                     </a>
                   )}
-                </motion.div>
+                </m.div>
 
                 {/* Contact info */}
                 <div className="mt-10 pt-8 border-t border-white/5 text-sm text-white/60 space-y-3">
@@ -320,7 +320,7 @@ export function Header() {
                   )}
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           </>
         )}
       </AnimatePresence>
@@ -333,7 +333,7 @@ function ScrollProgress() {
   const { scrollYProgress } = useScroll();
 
   return (
-    <motion.div
+    <m.div
       className="fixed top-0 left-0 right-0 h-[2px] bg-gold z-[60] origin-left"
       style={{ scaleX: scrollYProgress }}
     />

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { Play } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ProductImagePlaceholder } from "./ProductImagePlaceholder";
@@ -69,7 +69,7 @@ export function ProductGallery({
       {/* Main slide with hover-zoom for images */}
       <div className="aspect-square rounded-[var(--radius-lg)] overflow-hidden shadow-border relative group bg-stone-100">
         <AnimatePresence mode="wait">
-          <motion.div
+          <m.div
             key={`${current.type}-${active}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -101,7 +101,7 @@ export function ProductGallery({
                 className="absolute inset-0 w-full h-full object-cover bg-black"
               />
             )}
-          </motion.div>
+          </m.div>
         </AnimatePresence>
         {current.type === "image" && (
           <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none" />

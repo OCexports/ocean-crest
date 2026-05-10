@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 import { companyInfo } from "@/lib/constants/navigation";
 
@@ -21,7 +21,7 @@ export function WhatsAppFab() {
   return (
     <AnimatePresence>
       {isVisible && (
-        <motion.div
+        <m.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0, opacity: 0 }}
@@ -47,18 +47,18 @@ export function WhatsAppFab() {
             {/* Tooltip */}
             <AnimatePresence>
               {showTooltip && (
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, x: 10 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 10 }}
                   className="absolute right-full top-1/2 -translate-y-1/2 mr-3 bg-ocean-deep text-white text-sm px-3 py-1.5 rounded-lg whitespace-nowrap shadow-modal"
                 >
                   Chat with us
-                </motion.div>
+                </m.div>
               )}
             </AnimatePresence>
           </div>
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );
