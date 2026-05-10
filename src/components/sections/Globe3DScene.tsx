@@ -16,9 +16,8 @@ import {
   Vector3,
 } from "three";
 
-// Country outlines + their world-atlas JSON live in a separate chunk.
-// Mobile / tablet never imports this — mobile globe = wireframe + ocean +
-// arcs + markers, which still reads as a globe. Desktop only.
+// Country outlines + their world-atlas JSON live in a separate chunk so
+// they don't bloat the main globe bundle, but they render on every viewport.
 const GlobeContinents = lazy(() => import("./GlobeContinents"));
 
 /**
@@ -509,9 +508,6 @@ function Globe({ richDetail }: { richDetail: boolean }) {
     <group rotation={[0, FACE_INDIA_Y, 0]}>
       <Ocean />
       <Wireframe />
-      {/* Country outlines parse a ~110 KB topojson file on mount — desktop
-          only. Wireframe + arcs + markers still read clearly as a globe on
-          phones, just without the continent line detail. */}
       {richDetail && (
         <Suspense fallback={null}>
           <GlobeContinents />
@@ -531,7 +527,6 @@ function Globe({ richDetail }: { richDetail: boolean }) {
           baseOpacity={laneOpacities[i]}
         />
       ))}
-      {/* The 3D aircraft is an additional moving group; desktop-only too. */}
       {richDetail && featured && (
         <FeaturedAircraft start={originVec} end={featured.vec} />
       )}
@@ -540,11 +535,10 @@ function Globe({ richDetail }: { richDetail: boolean }) {
 }
 
 export default function Globe3DScene() {
-  // Two performance dials gated on viewport:
-  //   - Continents + FeaturedAircraft only on lg+ (saves a 110 KB topojson
-  //     parse + extra per-frame group on mobile)
-  //   - Antialias only on lg+ — invisible at phone DPR but ~30 % GPU
-  //   - DPR capped at 1 on touch (vs 1.25) halves fragment-shader work
+  // Visual parity across viewports — mobile gets the same continents +
+  // featured aircraft as desktop. The GPU dials (antialias / DPR) still
+  // step down on touch since those are imperceptible at phone DPI but
+  // ~30% GPU savings.
   const [isLgUp, setIsLgUp] = useState(false);
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
@@ -561,7 +555,7 @@ export default function Globe3DScene() {
       gl={{ antialias: isLgUp, alpha: true, powerPreference: "low-power" }}
       dpr={isLgUp ? [1, 1.25] : [1, 1]}
     >
-      <Globe richDetail={isLgUp} />
+      <Globe richDetail />
     </Canvas>
   );
 }
