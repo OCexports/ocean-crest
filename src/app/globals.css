@@ -245,24 +245,27 @@ h1 { letter-spacing: -0.04em; }
   50%      { opacity: 0.55; }
 }
 
-/* ═══ Hero entrance animations (CSS-driven so they don't depend on JS
-   hydration / framer-motion to paint — important for LCP). Easing matches
-   the fluid cubic the rest of the site uses. ═══ */
+/* ═══ Hero entrance animations.
+   IMPORTANT: above-the-fold elements never start at opacity 0 — Lighthouse
+   was selecting the eyebrow as the LCP candidate and waiting for it to
+   reach opacity 1, which gated LCP on the animation finishing. We slide
+   text in via transform only (no opacity gate), so paint happens on the
+   first frame and LCP is achieved immediately. ═══ */
 @keyframes hero-fade-up {
-  from { opacity: 0; transform: translate3d(0, 6px, 0); }
-  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  from { transform: translate3d(0, 6px, 0); }
+  to   { transform: translate3d(0, 0, 0); }
 }
 @keyframes hero-char-up {
-  from { opacity: 0; transform: translate3d(0, 14px, 0); }
-  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  from { transform: translate3d(0, 14px, 0); }
+  to   { transform: translate3d(0, 0, 0); }
 }
 @keyframes hero-fade {
-  from { opacity: 0; }
+  from { opacity: 0.001; }
   to   { opacity: 1; }
 }
 @keyframes hero-divider-grow {
-  from { opacity: 0; transform: scaleX(0); }
-  to   { opacity: 1; transform: scaleX(1); }
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
 }
 .hero-fade-up { animation: hero-fade-up 0.5s var(--ease-fluid) both; }
 .hero-char-up { animation: hero-char-up 0.6s var(--ease-fluid) both; }
