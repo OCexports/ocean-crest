@@ -20,21 +20,21 @@ import { StaggerChildren, StaggerItem } from "@/components/animations/StaggerChi
 import { CTABanner } from "@/components/sections/CTABanner";
 
 const aboutDescription =
-  "Ocean Crest Exports â€” a specialized export brand under Sheth & Bhatt's LLP, dedicated to the global distribution of high-quality Indian commodities with verified supply, FSSAI/APEDA certification, and B2B trust.";
+  "Ocean Crest Exports — a specialized export brand under Sheth & Bhatt's LLP, dedicated to the global distribution of high-quality Indian commodities with verified supply, FSSAI/APEDA certification, and B2B trust.";
 
 export const metadata: Metadata = {
-  title: "About Ocean Crest â€” Verified Indian Exporter",
+  title: "About Ocean Crest — Verified Indian Exporter",
   description: aboutDescription,
   alternates: { canonical: "/about" },
   openGraph: {
     type: "website",
-    title: "About Ocean Crest â€” Verified Indian Exporter",
+    title: "About Ocean Crest — Verified Indian Exporter",
     description: aboutDescription,
     url: "/about",
   },
   twitter: {
     card: "summary_large_image",
-    title: "About Ocean Crest â€” Verified Indian Exporter",
+    title: "About Ocean Crest — Verified Indian Exporter",
     description: aboutDescription,
   },
 };
@@ -140,7 +140,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* About Us â€” Long Form */}
+      {/* About Us — Long Form */}
       <section className="py-20 lg:py-28 bg-stone">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <ScrollReveal>
@@ -197,7 +197,7 @@ export default function AboutPage() {
                 </h2>
                 <p className="mt-4 text-ink-muted leading-relaxed">
                   To serve as a reliable bridge between local Indian production
-                  and international market requirements â€” delivering verified
+                  and international market requirements — delivering verified
                   quality, transparent dealings, and customized compliance for
                   every client.
                 </p>
@@ -254,7 +254,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Our Process â€” Detailed */}
+      {/* Our Process — Detailed */}
       <section className="py-20 lg:py-28 bg-warm-white">
         <div className="max-w-5xl mx-auto px-6 lg:px-8">
           <SectionHeader

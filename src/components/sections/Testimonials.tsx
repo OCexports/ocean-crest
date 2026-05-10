@@ -10,7 +10,7 @@ const testimonials = [
     role: "Procurement Head",
     company: "Al Waha Foods",
     country: "UAE",
-    flag: "Ã°Å¸â€¡Â¦Ã°Å¸â€¡Âª",
+    flag: "🇦🇪",
   },
   {
     quote:
@@ -19,7 +19,7 @@ const testimonials = [
     role: "Director of Sourcing",
     company: "Heritage Spice Co.",
     country: "United Kingdom",
-    flag: "Ã°Å¸â€¡Â¬Ã°Å¸â€¡Â§",
+    flag: "🇬🇧",
   },
 ];
 
