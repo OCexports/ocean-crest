@@ -1,7 +1,7 @@
 "use client";
 
-import { m, type Variants } from "framer-motion";
-import { type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode, type CSSProperties } from "react";
+import { cn } from "@/lib/utils";
 
 type Direction = "up" | "down" | "left" | "right";
 
@@ -14,13 +14,24 @@ interface ScrollRevealProps {
   once?: boolean;
 }
 
-const directionOffset: Record<Direction, { x: number; y: number }> = {
-  up: { x: 0, y: 40 },
-  down: { x: 0, y: -40 },
-  left: { x: 40, y: 0 },
-  right: { x: -40, y: 0 },
+// Same offsets that the framer-motion version used so visual cadence
+// across all the existing call sites is identical.
+const directionOffset: Record<Direction, { x: string; y: string }> = {
+  up:    { x: "0px",  y: "40px" },
+  down:  { x: "0px",  y: "-40px" },
+  left:  { x: "40px", y: "0px" },
+  right: { x: "-40px", y: "0px" },
 };
 
+/**
+ * IntersectionObserver-driven viewport reveal. Replaces a framer-motion
+ * `m.div` with `whileInView`, eliminating the framer-motion runtime cost
+ * for every section that animates in on scroll.
+ *
+ * Output and visual behavior intentionally mirror the previous
+ * framer-motion implementation: opacity 0 + offset → opacity 1 + 0 once
+ * 20% of the element enters the viewport, with optional delay/duration.
+ */
 export function ScrollReveal({
   children,
   direction = "up",
@@ -29,35 +40,47 @@ export function ScrollReveal({
   className,
   once = true,
 }: ScrollRevealProps) {
-  const offset = directionOffset[direction];
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const variants: Variants = {
-    hidden: {
-      opacity: 0,
-      x: offset.x,
-      y: offset.y,
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      transition: {
-        duration,
-        delay,
-        ease: [0.16, 1, 0.3, 1] as const,
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    // Honor reduced motion preference — show immediately, no animation.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setIsVisible(true);
+      return;
+    }
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          if (once) obs.disconnect();
+        } else if (!once) {
+          setIsVisible(false);
+        }
       },
-    },
-  };
+      { threshold: 0.2 },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [once]);
+
+  const offset = directionOffset[direction];
+  const style = {
+    "--sr-x": offset.x,
+    "--sr-y": offset.y,
+    "--sr-delay": `${delay}s`,
+    "--sr-duration": `${duration}s`,
+  } as CSSProperties;
 
   return (
-    <m.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once, amount: 0.2 }}
-      variants={variants}
-      className={className}
+    <div
+      ref={ref}
+      style={style}
+      className={cn(isVisible ? "sr-visible" : "sr-hidden", className)}
     >
       {children}
-    </m.div>
+    </div>
   );
 }

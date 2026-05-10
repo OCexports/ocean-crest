@@ -101,7 +101,16 @@ export function ProductShowcase() {
                     src={product.image}
                     video={product.video}
                     alt={product.name}
-                    sizes={i === 0 ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1024px) 25vw, 50vw"}
+                    // Bento grid lives inside max-w-7xl (≈1216px content width).
+                    // Hero card spans 2/4 cols ≈ 600px max; supporting cards
+                    // span 1/4 ≈ 290px max. Capping the upper bound stops
+                    // next/image from picking the 1080w/1200w variants on
+                    // high-DPR desktops where they aren't actually needed.
+                    sizes={
+                      i === 0
+                        ? "(min-width: 1024px) 600px, 100vw"
+                        : "(min-width: 1024px) 300px, 50vw"
+                    }
                     isHovered={hoveredSlug === product.slug}
                   />
                   <div

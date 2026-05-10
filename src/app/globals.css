@@ -245,6 +245,112 @@ h1 { letter-spacing: -0.04em; }
   50%      { opacity: 0.55; }
 }
 
+/* ═══ Hero entrance animations (CSS-driven so they don't depend on JS
+   hydration / framer-motion to paint — important for LCP). Easing matches
+   the fluid cubic the rest of the site uses. ═══ */
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translate3d(0, 6px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes hero-char-up {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes hero-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes hero-divider-grow {
+  from { opacity: 0; transform: scaleX(0); }
+  to   { opacity: 1; transform: scaleX(1); }
+}
+.hero-fade-up { animation: hero-fade-up 0.5s var(--ease-fluid) both; }
+.hero-char-up { animation: hero-char-up 0.6s var(--ease-fluid) both; }
+.hero-fade    { animation: hero-fade 0.5s var(--ease-fluid) both; }
+.hero-divider-grow {
+  transform-origin: left;
+  animation: hero-divider-grow 0.6s var(--ease-fluid) both;
+}
+@keyframes hero-scroll-cue {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50%      { transform: translateY(4px); opacity: 0.9; }
+}
+.hero-scroll-cue {
+  display: inline-block;
+  animation: hero-scroll-cue 2s ease-in-out infinite;
+}
+@keyframes hero-aurora-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.85; }
+}
+.hero-aurora-pulse {
+  animation: hero-aurora-pulse 4s ease-in-out infinite;
+}
+@keyframes hero-particle-rise {
+  0%   { transform: translate3d(0, 0, 0); opacity: 0; }
+  10%  { opacity: 0.6; }
+  50%  { transform: translate3d(var(--drift, 0px), -55vh, 0); opacity: 0.6; }
+  90%  { opacity: 0.6; }
+  100% { transform: translate3d(0, -110vh, 0); opacity: 0; }
+}
+.hero-particle {
+  animation: hero-particle-rise var(--duration, 14s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+/* ═══ ScrollReveal — IO-driven CSS animation (replaces framer-motion's
+   whileInView). Same look, zero framer-motion runtime cost per usage. ═══ */
+@keyframes scroll-reveal {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--sr-x, 0), var(--sr-y, 40px), 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+.sr-hidden {
+  opacity: 0;
+  transform: translate3d(var(--sr-x, 0), var(--sr-y, 40px), 0);
+  will-change: opacity, transform;
+}
+.sr-visible {
+  animation: scroll-reveal var(--sr-duration, 0.6s) var(--ease-fluid)
+    var(--sr-delay, 0s) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sr-hidden, .sr-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* ═══ StaggerChildren — IO-driven CSS stagger (replaces framer-motion's
+   container/item variants). Each item declares --sg-i (its index); the
+   container declares --sg-step (per-item stagger delay). ═══ */
+@keyframes stagger-item {
+  from { opacity: 0; transform: translate3d(0, 30px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.sg-item {
+  opacity: 0;
+  transform: translate3d(0, 30px, 0);
+  will-change: opacity, transform;
+}
+.sg-active > .sg-item {
+  animation: stagger-item 0.5s var(--ease-fluid) both;
+  animation-delay: calc(0.1s + var(--sg-step, 0.1s) * var(--sg-i, 0));
+}
+@media (prefers-reduced-motion: reduce) {
+  .sg-item, .sg-active > .sg-item {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
 /* ═══ Float Animations ═══ */
 @keyframes float {
   0%, 100% { transform: translateY(0); }

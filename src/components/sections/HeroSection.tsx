@@ -115,45 +115,29 @@ function HeroParticles() {
   return (
     <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
       {PARTICLES.map((p, i) => (
-        <m.span
+        <span
           key={i}
-          className="absolute rounded-full bg-gold/40 blur-[0.5px]"
-          style={{
-            left: `${p.left}%`,
-            bottom: "-10px",
-            width: `${p.size}px`,
-            height: `${p.size}px`,
-          }}
-          animate={{
-            y: ["0vh", "-110vh"],
-            x: [0, p.drift, 0],
-            opacity: [0, 0.6, 0],
-          }}
-          transition={{
-            duration: p.duration,
-            delay: p.delay,
-            repeat: Infinity,
-            ease: "linear",
-          }}
+          className="hero-particle absolute rounded-full bg-gold/40 blur-[0.5px]"
+          style={
+            {
+              left: `${p.left}%`,
+              bottom: "-10px",
+              width: `${p.size}px`,
+              height: `${p.size}px`,
+              "--drift": `${p.drift}px`,
+              "--duration": `${p.duration}s`,
+              "--delay": `${p.delay}s`,
+            } as React.CSSProperties
+          }
         />
       ))}
     </div>
   );
 }
 
-const lineVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.04, delayChildren: 0.25 } },
-};
-
-const charVariants = {
-  hidden: { opacity: 0, y: 14 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
-  },
-};
+// Per-char stagger delay used by the CSS-driven headline animation.
+// Mirrors the previous framer-motion stagger (0.04s step, 0.25s lead).
+const charDelay = (i: number) => `${0.25 + i * 0.04}s`;
 
 export function HeroSection() {
   const { t } = useLanguage();
@@ -226,11 +210,9 @@ export function HeroSection() {
               "radial-gradient(circle at 50% 45%, var(--color-primary-light) 0%, var(--color-primary) 55%, var(--color-primary-deep) 100%)",
           }}
         />
-        <m.div
+        <div
           aria-hidden="true"
-          animate={{ opacity: [1, 0.85, 1] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[35vw] h-[35vw] max-w-[460px] max-h-[460px] rounded-full pointer-events-none lg:left-[72%]"
+          className="hero-aurora-pulse absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[35vw] h-[35vw] max-w-[460px] max-h-[460px] rounded-full pointer-events-none lg:left-[72%]"
           style={{
             background:
               "radial-gradient(circle, rgba(212,166,74,0.22) 0%, rgba(212,166,74,0.06) 45%, transparent 70%)",
@@ -278,112 +260,106 @@ export function HeroSection() {
       <div className="relative z-10 flex-1 min-h-0 grid grid-rows-[auto_minmax(0,1fr)_auto] lg:grid-rows-1 lg:grid-cols-12 gap-2 sm:gap-3 lg:gap-8 xl:gap-12 px-4 sm:px-6 lg:px-10 xl:px-14 pt-16 pb-3 sm:pt-20 sm:pb-4 lg:pt-24 lg:pb-5 max-w-[1500px] mx-auto w-full">
         {/* MOBILE-ONLY: top eyebrow â†’ headline â†’ divider */}
         <div className="lg:hidden flex flex-col items-center text-center">
-          <m.div
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.5 }}
-            className="mb-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold/25 bg-gold/[0.04]"
+          <div
+            className="hero-fade-up mb-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold/25 bg-gold/[0.04]"
+            style={{ animationDelay: "0.15s" }}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
             <span className="text-[12px] lg:text-[10px] tracking-[0.3em] uppercase text-gold/90 font-medium">
               {t.hero.eyebrow}
             </span>
-          </m.div>
+          </div>
 
-          <m.h1
-            variants={lineVariants}
-            initial="hidden"
-            animate="visible"
-            className="font-[family-name:var(--font-display)]"
-          >
+          <h1 className="font-[family-name:var(--font-display)]">
             <span className="block text-[34px] sm:text-5xl font-light text-white leading-[1] tracking-tight">
               {"Ocean Crest".split("").map((c, i) => (
-                <m.span key={i} variants={charVariants} className="inline-block">
+                <span
+                  key={i}
+                  className="hero-char-up inline-block"
+                  style={{ animationDelay: charDelay(i) }}
+                >
                   {c === " " ? " " : c}
-                </m.span>
+                </span>
               ))}
             </span>
             <span className="block text-[34px] sm:text-5xl font-semibold text-white leading-[1] tracking-tight mt-0.5">
               {"Exports".split("").map((c, i) => (
-                <m.span key={i} variants={charVariants} className="inline-block">
+                <span
+                  key={i}
+                  className="hero-char-up inline-block"
+                  style={{ animationDelay: charDelay(i + "Ocean Crest".length) }}
+                >
                   {c}
-                </m.span>
+                </span>
               ))}
             </span>
-          </m.h1>
+          </h1>
 
-          <m.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.85, duration: 0.6 }}
-            className="mt-3 sm:mt-4 flex items-center justify-center gap-3"
+          <div
+            className="hero-fade mt-3 sm:mt-4 flex items-center justify-center gap-3"
+            style={{ animationDelay: "0.85s", animationDuration: "0.6s" }}
           >
             <span className="block w-12 h-px bg-gradient-to-r from-transparent to-gold/60" />
             <span className="text-gold/80 text-[12px] lg:text-[10px]">◆</span>
             <span className="block w-12 h-px bg-gradient-to-l from-transparent to-gold/60" />
-          </m.div>
+          </div>
         </div>
 
         {/* DESKTOP-ONLY (lg+): LEFT column — eyebrow / headline / divider / lede / CTAs / stat block */}
         <div className="hidden lg:flex lg:col-span-5 flex-col justify-center text-left">
-          <m.div
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.5 }}
-            className="self-start mb-5 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold/25 bg-gold/[0.04]"
+          <div
+            className="hero-fade-up self-start mb-5 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold/25 bg-gold/[0.04]"
+            style={{ animationDelay: "0.15s" }}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
             <span className="text-[12px] lg:text-[10px] tracking-[0.3em] uppercase text-gold/90 font-medium">
               {t.hero.eyebrow}
             </span>
-          </m.div>
+          </div>
 
-          <m.h1
-            variants={lineVariants}
-            initial="hidden"
-            animate="visible"
-            className="font-[family-name:var(--font-display)]"
-          >
+          <h1 className="font-[family-name:var(--font-display)]">
             <span className="block text-[clamp(48px,5.4vw,72px)] font-light text-white leading-[0.95] tracking-tight">
               {"Ocean Crest".split("").map((c, i) => (
-                <m.span key={i} variants={charVariants} className="inline-block">
+                <span
+                  key={i}
+                  className="hero-char-up inline-block"
+                  style={{ animationDelay: charDelay(i) }}
+                >
                   {c === " " ? " " : c}
-                </m.span>
+                </span>
               ))}
             </span>
             <span className="block text-[clamp(48px,5.4vw,72px)] font-semibold text-white leading-[0.95] tracking-tight mt-1">
               {"Exports".split("").map((c, i) => (
-                <m.span key={i} variants={charVariants} className="inline-block">
+                <span
+                  key={i}
+                  className="hero-char-up inline-block"
+                  style={{ animationDelay: charDelay(i + "Ocean Crest".length) }}
+                >
                   {c}
-                </m.span>
+                </span>
               ))}
             </span>
-          </m.h1>
+          </h1>
 
-          <m.div
-            initial={{ opacity: 0, scaleX: 0 }}
-            animate={{ opacity: 1, scaleX: 1 }}
-            transition={{ delay: 0.85, duration: 0.6 }}
-            className="origin-left mt-6 h-px w-24 bg-gradient-to-r from-gold via-gold/60 to-transparent"
+          <div
+            className="hero-divider-grow mt-6 h-px w-24 bg-gradient-to-r from-gold via-gold/60 to-transparent"
+            style={{ animationDelay: "0.85s" }}
           />
 
-          <m.p
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.95, duration: 0.5 }}
-            className="mt-6 max-w-md text-base xl:text-lg text-white/70 font-light leading-relaxed"
+          <p
+            className="hero-fade-up mt-6 max-w-md text-base xl:text-lg text-white/70 font-light leading-relaxed"
+            style={{ animationDelay: "0.95s" }}
           >
             Premium Indian{" "}
             <span className="font-medium text-white">commodities</span>, verified
             at source and shipped from Ahmedabad to{" "}
             <span className="font-medium text-white">25+ countries</span>.
-          </m.p>
+          </p>
 
-          <m.div
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1, duration: 0.5 }}
-            className="mt-7 flex flex-wrap gap-6"
+          <div
+            className="hero-fade-up mt-7 flex flex-wrap gap-6"
+            style={{ animationDelay: "1.1s" }}
           >
             <Link href="/products" className="inline-flex">
               <Button
@@ -403,37 +379,24 @@ export function HeroSection() {
                 {t.hero.cta2}
               </Button>
             </Link>
-          </m.div>
+          </div>
 
           {/* Stat block — 2x2 grid replacing the orbiting info cards.
               Was a <dl>/<dt>/<dd>: Lighthouse rejects definition lists where
               dt/dd aren't direct children of dl. Plain divs do the same job
               visually and a11y-wise here (these are not glossary entries). */}
-          <m.div
+          <div
             role="list"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: {},
-              visible: { transition: { staggerChildren: 0.08, delayChildren: 1.25 } },
-            }}
             className="mt-10 grid grid-cols-2 gap-x-6 gap-y-4 max-w-md"
           >
-            {stats.map((s) => {
+            {stats.map((s, i) => {
               const Icon = s.icon;
               return (
-                <m.div
+                <div
                   key={s.label}
                   role="listitem"
-                  variants={{
-                    hidden: { opacity: 0, y: 8 },
-                    visible: {
-                      opacity: 1,
-                      y: 0,
-                      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const },
-                    },
-                  }}
-                  className="flex items-start gap-2.5"
+                  className="hero-fade-up flex items-start gap-2.5"
+                  style={{ animationDelay: `${1.25 + i * 0.08}s` }}
                 >
                   <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-gold/30 bg-gold/[0.06]">
                     <Icon className="h-3.5 w-3.5 text-gold" strokeWidth={1.8} />
@@ -446,22 +409,25 @@ export function HeroSection() {
                       {s.description}
                     </p>
                   </div>
-                </m.div>
+                </div>
               );
             })}
-          </m.div>
+          </div>
         </div>
 
         {/* RIGHT column on lg+, MIDDLE row on mobile: globe */}
         <div className="relative w-full lg:col-span-7 self-stretch flex items-center justify-center min-h-0">
           <m.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 1.0, ease: [0.16, 1, 0.3, 1] as const }}
             onPointerMove={onPointerMove}
             onPointerLeave={onPointerLeave}
-            style={{ rotateX, rotateY, transformPerspective: 1200 }}
-            className="relative aspect-square h-full max-h-full w-full max-w-[640px] lg:max-w-none"
+            style={{
+              rotateX,
+              rotateY,
+              transformPerspective: 1200,
+              animationDelay: "0.4s",
+              animationDuration: "1s",
+            }}
+            className="hero-fade relative aspect-square h-full max-h-full w-full max-w-[640px] lg:max-w-none"
           >
             <div
               className="absolute inset-0"
@@ -479,22 +445,18 @@ export function HeroSection() {
 
         {/* MOBILE-ONLY: tagline + CTAs */}
         <div className="lg:hidden flex flex-col items-center text-center">
-          <m.p
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.5 }}
-            className="text-base sm:text-lg font-light text-white font-[family-name:var(--font-display)] tracking-tight leading-snug"
+          <p
+            className="hero-fade-up text-base sm:text-lg font-light text-white font-[family-name:var(--font-display)] tracking-tight leading-snug"
+            style={{ animationDelay: "1.2s" }}
           >
             Premium Indian{" "}
             <span className="font-semibold text-gold">Commodities</span>
             ,<br className="sm:hidden" /> Globally Delivered.
-          </m.p>
+          </p>
 
-          <m.div
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.3, duration: 0.5 }}
-            className="mt-3 sm:mt-4 flex flex-wrap gap-4 sm:gap-6 justify-center items-center"
+          <div
+            className="hero-fade-up mt-3 sm:mt-4 flex flex-wrap gap-4 sm:gap-6 justify-center items-center"
+            style={{ animationDelay: "1.3s" }}
           >
             <Link href="/products" className="inline-flex">
               <Button
@@ -514,7 +476,7 @@ export function HeroSection() {
                 {t.hero.cta2}
               </Button>
             </Link>
-          </m.div>
+          </div>
         </div>
       </div>
 
@@ -537,21 +499,16 @@ export function HeroSection() {
       </div>
 
       {/* Scroll cue — subtle indicator that there's content below */}
-      <m.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 0.6 }}
-        className="absolute bottom-14 left-1/2 -translate-x-1/2 z-20 hidden md:flex flex-col items-center gap-2 pointer-events-none"
+      <div
+        className="hero-fade absolute bottom-14 left-1/2 -translate-x-1/2 z-20 hidden md:flex flex-col items-center gap-2 pointer-events-none"
+        style={{ animationDelay: "1.6s", animationDuration: "0.6s" }}
         aria-hidden="true"
       >
-        <m.div
-          animate={{ y: [0, 4, 0], opacity: [0.4, 0.9, 0.4] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        >
+        <span className="hero-scroll-cue">
           <ChevronDown className="w-4 h-4 text-gold/80" strokeWidth={1.5} />
-        </m.div>
+        </span>
         <span className="w-1 h-1 rounded-full bg-gold/40" />
-      </m.div>
+      </div>
 
     </section>
   );

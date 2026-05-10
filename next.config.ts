@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
       "three",
       "@react-three/fiber",
     ],
+    // Inline the per-page Tailwind stylesheet into <style> in <head>.
+    // Eliminates the render-blocking CSS request flagged by Lighthouse and
+    // collapses the network dependency tree (HTML → CSS waterfall).
+    inlineCss: true,
   },
   images: {
     formats: ["image/avif", "image/webp"],
