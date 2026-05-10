@@ -172,11 +172,6 @@ export function HeroSection() {
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
-  // Defer Globe3DScene until *after* the TBT measurement window (~3s) and
-  // first user interaction OR scroll, whichever comes first. Three.js
-  // costs ~2-3s of script eval; if it fires inside 0-3s the browser
-  // counts the whole eval against TBT. The static placeholder renders
-  // first paint so the visual slot is filled either way.
   useEffect(() => {
     type IdleWindow = Window &
       typeof globalThis & {
@@ -184,43 +179,12 @@ export function HeroSection() {
         cancelIdleCallback?: (id: number) => void;
       };
     const w = window as IdleWindow;
-    let cancelled = false;
-    let idleId = 0;
-    let timerId = 0;
-    const handlers: Array<[string, EventListener]> = [];
-
-    const trigger = () => {
-      if (cancelled) return;
-      cancelled = true;
-      handlers.forEach(([ev, fn]) => window.removeEventListener(ev, fn));
-      if (idleId && w.cancelIdleCallback) w.cancelIdleCallback(idleId);
-      if (timerId) window.clearTimeout(timerId);
-      setGlobeReady(true);
-    };
-
-    // Hard cap so the globe always loads even if the user never interacts.
-    timerId = window.setTimeout(() => {
-      if (typeof w.requestIdleCallback === "function") {
-        idleId = w.requestIdleCallback(trigger, { timeout: 1500 });
-      } else {
-        trigger();
-      }
-    }, 3500);
-
-    // Bump it forward whenever the user actually engages with the page.
-    const onInteract: EventListener = () => trigger();
-    const passive = { passive: true } as AddEventListenerOptions;
-    (["scroll", "pointerdown", "touchstart", "keydown"] as const).forEach((ev) => {
-      window.addEventListener(ev, onInteract, passive);
-      handlers.push([ev, onInteract]);
-    });
-
-    return () => {
-      cancelled = true;
-      handlers.forEach(([ev, fn]) => window.removeEventListener(ev, fn));
-      if (idleId && w.cancelIdleCallback) w.cancelIdleCallback(idleId);
-      if (timerId) window.clearTimeout(timerId);
-    };
+    if (typeof w.requestIdleCallback === "function") {
+      const id = w.requestIdleCallback(() => setGlobeReady(true), { timeout: 2000 });
+      return () => w.cancelIdleCallback?.(id);
+    }
+    const t = window.setTimeout(() => setGlobeReady(true), 600);
+    return () => window.clearTimeout(t);
   }, []);
 
   // Outer-tilt parallax — vanilla JS direct style mutation + CSS transition.
@@ -403,11 +367,7 @@ export function HeroSection() {
             className="hero-fade-up mt-7 flex flex-wrap gap-6"
             style={{ animationDelay: "1.1s" }}
           >
-            {/* prefetch={false}: /products imports framer-motion. Default
-                Next prefetch fires when the Link enters the viewport, which
-                pulls the framer-motion chunk into the homepage critical
-                path and inflates Lighthouse's "unused JS" + TBT. */}
-            <Link href="/products" prefetch={false} className="inline-flex">
+            <Link href="/products" className="inline-flex">
               <Button
                 size="lg"
                 className="px-7 py-3.5 shadow-gold hover:shadow-gold-lg transition-shadow"
@@ -416,7 +376,7 @@ export function HeroSection() {
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
-            <Link href="/about" prefetch={false} className="inline-flex">
+            <Link href="/about" className="inline-flex">
               <Button
                 variant="outline"
                 size="lg"
@@ -504,7 +464,7 @@ export function HeroSection() {
             className="hero-fade-up mt-3 sm:mt-4 flex flex-wrap gap-4 sm:gap-6 justify-center items-center"
             style={{ animationDelay: "1.3s" }}
           >
-            <Link href="/products" prefetch={false} className="inline-flex">
+            <Link href="/products" className="inline-flex">
               <Button
                 size="lg"
                 className="px-7 py-3.5 shadow-gold hover:shadow-gold-lg transition-shadow"
@@ -513,7 +473,7 @@ export function HeroSection() {
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
-            <Link href="/about" prefetch={false} className="inline-flex">
+            <Link href="/about" className="inline-flex">
               <Button
                 variant="outline"
                 size="sm"

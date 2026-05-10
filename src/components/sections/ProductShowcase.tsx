@@ -80,7 +80,6 @@ export function ProductShowcase() {
           </div>
           <Link
             href="/products"
-            prefetch={false}
             className="mt-4 lg:mt-0 inline-flex items-center gap-2 text-sm font-medium text-gold-deep hover:text-gold transition-colors cursor-pointer"
           >
             View All <ArrowUpRight className="w-4 h-4" />
@@ -93,7 +92,6 @@ export function ProductShowcase() {
             <ScrollReveal key={product.slug} delay={i * 0.08} className={product.span}>
               <Link
                 href={`/products/${product.slug}`}
-                prefetch={false}
                 className="group block h-full"
                 onMouseEnter={() => setHoveredSlug(product.slug)}
                 onMouseLeave={() => setHoveredSlug(null)}

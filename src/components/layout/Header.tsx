@@ -116,7 +116,6 @@ export function Header() {
                 >
                   <Link
                     href={item.href}
-                    prefetch={false}
                     aria-haspopup={hasChildren ? "true" : undefined}
                     aria-expanded={hasChildren ? isOpen : undefined}
                     className={cn(
@@ -144,7 +143,6 @@ export function Header() {
                           <Link
                             key={child.name}
                             href={child.href}
-                            prefetch={false}
                             className="flex items-center justify-between px-4 py-2.5 text-[13px] text-ink-muted hover:text-primary hover:bg-stone-100 rounded-lg transition-all duration-150 cursor-pointer group/item focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
                           >
                             {child.name}
