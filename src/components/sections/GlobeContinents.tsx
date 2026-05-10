@@ -18,8 +18,7 @@ import countriesTopologyRaw from "world-atlas/countries-110m.json";
  *
  * Lives in its own module so the world-atlas JSON (~108 KB) and the
  * topojson-client runtime ship in their own chunk, not the main globe
- * chunk. The parent Globe3DScene only `import()`s this on lg+ viewports —
- * mobile/tablet visitors never download or parse it.
+ * chunk. Loaded via React.lazy by Globe3DScene on every viewport.
  */
 
 const COUNTRY_LINE = "#9DBFD7";
