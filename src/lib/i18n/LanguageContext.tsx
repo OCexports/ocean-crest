@@ -9,6 +9,7 @@ import {
   useMemo,
   type ReactNode,
 } from "react";
+import { LazyMotion, domAnimation } from "framer-motion";
 import { translations, type Locale } from "./translations";
 
 const RTL_LOCALES: Locale[] = ["ar", "ur"];
@@ -55,7 +56,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   return (
     <LanguageContext.Provider value={value}>
-      {children}
+      <LazyMotion features={domAnimation}>{children}</LazyMotion>
     </LanguageContext.Provider>
   );
 }

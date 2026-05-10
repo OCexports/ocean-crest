@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 import { companyInfo } from "@/lib/constants/navigation";
 
@@ -19,7 +19,6 @@ export function WhatsAppFab() {
   )}`;
 
   return (
-    <LazyMotion features={domAnimation} strict>
     <AnimatePresence>
       {isVisible && (
         <m.div
@@ -62,6 +61,5 @@ export function WhatsAppFab() {
         </m.div>
       )}
     </AnimatePresence>
-    </LazyMotion>
   );
 }

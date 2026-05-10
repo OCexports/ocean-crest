@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { m, AnimatePresence } from "framer-motion";
 import { Globe, Check, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
@@ -28,11 +29,7 @@ export function LanguageSwitcher({ isScrolled = false }: Props) {
   const locales = Object.keys(localeNames) as Locale[];
 
   return (
-    <div
-      ref={ref}
-      data-open={open ? "true" : "false"}
-      className="relative"
-    >
+    <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(!open)}
         className={cn(
@@ -55,33 +52,39 @@ export function LanguageSwitcher({ isScrolled = false }: Props) {
         />
       </button>
 
-      <div
-        role="listbox"
-        className="popover-panel absolute top-full right-0 mt-2 w-48 bg-white rounded-[var(--radius-md)] shadow-modal overflow-hidden border border-edge-light z-50"
-      >
-        <div className="p-1.5 max-h-[400px] overflow-y-auto">
-          {locales.map((lng) => (
-            <button
-              key={lng}
-              onClick={() => {
-                setLocale(lng);
-                setOpen(false);
-              }}
-              tabIndex={open ? 0 : -1}
-              className={cn(
-                "w-full flex items-center justify-between px-3 py-2 text-[13px] rounded-lg transition-all cursor-pointer",
-                locale === lng
-                  ? "bg-gold/10 text-gold font-medium"
-                  : "text-ink-muted hover:bg-stone-100 hover:text-primary"
-              )}
-            >
-              <span>{localeNames[lng]}</span>
-              {locale === lng && <Check className="w-3.5 h-3.5" />}
-            </button>
-          ))}
-        </div>
-        <div className="h-[2px] bg-gradient-to-r from-gold via-gold/50 to-transparent" />
-      </div>
+      <AnimatePresence>
+        {open && (
+          <m.div
+            initial={{ opacity: 0, y: 10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.98 }}
+            transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+            className="absolute top-full right-0 mt-2 w-48 bg-white rounded-[var(--radius-md)] shadow-modal overflow-hidden border border-edge-light z-50"
+          >
+            <div className="p-1.5 max-h-[400px] overflow-y-auto">
+              {locales.map((lng) => (
+                <button
+                  key={lng}
+                  onClick={() => {
+                    setLocale(lng);
+                    setOpen(false);
+                  }}
+                  className={cn(
+                    "w-full flex items-center justify-between px-3 py-2 text-[13px] rounded-lg transition-all cursor-pointer",
+                    locale === lng
+                      ? "bg-gold/10 text-gold font-medium"
+                      : "text-ink-muted hover:bg-stone-100 hover:text-primary"
+                  )}
+                >
+                  <span>{localeNames[lng]}</span>
+                  {locale === lng && <Check className="w-3.5 h-3.5" />}
+                </button>
+              ))}
+            </div>
+            <div className="h-[2px] bg-gradient-to-r from-gold via-gold/50 to-transparent" />
+          </m.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

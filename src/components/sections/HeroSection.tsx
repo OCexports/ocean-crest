@@ -1,5 +1,13 @@
 "use client";
 
+import {
+  m,
+  useInView,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -134,43 +142,24 @@ const charDelay = (i: number) => `${0.25 + i * 0.04}s`;
 export function HeroSection() {
   const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
-  const parallaxRef = useRef<HTMLDivElement>(null);
-  // IntersectionObserver-driven gates — replaces framer-motion useInView.
-  const [isInView, setIsInView] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const isInView = useInView(sectionRef, { amount: 0 });
+  const reducedMotion = useReducedMotion();
   // Mount strategy:
-  // - Globe3DScene runs everywhere — it's the brand. The scene was tuned
-  //   down (named imports, lower segment counts, antialias off on touch,
-  //   DPR capped at 1) so it's light enough for mobile.
-  // - HeroParticles still desktop-only — 24 infinite CSS loops are still
-  //   pure CPU cost without the visual payoff on small screens.
-  // - The 3D scene mounts after requestIdleCallback so its chunk loads
+  // - Globe3DScene runs everywhere now — it's the brand. The scene was
+  //   tuned down (named imports, lower segment counts, antialias off on
+  //   touch, DPR capped at 1) so it's light enough for mobile.
+  // - HeroParticles still desktop-only; 24 framer-motion infinite loops
+  //   are pure CPU cost without the visual payoff on small screens.
+  // - In both cases we mount after requestIdleCallback so the chunk loads
   //   AFTER the hero text + CTAs have painted (LCP / TBT win).
   const [isLgUp, setIsLgUp] = useState(false);
   const [globeReady, setGlobeReady] = useState(false);
   useEffect(() => {
     const lgMQ = window.matchMedia("(min-width: 1024px)");
-    const motionMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
     setIsLgUp(lgMQ.matches);
-    setReducedMotion(motionMQ.matches);
-    const onLg = (e: MediaQueryListEvent) => setIsLgUp(e.matches);
-    const onMotion = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
-    lgMQ.addEventListener("change", onLg);
-    motionMQ.addEventListener("change", onMotion);
-    return () => {
-      lgMQ.removeEventListener("change", onLg);
-      motionMQ.removeEventListener("change", onMotion);
-    };
-  }, []);
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => setIsInView(entry.isIntersecting),
-      { threshold: 0 },
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
+    const onChange = (e: MediaQueryListEvent) => setIsLgUp(e.matches);
+    lgMQ.addEventListener("change", onChange);
+    return () => lgMQ.removeEventListener("change", onChange);
   }, []);
   useEffect(() => {
     type IdleWindow = Window &
@@ -187,22 +176,27 @@ export function HeroSection() {
     return () => window.clearTimeout(t);
   }, []);
 
-  // Outer-tilt parallax — vanilla JS direct style mutation + CSS transition.
-  // Replaces framer-motion's useMotionValue/useSpring/useTransform so the
-  // hero stops pulling the framer-motion runtime onto the homepage.
+  // Outer-tilt parallax for the entire globe composition
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rotateX = useSpring(useTransform(my, [-1, 1], [3, -3]), {
+    stiffness: 100,
+    damping: 20,
+  });
+  const rotateY = useSpring(useTransform(mx, [-1, 1], [-3, 3]), {
+    stiffness: 100,
+    damping: 20,
+  });
+
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    const node = parallaxRef.current;
-    if (!node) return;
-    const r = node.getBoundingClientRect();
-    const x = ((e.clientX - r.left) / r.width) * 2 - 1;
-    const y = ((e.clientY - r.top) / r.height) * 2 - 1;
-    node.style.transform = `perspective(1200px) rotateX(${(-y * 3).toFixed(2)}deg) rotateY(${(x * 3).toFixed(2)}deg)`;
+    const r = e.currentTarget.getBoundingClientRect();
+    mx.set(((e.clientX - r.left) / r.width) * 2 - 1);
+    my.set(((e.clientY - r.top) / r.height) * 2 - 1);
   };
 
   const onPointerLeave = () => {
-    const node = parallaxRef.current;
-    if (!node) return;
-    node.style.transform = "perspective(1200px) rotateX(0deg) rotateY(0deg)";
+    mx.set(0);
+    my.set(0);
   };
 
   return (
@@ -423,17 +417,17 @@ export function HeroSection() {
 
         {/* RIGHT column on lg+, MIDDLE row on mobile: globe */}
         <div className="relative w-full lg:col-span-7 self-stretch flex items-center justify-center min-h-0">
-          <div
-            ref={parallaxRef}
+          <m.div
             onPointerMove={onPointerMove}
             onPointerLeave={onPointerLeave}
             style={{
-              transform: "perspective(1200px) rotateX(0deg) rotateY(0deg)",
-              transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+              rotateX,
+              rotateY,
+              transformPerspective: 1200,
               animationDelay: "0.4s",
               animationDuration: "1s",
             }}
-            className="hero-fade hero-parallax relative aspect-square h-full max-h-full w-full max-w-[640px] lg:max-w-none"
+            className="hero-fade relative aspect-square h-full max-h-full w-full max-w-[640px] lg:max-w-none"
           >
             <div
               className="absolute inset-0"
@@ -446,7 +440,7 @@ export function HeroSection() {
             >
               {globeReady ? <Globe3DScene /> : <StaticGlobePlaceholder />}
             </div>
-          </div>
+          </m.div>
         </div>
 
         {/* MOBILE-ONLY: tagline + CTAs */}

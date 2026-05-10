@@ -9,11 +9,6 @@ import dynamic from "next/dynamic";
  * internal "wait a beat then appear" delay, so the user-visible behavior
  * is identical — the only thing we're moving is when the JS lands.
  *
- * IMPORTANT: framer-motion lives inside the dynamic-imported children
- * (each wraps its own LazyMotion provider), NOT in this file — importing
- * `LazyMotion` here would pull framer-motion into the layout chunk and
- * negate the deferral.
- *
  * Wrapped in a "use client" component because next/dynamic with ssr:false
  * can't sit directly in the Server-Component root layout.
  */

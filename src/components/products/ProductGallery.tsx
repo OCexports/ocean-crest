@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { Play } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ProductImagePlaceholder } from "./ProductImagePlaceholder";
@@ -65,7 +65,6 @@ export function ProductGallery({
   const current = slides[active];
 
   return (
-    <LazyMotion features={domAnimation} strict>
     <div className="sticky top-24">
       {/* Main slide with hover-zoom for images */}
       <div className="aspect-square rounded-[var(--radius-lg)] overflow-hidden shadow-border relative group bg-stone-100">
@@ -160,6 +159,5 @@ export function ProductGallery({
         </div>
       )}
     </div>
-    </LazyMotion>
   );
 }
