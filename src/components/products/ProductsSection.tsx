@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { m, AnimatePresence } from "framer-motion";
+import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardContent } from "@/components/ui/Card";
@@ -17,7 +17,7 @@ export function ProductsSection() {
   const filtered = getProductsByCategory(active);
 
   return (
-    <>
+    <LazyMotion features={domAnimation} strict>
       {/* Filter Buttons */}
       <div className="flex flex-wrap gap-3 mb-10">
         {categories.map((cat) => (
@@ -119,6 +119,6 @@ export function ProductsSection() {
           </p>
         </div>
       )}
-    </>
+    </LazyMotion>
   );
 }

@@ -354,6 +354,77 @@ h1 { letter-spacing: -0.04em; }
   }
 }
 
+/* ═══ Header CSS-driven hide-on-scroll + dropdown / drawer / scroll-progress
+   Replaces framer-motion m.header / AnimatePresence / useScroll, so the
+   layout shell pulls in zero framer-motion runtime. ═══ */
+.header-shell {
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+.header-shell.is-hidden {
+  transform: translate3d(0, -100%, 0);
+}
+
+.scroll-progress-bar {
+  transform: scaleX(var(--scroll-progress, 0));
+  transform-origin: left;
+}
+
+/* Pop-down menu (nav dropdown / language switcher). Mounted as a hidden
+   element; toggled via the parent's `data-open` attribute. */
+.popover-panel {
+  opacity: 0;
+  transform: translate3d(0, 10px, 0) scale(0.98);
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0s linear 0.2s;
+}
+.is-open > .popover-panel,
+[data-open="true"] > .popover-panel {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0s linear 0s;
+}
+
+/* Mobile drawer + backdrop. Styled by .is-open on the host. */
+.drawer-backdrop {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease-out;
+}
+.drawer-panel {
+  transform: translate3d(100%, 0, 0);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+.drawer-host.is-open .drawer-backdrop {
+  opacity: 1;
+  pointer-events: auto;
+}
+.drawer-host.is-open .drawer-panel {
+  transform: translate3d(0, 0, 0);
+}
+
+@keyframes drawer-item-in {
+  from { opacity: 0; transform: translate3d(30px, 0, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.drawer-host.is-open .drawer-item {
+  animation: drawer-item-in 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation-delay: calc(0.05s + 0.06s * var(--i, 0));
+}
+.drawer-host.is-open .drawer-cta {
+  animation: drawer-item-in 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation-delay: 0.4s;
+}
+
 /* ═══ Float Animations ═══ */
 @keyframes float {
   0%, 100% { transform: translateY(0); }
