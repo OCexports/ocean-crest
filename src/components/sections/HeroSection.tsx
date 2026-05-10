@@ -47,7 +47,7 @@ interface Stat {
 }
 
 const stats: Stat[] = [
-  { icon: GlobeIcon, label: "Global Reach", description: "8 ports Â· 6 continents" },
+  { icon: GlobeIcon, label: "Global Reach", description: "8 ports · 6 continents" },
   { icon: ShieldCheck, label: "Verified Quality", description: "FSSAI + ISO 22000" },
   { icon: Award, label: "Direct Source", description: "Farm-to-port traceability" },
   { icon: Clock, label: "Timely Delivery", description: "Container & LCL ready" },
@@ -217,7 +217,7 @@ export function HeroSection() {
 
   return (
     <section ref={sectionRef} className="relative h-screen min-h-[560px] sm:min-h-[640px] flex flex-col overflow-hidden bg-primary">
-      {/* Layered backdrop â€” base radial gradient + grid + drifting aurora blobs */}
+      {/* Layered backdrop — base radial gradient + grid + drifting aurora blobs */}
       <div className="absolute inset-0">
         <div
           className="absolute inset-0"
@@ -236,17 +236,17 @@ export function HeroSection() {
               "radial-gradient(circle, rgba(212,166,74,0.22) 0%, rgba(212,166,74,0.06) 45%, transparent 70%)",
           }}
         />
-        {/* Aurora blob 1 â€” gold (static) */}
+        {/* Aurora blob 1 — gold (static) */}
         <div
           aria-hidden="true"
           className="absolute top-[20%] left-[20%] w-[60vw] h-[60vw] max-w-[700px] max-h-[700px] rounded-full bg-gold/[0.06] blur-2xl pointer-events-none"
         />
-        {/* Aurora blob 2 â€” teal (static) */}
+        {/* Aurora blob 2 — teal (static) */}
         <div
           aria-hidden="true"
           className="absolute bottom-[10%] right-[15%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] rounded-full bg-teal/[0.04] blur-2xl pointer-events-none"
         />
-        {/* Drifting gold particles â€” only when hero is in view */}
+        {/* Drifting gold particles — only when hero is in view */}
         {/* Particles only render on lg+ — 24 infinite framer-motion animations
             cost too much main-thread time on mid-range mobile CPUs. The CSS
             `hidden lg:block` would only hide them visually; the animation
@@ -319,12 +319,12 @@ export function HeroSection() {
             className="mt-3 sm:mt-4 flex items-center justify-center gap-3"
           >
             <span className="block w-12 h-px bg-gradient-to-r from-transparent to-gold/60" />
-            <span className="text-gold/80 text-[12px] lg:text-[10px]">â—†</span>
+            <span className="text-gold/80 text-[12px] lg:text-[10px]">◆</span>
             <span className="block w-12 h-px bg-gradient-to-l from-transparent to-gold/60" />
           </motion.div>
         </div>
 
-        {/* DESKTOP-ONLY (lg+): LEFT column â€” eyebrow / headline / divider / lede / CTAs / stat block */}
+        {/* DESKTOP-ONLY (lg+): LEFT column — eyebrow / headline / divider / lede / CTAs / stat block */}
         <div className="hidden lg:flex lg:col-span-5 flex-col justify-center text-left">
           <motion.div
             initial={{ opacity: 0, y: 6 }}
@@ -518,7 +518,7 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Capability ticker â€” only animates when hero is in view */}
+      {/* Capability ticker — only animates when hero is in view */}
       <div className="relative z-10 py-2.5 sm:py-3 overflow-hidden bg-primary">
         {isInView && (
           <div className="animate-marquee flex whitespace-nowrap">
@@ -536,7 +536,7 @@ export function HeroSection() {
         )}
       </div>
 
-      {/* Scroll cue â€” subtle indicator that there's content below */}
+      {/* Scroll cue — subtle indicator that there's content below */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

@@ -86,7 +86,7 @@ export function ProductShowcase() {
           </Link>
         </div>
 
-        {/* Bento grid â€” 1 hero card + 3 supporting cards */}
+        {/* Bento grid — 1 hero card + 3 supporting cards */}
         <div className="grid grid-cols-1 lg:grid-cols-4 lg:grid-rows-2 gap-5 lg:gap-6 lg:auto-rows-fr">
           {featured.map((product, i) => (
             <ScrollReveal key={product.slug} delay={i * 0.08} className={product.span}>

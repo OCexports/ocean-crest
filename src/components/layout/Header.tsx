@@ -43,7 +43,7 @@ export function Header() {
   }, [isMobileOpen]);
 
   // Esc closes the drawer; focus moves to the close button on open and
-  // returns to the hamburger on close â€” keyboard users should never get lost.
+  // returns to the hamburger on close — keyboard users should never get lost.
   useEffect(() => {
     if (!isMobileOpen) return;
     const onKey = (e: KeyboardEvent) => {
@@ -76,7 +76,7 @@ export function Header() {
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-24 lg:h-32">
-            {/* Logo â€” text composite (circle + wordmark) */}
+            {/* Logo — text composite (circle + wordmark) */}
             <Link href="/" className="flex items-center gap-3 cursor-pointer group">
               <Image
                 src="/images/brand/OC MONOGRAM.png"
@@ -278,7 +278,7 @@ export function Header() {
                   ))}
                 </nav>
 
-                {/* Language Switcher â€” Mobile */}
+                {/* Language Switcher — Mobile */}
                 <div className="mt-4 border-t border-white/10 pt-4">
                   <LanguageSwitcher isScrolled={false} />
                 </div>
@@ -328,7 +328,7 @@ export function Header() {
   );
 }
 
-/* Scroll Progress Bar â€” like Everest */
+/* Scroll Progress Bar — like Everest */
 function ScrollProgress() {
   const { scrollYProgress } = useScroll();
 
