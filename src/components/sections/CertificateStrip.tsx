@@ -57,6 +57,7 @@ export function CertificateStrip() {
             </div>
             <Link
               href="/certificates"
+              prefetch={false}
               className="mt-4 sm:mt-0 inline-flex items-center gap-1.5 text-sm font-medium text-gold hover:text-gold-muted transition-colors cursor-pointer"
             >
               View All Certificates <ArrowUpRight className="w-3.5 h-3.5" />
