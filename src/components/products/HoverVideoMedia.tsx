@@ -103,6 +103,17 @@ export function HoverVideoMedia({
     return () => obs.disconnect();
   }, [isTouchPrimary, reducedMotion, video, interactive]);
 
+  // React applies `muted` as a property after mount, not as the DOM attribute —
+  // and some mobile Safari builds key autoplay eligibility off the attribute /
+  // `defaultMuted`. Set both imperatively so muted-inline autoplay is honored
+  // on real devices (works in desktop DevTools emulation regardless).
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    el.muted = true;
+    el.defaultMuted = true;
+  }, [video]);
+
   const hoverSignal = isHovered !== undefined ? isHovered : internalHover;
   // Hover is an explicit user action — allow it even with reduced motion.
   // Intersection autoplay is the implicit motion that reduced-motion targets.
@@ -178,7 +189,7 @@ export function HoverVideoMedia({
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
           aria-hidden="true"
           tabIndex={-1}
           className={cn(

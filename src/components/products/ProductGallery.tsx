@@ -46,6 +46,10 @@ export function ProductGallery({
     if (!el) return;
     const current = slides[active];
     if (current?.type === "video") {
+      // React doesn't reflect `muted` to the DOM attribute; some mobile Safari
+      // builds need the property/`defaultMuted` set for muted-inline autoplay.
+      el.muted = true;
+      el.defaultMuted = true;
       el.play().catch(() => {});
     } else {
       el.pause();
