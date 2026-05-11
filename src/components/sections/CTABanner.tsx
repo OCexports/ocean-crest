@@ -22,7 +22,7 @@ export function CTABanner() {
     <section className="relative py-28 lg:py-36 bg-primary overflow-hidden">
       {/* Large background text */}
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none">
-        <span className="text-[100px] lg:text-[200px] font-bold text-white/[0.015] font-[family-name:var(--font-display)] whitespace-nowrap select-none">
+        <span className="text-[60px] sm:text-[100px] lg:text-[200px] font-bold text-white/[0.015] font-[family-name:var(--font-display)] whitespace-nowrap select-none">
           OCEAN CREST
         </span>
       </div>
@@ -35,14 +35,13 @@ export function CTABanner() {
               {t.common.getInTouch}
             </span>
             <h2 className="mt-4 text-3xl lg:text-5xl font-bold text-white font-[family-name:var(--font-display)] leading-tight">
-              Ready to Source
+              {t.ctaBanner.heading1}
               <br />
-              <span className="text-gradient-copper">Quality Products?</span>
+              <span className="text-gradient-copper">{t.ctaBanner.heading2}</span>
             </h2>
             <div className="gold-line-left mt-6" />
             <p className="mt-6 text-base text-white/80 leading-relaxed max-w-md font-light">
-              Fill in your details and our team will get back to you with a
-              customized quote within 24 hours.
+              {t.ctaBanner.intro}
             </p>
           </ScrollReveal>
 
@@ -63,13 +62,13 @@ export function CTABanner() {
                   onClick={() => setIsSubmitted(false)}
                   className="mt-4 text-sm text-gold hover:text-gold-light transition-colors cursor-pointer underline"
                 >
-                  Send another inquiry
+                  {t.ctaBanner.sendAnother}
                 </button>
               </div>
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="glass rounded-[var(--radius-lg)] p-6 lg:p-8 space-y-4"
+                className="glass rounded-[var(--radius-lg)] p-4 sm:p-6 lg:p-8 space-y-4"
               >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
@@ -82,7 +81,7 @@ export function CTABanner() {
                       autoComplete="name"
                       required
                       className="w-full px-3 py-2.5 bg-white/8 border border-white/15 rounded-[var(--radius-sm)] text-white text-sm placeholder:text-white/45 focus:outline-none focus:ring-2 focus:ring-gold/40 focus:border-gold focus:bg-white/10 transition-colors"
-                      placeholder="Your name"
+                      placeholder={t.ctaBanner.phName}
                     />
                   </div>
                   <div className="space-y-1.5">
@@ -125,7 +124,7 @@ export function CTABanner() {
                       name="company"
                       autoComplete="organization"
                       className="w-full px-3 py-2.5 bg-white/8 border border-white/15 rounded-[var(--radius-sm)] text-white text-sm placeholder:text-white/45 focus:outline-none focus:ring-2 focus:ring-gold/40 focus:border-gold focus:bg-white/10 transition-colors"
-                      placeholder="Company name"
+                      placeholder={t.ctaBanner.phCompany}
                     />
                   </div>
                 </div>
@@ -134,7 +133,7 @@ export function CTABanner() {
                     {t.contact.product}
                   </label>
                   <select id="cta-product" name="product" className="w-full px-3 py-2.5 bg-white/8 border border-white/15 rounded-[var(--radius-sm)] text-white text-sm focus:outline-none focus:ring-2 focus:ring-gold/40 focus:border-gold focus:bg-white/10 transition-colors cursor-pointer">
-                    <option value="" className="bg-primary">Select a product</option>
+                    <option value="" className="bg-primary">{t.ctaBanner.selectProduct}</option>
                     <option value="dehydrated-garlic-flakes" className="bg-primary">Garlic Flakes</option>
                     <option value="dehydrated-garlic-chopped" className="bg-primary">Garlic Chopped</option>
                     <option value="dehydrated-garlic-minced" className="bg-primary">Garlic Minced</option>
@@ -152,7 +151,7 @@ export function CTABanner() {
                     required
                     rows={3}
                     className="w-full px-3 py-2.5 bg-white/8 border border-white/15 rounded-[var(--radius-sm)] text-white text-sm placeholder:text-white/45 focus:outline-none focus:ring-2 focus:ring-gold/40 focus:border-gold focus:bg-white/10 transition-colors resize-none"
-                    placeholder="Tell us about your requirements..."
+                    placeholder={t.ctaBanner.phMessage}
                   />
                 </div>
                 <button
@@ -183,7 +182,7 @@ export function CTABanner() {
                   ) : (
                     <Send className="w-4 h-4" />
                   )}
-                  {isSubmitting ? "Sending..." : t.contact.submit}
+                  {isSubmitting ? t.ctaBanner.sending : t.contact.submit}
                 </button>
               </form>
             )}

@@ -1,6 +1,9 @@
+"use client";
+
 import { Quote } from "lucide-react";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { StaggerChildren, StaggerItem } from "@/components/animations/StaggerChildren";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 const testimonials = [
   {
@@ -24,16 +27,17 @@ const testimonials = [
 ];
 
 export function Testimonials() {
+  const { t } = useLanguage();
   return (
     <section className="py-24 lg:py-32 bg-stone">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-14 lg:mb-16">
             <span className="text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase text-gold-deep">
-              In their words
+              {t.testimonials.eyebrow}
             </span>
             <h2 className="mt-3 text-3xl lg:text-4xl font-semibold text-primary font-[family-name:var(--font-display)]">
-              What our partners say
+              {t.testimonials.heading}
             </h2>
             <div className="gold-line mx-auto mt-5 max-w-[80px]" />
           </div>

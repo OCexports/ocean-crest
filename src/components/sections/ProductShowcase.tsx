@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { HoverVideoMedia } from "@/components/products/HoverVideoMedia";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 const featured: {
   name: string;
@@ -25,8 +26,8 @@ const featured: {
     tag: "Dehydrated",
     moq: "MOQ 200 KG",
     color: "from-stone-900/40 via-stone-900/10 to-stone-950/80",
-    span: "lg:col-span-2 lg:row-span-2",
-    height: "h-[340px] lg:h-full",
+    span: "md:col-span-2 lg:col-span-2 lg:row-span-2",
+    height: "h-[340px] md:h-[420px] lg:h-full",
   },
   {
     name: "Dehydrated Garlic Chopped",
@@ -37,7 +38,7 @@ const featured: {
     moq: "MOQ 200 KG",
     color: "from-stone-900/40 via-stone-900/10 to-stone-950/80",
     span: "",
-    height: "h-[260px] lg:h-[260px]",
+    height: "h-[260px] md:h-[280px] lg:h-[260px]",
   },
   {
     name: "Dehydrated Garlic Minced",
@@ -48,7 +49,7 @@ const featured: {
     moq: "MOQ 200 KG",
     color: "from-amber-900/30 via-amber-900/5 to-amber-950/75",
     span: "",
-    height: "h-[260px] lg:h-[260px]",
+    height: "h-[260px] md:h-[280px] lg:h-[260px]",
   },
   {
     name: "Dehydrated Garlic Powder",
@@ -58,12 +59,24 @@ const featured: {
     tag: "Dehydrated",
     moq: "MOQ 200 KG",
     color: "from-yellow-900/30 via-yellow-900/5 to-yellow-950/75",
-    span: "lg:col-span-2",
-    height: "h-[260px] lg:h-[260px]",
+    span: "",
+    height: "h-[260px] md:h-[280px] lg:h-[260px]",
+  },
+  {
+    name: "Dehydrated Garlic Granules",
+    slug: "dehydrated-garlic-granules",
+    image: "/images/products/garlic/granules-1.webp",
+    video: "/videos/products/garlic/granules.mp4",
+    tag: "Dehydrated",
+    moq: "MOQ 200 KG",
+    color: "from-orange-900/30 via-orange-900/5 to-orange-950/75",
+    span: "",
+    height: "h-[260px] md:h-[280px] lg:h-[260px]",
   },
 ];
 
 export function ProductShowcase() {
+  const { t } = useLanguage();
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
   return (
     <section className="py-28 lg:py-36 bg-stone">
@@ -71,10 +84,10 @@ export function ProductShowcase() {
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16">
           <div>
             <span className="text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase text-gold-deep">
-              Products
+              {t.productsSection.eyebrow}
             </span>
             <h2 className="mt-3 text-3xl lg:text-5xl font-semibold text-primary font-[family-name:var(--font-display)]">
-              Our Products
+              {t.productsSection.heading}
             </h2>
             <div className="gold-line-left mt-4" />
           </div>
@@ -82,13 +95,17 @@ export function ProductShowcase() {
             href="/products"
             className="mt-4 lg:mt-0 inline-flex items-center gap-2 text-sm font-medium text-gold-deep hover:text-gold transition-colors cursor-pointer"
           >
-            View All <ArrowUpRight className="w-4 h-4" />
+            {t.productsSection.viewAll} <ArrowUpRight className="w-4 h-4" />
           </Link>
         </div>
 
         {/* Bento grid — 1 hero card + 3 supporting cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 lg:grid-rows-2 gap-5 lg:gap-6 lg:auto-rows-fr">
-          {featured.map((product, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2 gap-5 md:gap-6 lg:gap-6 lg:auto-rows-fr">
+          {featured.map((product, i) => {
+            const pd = t.productData[product.slug];
+            const name = pd?.name ?? product.name;
+            const tag = pd?.category ?? product.tag;
+            return (
             <ScrollReveal key={product.slug} delay={i * 0.08} className={product.span}>
               <Link
                 href={`/products/${product.slug}`}
@@ -100,7 +117,7 @@ export function ProductShowcase() {
                   <HoverVideoMedia
                     src={product.image}
                     video={product.video}
-                    alt={product.name}
+                    alt={name}
                     // Bento grid lives inside max-w-7xl (≈1216px content width).
                     // Hero card spans 2/4 cols ≈ 600px max; supporting cards
                     // span 1/4 ≈ 290px max. Capping the upper bound stops
@@ -119,7 +136,7 @@ export function ProductShowcase() {
 
                   <div className="absolute top-5 left-5 z-10 flex items-center gap-2">
                     <span className="text-[12px] lg:text-[9px] tracking-[0.2em] uppercase font-semibold px-3 py-1.5 rounded-full bg-gold/90 backdrop-blur-sm text-white border border-gold/30">
-                      {product.tag}
+                      {tag}
                     </span>
                     <span className="text-[12px] lg:text-[9px] tracking-[0.15em] uppercase font-medium px-2.5 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-white/90 border border-white/15">
                       {product.moq}
@@ -134,16 +151,17 @@ export function ProductShowcase() {
 
                   <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
                     <h3 className="text-xl lg:text-2xl font-semibold text-white font-[family-name:var(--font-display)]">
-                      {product.name}
+                      {name}
                     </h3>
                     <span className="inline-block mt-1 text-xs text-white/80 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
-                      View Details â†’
+                      {t.productsSection.viewDetails} {"→"}
                     </span>
                   </div>
                 </div>
               </Link>
             </ScrollReveal>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

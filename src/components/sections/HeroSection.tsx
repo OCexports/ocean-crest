@@ -31,27 +31,13 @@ const Globe3DScene = dynamic(() => import("./Globe3DScene"), {
   ),
 });
 
-const capabilities = [
-  "Verified Supply",
-  "Lab-Tested Quality",
-  "Direct Sourcing",
-  "Custom Compliance",
-  "Export-Grade Packaging",
-  "Global Distribution",
-];
 
-interface Stat {
-  icon: typeof GlobeIcon;
-  label: string;
-  description: string;
-}
-
-const stats: Stat[] = [
-  { icon: GlobeIcon, label: "Global Reach", description: "8 ports · 6 continents" },
-  { icon: ShieldCheck, label: "Verified Quality", description: "FSSAI + ISO 22000" },
-  { icon: Award, label: "Direct Source", description: "Farm-to-port traceability" },
-  { icon: Clock, label: "Timely Delivery", description: "Container & LCL ready" },
-];
+const statIcons = [
+  { icon: GlobeIcon, key: "globalReach" },
+  { icon: ShieldCheck, key: "verifiedQuality" },
+  { icon: Award, key: "directSource" },
+  { icon: Clock, key: "timelyDelivery" },
+] as const;
 
 const PARTICLES = Array.from({ length: 24 }).map((_, i) => {
   const seed = (Math.sin(i * 12.9898) * 43758.5453) % 1;
@@ -200,7 +186,7 @@ export function HeroSection() {
   };
 
   return (
-    <section ref={sectionRef} className="relative h-screen min-h-[560px] sm:min-h-[640px] flex flex-col overflow-hidden bg-primary">
+    <section ref={sectionRef} className="relative h-screen lg:min-h-[560px] flex flex-col overflow-hidden bg-primary">
       {/* Layered backdrop — base radial gradient + grid + drifting aurora blobs */}
       <div className="absolute inset-0">
         <div
@@ -212,7 +198,7 @@ export function HeroSection() {
         />
         <div
           aria-hidden="true"
-          className="hero-aurora-pulse absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[35vw] h-[35vw] max-w-[460px] max-h-[460px] rounded-full pointer-events-none lg:left-[72%]"
+          className="hero-aurora-pulse absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[35vw] h-[35vw] max-w-[460px] max-h-[460px] rounded-full pointer-events-none lg:left-[72%] [dir=rtl]:lg:left-auto [dir=rtl]:lg:right-[72%] [dir=rtl]:lg:translate-x-1/2"
           style={{
             background:
               "radial-gradient(circle, rgba(212,166,74,0.22) 0%, rgba(212,166,74,0.06) 45%, transparent 70%)",
@@ -261,28 +247,28 @@ export function HeroSection() {
         {/* MOBILE-ONLY: top eyebrow â†’ headline â†’ divider */}
         <div className="lg:hidden flex flex-col items-center text-center">
           <div
-            className="hero-fade-up mb-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold/25 bg-gold/[0.04]"
+            className="hero-fade-up mb-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold/25 bg-gold/[0.04] max-w-[calc(100vw-2rem)]"
             style={{ animationDelay: "0.15s" }}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
-            <span className="text-[12px] lg:text-[10px] tracking-[0.3em] uppercase text-gold/90 font-medium">
+            <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse shrink-0" />
+            <span className="text-[10px] sm:text-[12px] lg:text-[10px] tracking-[0.12em] sm:tracking-[0.2em] uppercase text-gold/90 font-medium leading-snug text-center break-words">
               {t.hero.eyebrow}
             </span>
           </div>
 
           <h1 className="font-[family-name:var(--font-display)]">
-            <span className="block text-[34px] sm:text-5xl font-light text-white leading-[1] tracking-tight">
+            <span className="block text-[28px] sm:text-5xl font-light text-white leading-[1] tracking-tight">
               {"Ocean Crest".split("").map((c, i) => (
                 <span
                   key={i}
                   className="hero-char-up inline-block"
                   style={{ animationDelay: charDelay(i) }}
                 >
-                  {c === " " ? " " : c}
+                  {c === " " ? String.fromCharCode(160) : c}
                 </span>
               ))}
             </span>
-            <span className="block text-[34px] sm:text-5xl font-semibold text-white leading-[1] tracking-tight mt-0.5">
+            <span className="block text-[28px] sm:text-5xl font-semibold text-white leading-[1] tracking-tight mt-0.5">
               {"Exports".split("").map((c, i) => (
                 <span
                   key={i}
@@ -312,7 +298,7 @@ export function HeroSection() {
             style={{ animationDelay: "0.15s" }}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
-            <span className="text-[12px] lg:text-[10px] tracking-[0.3em] uppercase text-gold/90 font-medium">
+            <span className="text-[12px] lg:text-[10px] tracking-[0.2em] uppercase text-gold/90 font-medium break-words">
               {t.hero.eyebrow}
             </span>
           </div>
@@ -325,7 +311,7 @@ export function HeroSection() {
                   className="hero-char-up inline-block"
                   style={{ animationDelay: charDelay(i) }}
                 >
-                  {c === " " ? " " : c}
+                  {c === " " ? String.fromCharCode(160) : c}
                 </span>
               ))}
             </span>
@@ -351,10 +337,7 @@ export function HeroSection() {
             className="hero-fade-up mt-6 max-w-md text-base xl:text-lg text-white/70 font-light leading-relaxed"
             style={{ animationDelay: "0.95s" }}
           >
-            Premium Indian{" "}
-            <span className="font-medium text-white">commodities</span>, verified
-            at source and shipped from Ahmedabad to{" "}
-            <span className="font-medium text-white">25+ countries</span>.
+            {t.heroLede}
           </p>
 
           <div
@@ -387,13 +370,13 @@ export function HeroSection() {
               visually and a11y-wise here (these are not glossary entries). */}
           <div
             role="list"
-            className="mt-10 grid grid-cols-2 gap-x-6 gap-y-4 max-w-md"
+            className="mt-10 grid grid-cols-2 gap-x-6 gap-y-4 max-w-md lg:max-w-lg"
           >
-            {stats.map((s, i) => {
-              const Icon = s.icon;
+            {statIcons.map(({ icon: Icon, key }, i) => {
+              const card = t.heroCards[key];
               return (
                 <div
-                  key={s.label}
+                  key={key}
                   role="listitem"
                   className="hero-fade-up flex items-start gap-2.5"
                   style={{ animationDelay: `${1.25 + i * 0.08}s` }}
@@ -401,12 +384,12 @@ export function HeroSection() {
                   <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-gold/30 bg-gold/[0.06]">
                     <Icon className="h-3.5 w-3.5 text-gold" strokeWidth={1.8} />
                   </span>
-                  <div className="leading-tight">
+                  <div className="leading-tight min-w-0">
                     <p className="text-[12px] lg:text-[10px] font-semibold tracking-[0.2em] uppercase text-white/95">
-                      {s.label}
+                      {card.title}
                     </p>
-                    <p className="mt-1 text-[12px] text-white/75 font-light">
-                      {s.description}
+                    <p className="mt-1 text-[12px] text-white/75 font-light break-words">
+                      {card.value}
                     </p>
                   </div>
                 </div>
@@ -449,9 +432,9 @@ export function HeroSection() {
             className="hero-fade-up text-base sm:text-lg font-light text-white font-[family-name:var(--font-display)] tracking-tight leading-snug"
             style={{ animationDelay: "1.2s" }}
           >
-            Premium Indian{" "}
-            <span className="font-semibold text-gold">Commodities</span>
-            ,<br className="sm:hidden" /> Globally Delivered.
+            {t.hero.taglineLead}{" "}
+            <span className="font-semibold text-gold">{t.hero.taglineHighlight}</span>
+            {", "}<br className="sm:hidden" />{t.hero.taglineEnd}
           </p>
 
           <div
@@ -484,10 +467,10 @@ export function HeroSection() {
       <div className="relative z-10 py-2.5 sm:py-3 overflow-hidden bg-primary">
         {isInView && (
           <div className="animate-marquee flex whitespace-nowrap">
-            {[...capabilities, ...capabilities, ...capabilities, ...capabilities].map(
+            {[...t.marquee, ...t.marquee, ...t.marquee, ...t.marquee].map(
               (name, i) => (
-                <span key={i} className="flex items-center mx-6 sm:mx-8">
-                  <span className="text-[12px] sm:text-[11px] lg:text-[9.5px] tracking-[0.2em] uppercase text-white/70 font-medium">
+                <span key={i} className="flex items-center mx-4 sm:mx-8">
+                  <span className="text-[11px] lg:text-[9.5px] tracking-[0.2em] uppercase text-white/70 font-medium">
                     {name}
                   </span>
                   <span className="ml-6 sm:ml-8 w-1.5 h-1.5 rounded-full bg-gold/80" />

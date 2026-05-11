@@ -10,49 +10,76 @@ import {
   type ReactNode,
 } from "react";
 import { LazyMotion, domAnimation } from "framer-motion";
-import { translations, type Locale } from "./translations";
+import {
+  en,
+  loadLocale,
+  isLocale,
+  type Locale,
+  type Translations,
+} from "./translations";
 
 const RTL_LOCALES: Locale[] = ["ar", "ur"];
+const STORAGE_KEY = "ocean-crest-locale";
 
 interface LanguageContextType {
   locale: Locale;
   setLocale: (locale: Locale) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  t: any;
+  t: Translations;
   dir: "ltr" | "rtl";
 }
 
 const LanguageContext = createContext<LanguageContextType>({
   locale: "en",
   setLocale: () => {},
-  t: translations.en,
+  t: en,
   dir: "ltr",
 });
 
+function applyDocAttrs(locale: Locale) {
+  document.documentElement.lang = locale;
+  document.documentElement.dir = RTL_LOCALES.includes(locale) ? "rtl" : "ltr";
+}
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>("en");
+  // `t` lags `locale` by one async tick on switch — we keep showing the
+  // previous dictionary until the new one resolves (no flash of keys).
+  const [t, setT] = useState<Translations>(en);
 
+  // On mount, restore the stored locale (if any) and lazy-load its dictionary.
   useEffect(() => {
-    const stored = localStorage.getItem("ocean-crest-locale") as Locale | null;
-    if (stored && translations[stored]) {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (!isLocale(stored) || stored === "en") return;
+    applyDocAttrs(stored);
+    let cancelled = false;
+    loadLocale(stored).then((dict) => {
+      if (cancelled) return;
       setLocaleState(stored);
-      document.documentElement.lang = stored;
-      document.documentElement.dir = RTL_LOCALES.includes(stored) ? "rtl" : "ltr";
+      setT(dict);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const setLocale = useCallback((next: Locale) => {
+    applyDocAttrs(next);
+    localStorage.setItem(STORAGE_KEY, next);
+    if (next === "en") {
+      setLocaleState("en");
+      setT(en);
+      return;
     }
+    loadLocale(next).then((dict) => {
+      setLocaleState(next);
+      setT(dict);
+    });
   }, []);
 
-  const setLocale = useCallback((newLocale: Locale) => {
-    setLocaleState(newLocale);
-    document.documentElement.lang = newLocale;
-    document.documentElement.dir = RTL_LOCALES.includes(newLocale) ? "rtl" : "ltr";
-    localStorage.setItem("ocean-crest-locale", newLocale);
-  }, []);
-
-  const value = useMemo(() => {
-    const t = translations[locale] || translations.en;
+  const value = useMemo<LanguageContextType>(() => {
     const dir: "ltr" | "rtl" = RTL_LOCALES.includes(locale) ? "rtl" : "ltr";
     return { locale, setLocale, t, dir };
-  }, [locale, setLocale]);
+  }, [locale, setLocale, t]);
 
   return (
     <LanguageContext.Provider value={value}>

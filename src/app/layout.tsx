@@ -5,7 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { LanguageProvider } from "@/lib/i18n/LanguageContext";
 import { StructuredData, organizationSchema } from "@/components/seo/StructuredData";
-import { siteUrl, siteName, defaultOgImage } from "@/lib/seo/site";
+import { siteUrl, siteName } from "@/lib/seo/site";
 import { DeferredOverlays } from "@/components/layout/DeferredOverlays";
 
 const cormorant = Cormorant({
@@ -64,20 +64,13 @@ export const metadata: Metadata = {
     title: defaultTitle,
     description: defaultDescription,
     url: siteUrl,
-    images: [
-      {
-        url: defaultOgImage,
-        width: 1200,
-        height: 630,
-        alt: "Ocean Crest Exports — Premium Indian spice and dehydrated vegetable supplier",
-      },
-    ],
+    // og:image is provided by src/app/opengraph-image.tsx (file convention).
   },
   twitter: {
     card: "summary_large_image",
     title: defaultTitle,
     description: defaultDescription,
-    images: [defaultOgImage],
+    // twitter:image is also derived from src/app/opengraph-image.tsx.
   },
   robots: {
     index: true,
@@ -90,9 +83,8 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
-  icons: {
-    icon: "/favicon.ico",
-  },
+  // favicon comes from src/app/favicon.ico, apple-touch from src/app/apple-icon.tsx
+  // (Next.js file conventions) — no explicit `icons` needed.
 };
 
 export const viewport: Viewport = {

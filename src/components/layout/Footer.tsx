@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { companyInfo } from "@/lib/constants/navigation";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 type IconProps = { className?: string };
 
@@ -34,22 +37,23 @@ const socialIcons: Record<string, (p: IconProps) => React.ReactElement> = {
 };
 
 const footerLinks = [
-  { name: "Home", href: "/" },
-  { name: "About Us", href: "/about" },
-  { name: "Products", href: "/products" },
-  { name: "Certificates", href: "/certificates" },
-  { name: "Contact", href: "/contact" },
-];
+  { key: "home", href: "/" },
+  { key: "about", href: "/about" },
+  { key: "products", href: "/products" },
+  { key: "certificates", href: "/certificates" },
+  { key: "contact", href: "/contact" },
+] as const;
 
 const productLinks = [
-  { name: "Garlic Flakes", href: "/products/dehydrated-garlic-flakes" },
-  { name: "Garlic Chopped", href: "/products/dehydrated-garlic-chopped" },
-  { name: "Garlic Minced", href: "/products/dehydrated-garlic-minced" },
-  { name: "Garlic Granules", href: "/products/dehydrated-garlic-granules" },
-  { name: "Garlic Powder", href: "/products/dehydrated-garlic-powder" },
-];
+  { slug: "dehydrated-garlic-flakes", fallback: "Garlic Flakes" },
+  { slug: "dehydrated-garlic-chopped", fallback: "Garlic Chopped" },
+  { slug: "dehydrated-garlic-minced", fallback: "Garlic Minced" },
+  { slug: "dehydrated-garlic-granules", fallback: "Garlic Granules" },
+  { slug: "dehydrated-garlic-powder", fallback: "Garlic Powder" },
+] as const;
 
 export function Footer() {
+  const { t } = useLanguage();
   return (
     <footer className="relative">
       <div className="gold-line" />
@@ -71,9 +75,7 @@ export function Footer() {
                 />
               </div>
               <p className="text-white/80 text-sm leading-relaxed">
-                A specialized export brand under Sheth &amp; Bhatt&apos;s LLP,
-                dedicated to the global distribution of high-quality Indian
-                products with verified supply and lab-tested quality.
+                {t.footer.tagline}
               </p>
               {/* Social */}
               <div className="flex gap-3 mt-6">
@@ -104,16 +106,16 @@ export function Footer() {
             {/* Quick Links */}
             <div>
               <h3 className="text-sm font-semibold tracking-wider uppercase text-white/80 mb-4">
-                Quick Links
+                {t.footer.quickLinks}
               </h3>
               <ul className="space-y-2.5">
                 {footerLinks.map((link) => (
-                  <li key={link.name}>
+                  <li key={link.key}>
                     <Link
                       href={link.href}
                       className="text-sm text-white/80 hover:text-gold transition-colors cursor-pointer"
                     >
-                      {link.name}
+                      {t.nav[link.key]}
                     </Link>
                   </li>
                 ))}
@@ -123,16 +125,16 @@ export function Footer() {
             {/* Products */}
             <div>
               <h3 className="text-sm font-semibold tracking-wider uppercase text-white/80 mb-4">
-                Our Products
+                {t.footer.products}
               </h3>
               <ul className="space-y-2.5">
                 {productLinks.map((link) => (
-                  <li key={link.name}>
+                  <li key={link.slug}>
                     <Link
-                      href={link.href}
+                      href={`/products/${link.slug}`}
                       className="text-sm text-white/80 hover:text-gold transition-colors cursor-pointer"
                     >
-                      {link.name}
+                      {t.productData[link.slug]?.name ?? link.fallback}
                     </Link>
                   </li>
                 ))}
@@ -142,7 +144,7 @@ export function Footer() {
             {/* Contact + Map */}
             <div>
               <h3 className="text-sm font-semibold tracking-wider uppercase text-white/80 mb-4">
-                Contact Us
+                {t.footer.contact}
               </h3>
               <div className="space-y-3 text-sm text-white/80">
                 <div className="flex gap-3">
@@ -176,8 +178,7 @@ export function Footer() {
                 <iframe
                   src="https://www.google.com/maps?q=Zodiac+Aarish+Sundervan+Epitome+Jodhpur+Ahmedabad+380015&output=embed"
                   width="100%"
-                  height="140"
-                  className="border-0"
+                  className="border-0 block w-full h-[160px] md:h-[200px]"
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
@@ -191,21 +192,20 @@ export function Footer() {
           {/* Bottom */}
           <div className="mt-12 pt-8 border-t border-gold/10 flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-white/80">
-              &copy; {new Date().getFullYear()} Ocean Crest Exports. All rights
-              reserved. Part of Sheth &amp; Bhatt&apos;s LLP.
+              &copy; {new Date().getFullYear()} Ocean Crest Exports. {t.footerExtra.copyright}
             </p>
             <div className="flex gap-6 text-sm text-white/80">
               <Link
                 href="/privacy"
                 className="hover:text-gold/60 transition-colors cursor-pointer"
               >
-                Privacy Policy
+                {t.footerExtra.privacy}
               </Link>
               <Link
                 href="/terms"
                 className="hover:text-gold/60 transition-colors cursor-pointer"
               >
-                Terms of Service
+                {t.footerExtra.terms}
               </Link>
             </div>
           </div>

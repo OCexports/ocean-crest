@@ -1,47 +1,21 @@
+"use client";
+
 import { MapPin, FlaskConical, FileCheck, Package, Truck } from "lucide-react";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { StaggerChildren, StaggerItem } from "@/components/animations/StaggerChildren";
 import { JourneyScrollLine } from "./JourneyScrollLine";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
-const steps = [
-  {
-    num: "01",
-    icon: MapPin,
-    title: "Sourced Locally",
-    description:
-      "Direct relationships with local producers across India, ensuring full visibility into origin and quality.",
-  },
-  {
-    num: "02",
-    icon: FlaskConical,
-    title: "Lab Tested",
-    description:
-      "Comprehensive analysis in accredited laboratories to verify purity, safety, and international compliance.",
-  },
-  {
-    num: "03",
-    icon: FileCheck,
-    title: "Customized Compliance",
-    description:
-      "Tailored testing protocols based on client demand or destination country regulations for seamless customs clearance.",
-  },
-  {
-    num: "04",
-    icon: Package,
-    title: "Strategic Packaging",
-    description:
-      "Industrial-grade, export-specific packaging to preserve product integrity during long-haul transit.",
-  },
-  {
-    num: "05",
-    icon: Truck,
-    title: "Verified Delivery",
-    description:
-      "Every shipment backed by a reliable supply chain and dedicated support to ensure on-time arrival.",
-  },
-];
+const stepIcons = [
+  { num: "01", icon: MapPin, key: "sourced" },
+  { num: "02", icon: FlaskConical, key: "tested" },
+  { num: "03", icon: FileCheck, key: "compliance" },
+  { num: "04", icon: Package, key: "packaging" },
+  { num: "05", icon: Truck, key: "delivery" },
+] as const;
 
 export function JourneySection() {
+  const { t } = useLanguage();
   return (
     <section className="py-28 lg:py-36 bg-primary relative overflow-hidden">
       <div className="absolute inset-0 gradient-mesh opacity-20" />
@@ -50,14 +24,13 @@ export function JourneySection() {
         <ScrollReveal>
           <div className="text-center mb-16 lg:mb-20">
             <span className="text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase text-gold-deep">
-              Our Process
+              {t.journey.eyebrow}
             </span>
             <h2 className="mt-3 text-3xl lg:text-5xl font-semibold text-white font-[family-name:var(--font-display)]">
-              The Verified Supply
+              {t.journey.heading}
             </h2>
             <p className="mt-4 text-sm text-white/70 max-w-xl mx-auto">
-              We eliminate uncertainty in cross-border trade through direct
-              sourcing and mandatory laboratory verification for every shipment.
+              {t.journey.intro}
             </p>
           </div>
         </ScrollReveal>
@@ -66,13 +39,13 @@ export function JourneySection() {
           <JourneyScrollLine />
 
           <StaggerChildren
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-y-12 gap-x-4 lg:gap-x-6"
+            className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-y-10 gap-x-4 lg:gap-x-6"
             staggerDelay={0.12}
           >
-            {steps.map((step) => {
-              const Icon = step.icon;
+            {stepIcons.map(({ num, icon: Icon, key }) => {
+              const step = t.journey.steps[key];
               return (
-                <StaggerItem key={step.num}>
+                <StaggerItem key={num}>
                   <div className="relative text-center px-2">
                     {/* Icon circle */}
                     <div className="relative z-10 w-[100px] h-[100px] mx-auto rounded-full border border-gold/30 flex items-center justify-center bg-primary">
@@ -85,7 +58,7 @@ export function JourneySection() {
                       {step.title}
                     </h3>
                     <p className="mt-2 text-xs text-white/65 leading-relaxed">
-                      {step.description}
+                      {step.desc}
                     </p>
                   </div>
                 </StaggerItem>
