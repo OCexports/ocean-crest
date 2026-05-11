@@ -115,7 +115,7 @@ export function ProductGallery({
 
         {/* Slide counter */}
         {slides.length > 1 && (
-          <div className="absolute bottom-4 right-4 px-3 py-1.5 rounded-full bg-ink/60 backdrop-blur-sm text-white text-xs font-medium tracking-wider pointer-events-none">
+          <div className="absolute bottom-4 end-4 px-3 py-1.5 rounded-full bg-ink/60 backdrop-blur-sm text-white text-xs font-medium tracking-wider pointer-events-none">
             {active + 1} / {slides.length}
           </div>
         )}

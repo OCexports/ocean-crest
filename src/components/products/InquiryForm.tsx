@@ -65,7 +65,7 @@ export function InquiryForm() {
           {f.successTitle}
         </h3>
         <p className="mt-2 text-ink-muted max-w-md mx-auto">{f.successBody}</p>
-        <ul className="mt-6 max-w-md mx-auto text-left text-sm text-ink-muted space-y-2">
+        <ul className="mt-6 max-w-md mx-auto text-start text-sm text-ink-muted space-y-2">
           <li className="flex items-start gap-2">
             <span className="mt-1 inline-block w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
             <span>{f.emailConfirm}</span>

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant, Montserrat } from "next/font/google";
+import { Cormorant, Montserrat, Noto_Sans_Devanagari, Noto_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -15,13 +15,33 @@ const cormorant = Cormorant({
   weight: ["400", "600", "700"],
 });
 
-// Montserrat covers latin + latin-ext; Hindi/Arabic/Urdu locales fall back to
-// the system stack until we ship dedicated Devanagari/Arabic font families.
+// Montserrat covers latin + latin-ext.
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin", "latin-ext"],
   display: "swap",
   weight: ["300", "400", "500", "600", "700"],
+});
+
+// Script-specific webfonts for the non-latin locales. `preload: false` so the
+// `@font-face` is defined but the woff2 is only fetched once an element with
+// the matching font-family actually renders (i.e. only on hi / ar / ur — see
+// the `html[lang="…"]` rules in globals.css). CJK locales (zh/ja/ko) use the
+// OS CJK font stack instead — self-hosting CJK webfonts would be multi-MB.
+const notoDevanagari = Noto_Sans_Devanagari({
+  variable: "--font-devanagari",
+  subsets: ["devanagari"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+  preload: false,
+});
+
+const notoArabic = Noto_Sans_Arabic({
+  variable: "--font-arabic",
+  subsets: ["arabic"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+  preload: false,
 });
 
 const defaultTitle = "Ocean Crest — Premium Spice Exports from India";
@@ -100,9 +120,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${montserrat.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${cormorant.variable} ${montserrat.variable} ${notoDevanagari.variable} ${notoArabic.variable}`} suppressHydrationWarning>
       <body className="min-h-screen flex flex-col" suppressHydrationWarning>
-        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-gold focus:text-white focus:px-4 focus:py-2 focus:rounded-[var(--radius-sm)] focus:text-sm focus:font-medium">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:start-4 focus:z-[100] focus:bg-gold focus:text-white focus:px-4 focus:py-2 focus:rounded-[var(--radius-sm)] focus:text-sm focus:font-medium">
           Skip to main content
         </a>
         <LanguageProvider>
