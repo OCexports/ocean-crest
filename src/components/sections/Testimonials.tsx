@@ -51,10 +51,10 @@ export function Testimonials() {
             <StaggerItem key={t.author}>
               <figure className="h-full bg-warm-white rounded-[var(--radius-lg)] p-8 lg:p-10 shadow-border hover:shadow-card-hover transition-all duration-300 border border-edge-light relative">
                 <Quote
-                  className="absolute top-6 right-6 w-8 h-8 text-gold/20"
+                  className="absolute top-6 end-6 w-8 h-8 text-gold/20"
                   aria-hidden="true"
                 />
-                <blockquote className="text-lg leading-relaxed text-ink pr-8">
+                <blockquote className="text-lg leading-relaxed text-ink pe-8">
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
                 <figcaption className="mt-6 pt-6 border-t border-edge-light flex items-center gap-4">

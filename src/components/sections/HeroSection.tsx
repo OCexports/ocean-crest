@@ -256,28 +256,37 @@ export function HeroSection() {
             </span>
           </div>
 
+          {/* The brand name is always Latin and rendered char-by-char for the
+              entrance animation. The dir="ltr" inline-block wrapper keeps the
+              letters in order under dir="rtl" (ar/ur) WITHOUT pinning the h1's
+              alignment — so the headline still follows the column's text-align
+              (centered here, start-aligned on desktop). */}
           <h1 className="font-[family-name:var(--font-display)]">
             <span className="block text-[28px] sm:text-5xl font-light text-white leading-[1] tracking-tight">
-              {"Ocean Crest".split("").map((c, i) => (
-                <span
-                  key={i}
-                  className="hero-char-up inline-block"
-                  style={{ animationDelay: charDelay(i) }}
-                >
-                  {c === " " ? String.fromCharCode(160) : c}
-                </span>
-              ))}
+              <span dir="ltr" className="inline-block">
+                {"Ocean Crest".split("").map((c, i) => (
+                  <span
+                    key={i}
+                    className="hero-char-up inline-block"
+                    style={{ animationDelay: charDelay(i) }}
+                  >
+                    {c === " " ? String.fromCharCode(160) : c}
+                  </span>
+                ))}
+              </span>
             </span>
             <span className="block text-[28px] sm:text-5xl font-semibold text-white leading-[1] tracking-tight mt-0.5">
-              {"Exports".split("").map((c, i) => (
-                <span
-                  key={i}
-                  className="hero-char-up inline-block"
-                  style={{ animationDelay: charDelay(i + "Ocean Crest".length) }}
-                >
-                  {c}
-                </span>
-              ))}
+              <span dir="ltr" className="inline-block">
+                {"Exports".split("").map((c, i) => (
+                  <span
+                    key={i}
+                    className="hero-char-up inline-block"
+                    style={{ animationDelay: charDelay(i + "Ocean Crest".length) }}
+                  >
+                    {c}
+                  </span>
+                ))}
+              </span>
             </span>
           </h1>
 
@@ -292,7 +301,7 @@ export function HeroSection() {
         </div>
 
         {/* DESKTOP-ONLY (lg+): LEFT column — eyebrow / headline / divider / lede / CTAs / stat block */}
-        <div className="hidden lg:flex lg:col-span-5 flex-col justify-center text-left">
+        <div className="hidden lg:flex lg:col-span-5 flex-col justify-center text-start">
           <div
             className="hero-fade-up self-start mb-5 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold/25 bg-gold/[0.04]"
             style={{ animationDelay: "0.15s" }}
@@ -303,28 +312,33 @@ export function HeroSection() {
             </span>
           </div>
 
+          {/* dir="ltr" inline-block wrappers — see the mobile headline above. */}
           <h1 className="font-[family-name:var(--font-display)]">
             <span className="block text-[clamp(48px,5.4vw,72px)] font-light text-white leading-[0.95] tracking-tight">
-              {"Ocean Crest".split("").map((c, i) => (
-                <span
-                  key={i}
-                  className="hero-char-up inline-block"
-                  style={{ animationDelay: charDelay(i) }}
-                >
-                  {c === " " ? String.fromCharCode(160) : c}
-                </span>
-              ))}
+              <span dir="ltr" className="inline-block">
+                {"Ocean Crest".split("").map((c, i) => (
+                  <span
+                    key={i}
+                    className="hero-char-up inline-block"
+                    style={{ animationDelay: charDelay(i) }}
+                  >
+                    {c === " " ? String.fromCharCode(160) : c}
+                  </span>
+                ))}
+              </span>
             </span>
             <span className="block text-[clamp(48px,5.4vw,72px)] font-semibold text-white leading-[0.95] tracking-tight mt-1">
-              {"Exports".split("").map((c, i) => (
-                <span
-                  key={i}
-                  className="hero-char-up inline-block"
-                  style={{ animationDelay: charDelay(i + "Ocean Crest".length) }}
-                >
-                  {c}
-                </span>
-              ))}
+              <span dir="ltr" className="inline-block">
+                {"Exports".split("").map((c, i) => (
+                  <span
+                    key={i}
+                    className="hero-char-up inline-block"
+                    style={{ animationDelay: charDelay(i + "Ocean Crest".length) }}
+                  >
+                    {c}
+                  </span>
+                ))}
+              </span>
             </span>
           </h1>
 

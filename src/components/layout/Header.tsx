@@ -11,7 +11,10 @@ import { LanguageSwitcher } from "./LanguageSwitcher";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export function Header() {
-  const { t } = useLanguage();
+  const { t, dir } = useLanguage();
+  // In RTL the hamburger sits on the left (the header flex reverses), so the
+  // drawer must anchor to / slide in from the left instead of the right.
+  const drawerOffset = dir === "rtl" ? "-100%" : "100%";
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -80,6 +83,7 @@ export function Header() {
                 scrolls to top if you're already there. */}
             <Link
               href="/"
+              dir="ltr"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               className="flex items-center gap-3 cursor-pointer group"
             >
@@ -216,17 +220,18 @@ export function Header() {
               role="dialog"
               aria-modal="true"
               aria-label="Site navigation"
-              initial={{ x: "100%" }}
+              initial={{ x: drawerOffset }}
               animate={{ x: 0 }}
-              exit={{ x: "100%" }}
+              exit={{ x: drawerOffset }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 bottom-0 w-[88%] max-w-sm bg-primary z-50 overflow-y-auto"
+              className="fixed top-0 right-0 bottom-0 [dir=rtl]:right-auto [dir=rtl]:left-0 w-[88%] max-w-sm bg-primary z-50 overflow-y-auto"
             >
               <div className="p-5 sm:p-8">
                 {/* Close */}
                 <div className="flex items-center justify-between mb-12">
                   <Link
                     href="/"
+                    dir="ltr"
                     onClick={() => {
                       setIsMobileOpen(false);
                       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -346,7 +351,7 @@ function ScrollProgress() {
 
   return (
     <m.div
-      className="fixed top-0 left-0 right-0 h-[2px] bg-gold z-[60] origin-left"
+      className="fixed top-0 left-0 right-0 h-[2px] bg-gold z-[60] origin-left [dir=rtl]:origin-right"
       style={{ scaleX: scrollYProgress }}
     />
   );

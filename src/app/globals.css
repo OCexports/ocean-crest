@@ -113,6 +113,34 @@ h1, h2, h3 {
 
 h1 { letter-spacing: -0.04em; }
 
+/* ═══ Script-aware fonts per locale ═══
+   LanguageContext sets <html lang="…">; these override the --font-display /
+   --font-body custom properties so headings + body pick up the right script
+   font. Devanagari/Arabic come from the lazy Noto webfonts (only loaded when
+   one of these locales is active); the latin fallbacks ('Cormorant' /
+   'Montserrat' / system-ui) stay in the base `body` and `h1,h2,h3` font stacks.
+   CJK uses the OS font stack — no webfont download. */
+html[lang="hi"] {
+  --font-display: var(--font-devanagari);
+  --font-body: var(--font-devanagari);
+}
+html[lang="ar"], html[lang="ur"] {
+  --font-display: var(--font-arabic);
+  --font-body: var(--font-arabic);
+}
+html[lang="zh"] {
+  --font-display: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC";
+  --font-body: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC";
+}
+html[lang="ja"] {
+  --font-display: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", "Noto Sans CJK JP";
+  --font-body: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", "Noto Sans CJK JP";
+}
+html[lang="ko"] {
+  --font-display: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR";
+  --font-body: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR";
+}
+
 /* ═══ Shadow-as-border (Vercel pattern) ═══ */
 .shadow-border {
   box-shadow: 0 0 0 1px rgba(10, 30, 45, 0.08);
@@ -159,6 +187,19 @@ h1 { letter-spacing: -0.04em; }
 }
 
 [dir="rtl"] { text-align: right; }
+/* RTL: mirror the left-anchored heading accent gradient so it stays solid on
+   the side the right-aligned heading starts from. */
+[dir="rtl"] .gold-line-left {
+  background: linear-gradient(270deg, var(--color-gold), transparent 70%);
+}
+/* RTL: flip directional arrow glyphs (CTAs, "view all", breadcrumb/dropdown
+   hover arrows) so they point the reading direction. lucide icons carry a
+   `.lucide-arrow-*` class. */
+[dir="rtl"] .lucide-arrow-right,
+[dir="rtl"] .lucide-arrow-up-right,
+[dir="rtl"] .lucide-arrow-left {
+  transform: scaleX(-1);
+}
 
 ::selection {
   background: var(--color-gold);
