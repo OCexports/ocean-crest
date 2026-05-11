@@ -10,8 +10,10 @@ import { Card, CardContent } from "@/components/ui/Card";
 import { categories, getProductsByCategory } from "@/lib/constants/products";
 import { ProductImagePlaceholder } from "./ProductImagePlaceholder";
 import { HoverVideoMedia } from "./HoverVideoMedia";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export function ProductsSection() {
+  const { t } = useLanguage();
   const [active, setActive] = useState("all");
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
   const filtered = getProductsByCategory(active);
@@ -25,13 +27,13 @@ export function ProductsSection() {
             key={cat.slug}
             onClick={() => setActive(cat.slug)}
             className={cn(
-              "px-5 py-2.5 text-sm font-medium rounded-full border transition-all duration-200 cursor-pointer",
+              "px-5 py-2.5 text-sm font-medium rounded-full border transition-all duration-200 cursor-pointer whitespace-nowrap",
               active === cat.slug
                 ? "bg-primary text-white border-primary shadow-md"
                 : "bg-white text-ink-muted border-edge hover:border-gold hover:text-gold"
             )}
           >
-            {cat.name}
+            {t.categoriesLabels[cat.slug as keyof typeof t.categoriesLabels] ?? cat.name}
           </button>
         ))}
       </div>
@@ -46,7 +48,11 @@ export function ProductsSection() {
           transition={{ duration: 0.25 }}
           className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {filtered.map((product, i) => (
+          {filtered.map((product, i) => {
+            const pd = t.productData[product.slug];
+            const name = pd?.name ?? product.name;
+            const meshBadge = pd?.meshBadge ?? product.meshBadge;
+            return (
             <m.div
               key={product.slug}
               initial={{ opacity: 0, y: 20 }}
@@ -66,7 +72,7 @@ export function ProductsSection() {
                         <HoverVideoMedia
                           src={product.image}
                           video={product.video}
-                          alt={product.name}
+                          alt={name}
                           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                           isHovered={hoveredSlug === product.slug}
                         />
@@ -75,9 +81,9 @@ export function ProductsSection() {
                     ) : (
                       <ProductImagePlaceholder />
                     )}
-                    {product.meshBadge && (
+                    {meshBadge && (
                       <span className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-sm text-[12px] lg:text-[10px] font-semibold tracking-[0.15em] uppercase text-primary shadow-border">
-                        {product.meshBadge}
+                        {meshBadge}
                       </span>
                     )}
                     {product.video && (
@@ -92,30 +98,31 @@ export function ProductsSection() {
                   </div>
                   <CardContent>
                     <Badge variant="gold" className="mb-2">
-                      {product.category}
+                      {pd?.category ?? product.category}
                     </Badge>
                     <h3 className="text-lg font-semibold text-primary font-[family-name:var(--font-display)] group-hover:text-gold transition-colors">
-                      {product.name}
+                      {name}
                     </h3>
                     <p className="mt-1.5 text-sm text-ink-muted line-clamp-2">
-                      {product.shortDescription}
+                      {pd?.shortDescription ?? product.shortDescription}
                     </p>
                     <span className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-gold group-hover:gap-2 transition-all">
-                      View Details{" "}
+                      {t.productsSection.viewDetails}{" "}
                       <ArrowRight className="w-3.5 h-3.5" />
                     </span>
                   </CardContent>
                 </Card>
               </Link>
             </m.div>
-          ))}
+            );
+          })}
         </m.div>
       </AnimatePresence>
 
       {filtered.length === 0 && (
         <div className="text-center py-16">
           <p className="text-ink-muted text-lg">
-            No products found in this category.
+            {t.productsSection.noResults}
           </p>
         </div>
       )}

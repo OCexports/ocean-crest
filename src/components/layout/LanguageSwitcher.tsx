@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function LanguageSwitcher({ isScrolled = false }: Props) {
-  const { locale, setLocale } = useLanguage();
+  const { locale, setLocale, t } = useLanguage();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -38,7 +38,7 @@ export function LanguageSwitcher({ isScrolled = false }: Props) {
             ? "text-ink-muted hover:text-primary hover:bg-stone-100"
             : "text-white/80 hover:text-white hover:bg-white/10"
         )}
-        aria-label={`${locale.toUpperCase()} — change language`}
+        aria-label={`${locale.toUpperCase()} — ${t.overlays.langSwitchAria}`}
         aria-expanded={open}
         aria-haspopup="listbox"
       >
@@ -59,9 +59,12 @@ export function LanguageSwitcher({ isScrolled = false }: Props) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.98 }}
             transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-            className="absolute top-full right-0 mt-2 w-48 bg-white rounded-[var(--radius-md)] shadow-modal overflow-hidden border border-edge-light z-50"
+            className="absolute top-full right-0 mt-2 w-48 max-w-[calc(100vw-1rem)] bg-white rounded-[var(--radius-md)] shadow-modal overflow-hidden border border-edge-light z-50"
           >
-            <div className="p-1.5 max-h-[400px] overflow-y-auto">
+            <div
+              className="p-1.5 max-h-[400px] overflow-y-auto overscroll-contain"
+              data-lenis-prevent
+            >
               {locales.map((lng) => (
                 <button
                   key={lng}

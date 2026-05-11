@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { m } from "framer-motion";
 import { Mail } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 /**
  * Vertical "Get in Touch" tab pinned mid-right on desktop. A persistent
@@ -15,6 +16,7 @@ import { Mail } from "lucide-react";
  * scarce horizontal space.
  */
 export function ContactSideTab() {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -28,19 +30,19 @@ export function ContactSideTab() {
       initial={{ x: 64, opacity: 0 }}
       animate={isVisible ? { x: 0, opacity: 1 } : { x: 64, opacity: 0 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="hidden lg:flex fixed right-0 top-1/2 -translate-y-1/2 z-40"
+      className="hidden lg:flex fixed right-0 [dir=rtl]:right-auto [dir=rtl]:left-0 top-1/2 -translate-y-1/2 z-40"
     >
       <Link
         href="/contact"
-        aria-label="Get in touch with Ocean Crest"
-        className="group flex flex-col items-center gap-3 bg-gold text-primary px-2 py-4 rounded-l-[var(--radius-sm)] shadow-modal hover:bg-gold-muted transition-colors duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+        aria-label={t.overlays.contactSideAria}
+        className="group flex flex-col items-center gap-3 bg-gold text-primary px-2 py-4 rounded-l-[var(--radius-sm)] [dir=rtl]:rounded-l-none [dir=rtl]:rounded-r-[var(--radius-sm)] shadow-modal hover:bg-gold-muted transition-colors duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
       >
         <Mail className="w-3.5 h-3.5 shrink-0" strokeWidth={2.2} />
         <span
           className="text-[12px] lg:text-[9.5px] font-semibold tracking-[0.2em] uppercase leading-none"
           style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
         >
-          Get in Touch
+          {t.overlays.contactSideLabel}
         </span>
       </Link>
     </m.div>

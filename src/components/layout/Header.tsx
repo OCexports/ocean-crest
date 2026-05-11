@@ -76,8 +76,13 @@ export function Header() {
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-24 lg:h-32">
-            {/* Logo — text composite (circle + wordmark) */}
-            <Link href="/" className="flex items-center gap-3 cursor-pointer group">
+            {/* Logo — text composite (circle + wordmark). Always returns to home;
+                scrolls to top if you're already there. */}
+            <Link
+              href="/"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="flex items-center gap-3 cursor-pointer group"
+            >
               <Image
                 src="/images/brand/OC MONOGRAM.png"
                 alt="OC monogram"
@@ -89,7 +94,7 @@ export function Header() {
               />
               <span
                 className={cn(
-                  "text-[13px] lg:text-[16px] font-semibold tracking-[0.1em] uppercase font-[family-name:var(--font-display)] transition-colors duration-300 leading-none",
+                  "text-[13px] lg:text-[16px] font-semibold tracking-[0.1em] uppercase font-[family-name:var(--font-display)] transition-colors duration-300 leading-none whitespace-nowrap",
                   isScrolled ? "text-primary" : "text-white",
                 )}
               >
@@ -215,12 +220,19 @@ export function Header() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 bottom-0 w-[85%] max-w-sm bg-primary z-50 overflow-y-auto"
+              className="fixed top-0 right-0 bottom-0 w-[88%] max-w-sm bg-primary z-50 overflow-y-auto"
             >
-              <div className="p-8">
+              <div className="p-5 sm:p-8">
                 {/* Close */}
                 <div className="flex items-center justify-between mb-12">
-                  <div className="flex items-center gap-2.5">
+                  <Link
+                    href="/"
+                    onClick={() => {
+                      setIsMobileOpen(false);
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                    className="flex items-center gap-2.5 cursor-pointer"
+                  >
                     <Image
                       src="/images/brand/OC MONOGRAM.png"
                       alt="OC monogram"
@@ -232,7 +244,7 @@ export function Header() {
                     <span className="text-sm font-semibold tracking-[0.1em] uppercase font-[family-name:var(--font-display)] text-white leading-none">
                       Ocean Crest Exports
                     </span>
-                  </div>
+                  </Link>
                   <button
                     ref={drawerCloseRef}
                     onClick={() => setIsMobileOpen(false)}
@@ -302,7 +314,7 @@ export function Header() {
                       rel="noopener noreferrer"
                     >
                       <button className="w-full mt-2 py-3.5 bg-whatsapp/10 border border-whatsapp/20 text-whatsapp font-semibold text-sm rounded-full hover:bg-whatsapp/20 transition-colors cursor-pointer">
-                        WhatsApp Us
+                        {t.headerExtra.whatsappUs}
                       </button>
                     </a>
                   )}

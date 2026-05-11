@@ -3,5 +3,3 @@ export const siteUrl = (
 ).replace(/\/$/, "");
 
 export const siteName = "Ocean Crest Exports";
-
-export const defaultOgImage = `${siteUrl}/og-image.png`;

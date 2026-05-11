@@ -6,6 +6,7 @@ import { m, AnimatePresence } from "framer-motion";
 import { Play } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ProductImagePlaceholder } from "./ProductImagePlaceholder";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface ProductGalleryProps {
   images: string[];
@@ -28,6 +29,7 @@ export function ProductGallery({
   videoPoster,
   alt,
 }: ProductGalleryProps) {
+  const { t } = useLanguage();
   // Images first so the page opens on the primary product photo (cheap to load);
   // video appended at the end so the heavy MP4 is only fetched when the user
   // explicitly opts in via the thumbnail.
@@ -54,7 +56,7 @@ export function ProductGallery({
   // Empty → placeholder.
   if (slides.length === 0) {
     return (
-      <div className="sticky top-24">
+      <div className="sticky top-24 lg:top-32">
         <div className="aspect-square rounded-[var(--radius-lg)] overflow-hidden shadow-border relative bg-stone-100">
           <ProductImagePlaceholder />
         </div>
@@ -65,7 +67,7 @@ export function ProductGallery({
   const current = slides[active];
 
   return (
-    <div className="sticky top-24">
+    <div className="sticky top-24 lg:top-32">
       {/* Main slide with hover-zoom for images */}
       <div className="aspect-square rounded-[var(--radius-lg)] overflow-hidden shadow-border relative group bg-stone-100">
         <AnimatePresence mode="wait">
@@ -117,7 +119,7 @@ export function ProductGallery({
 
       {/* Thumbnails */}
       {slides.length > 1 && (
-        <div className="mt-4 grid grid-cols-4 gap-3">
+        <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 gap-3">
           {slides.map((slide, i) => (
             <button
               key={i}
@@ -125,8 +127,8 @@ export function ProductGallery({
               onClick={() => setActive(i)}
               aria-label={
                 slide.type === "video"
-                  ? "View product video"
-                  : `View image ${i + 1}`
+                  ? t.gallery.viewVideo
+                  : `${t.gallery.viewImage} ${i + 1}`
               }
               aria-current={i === active}
               className={cn(

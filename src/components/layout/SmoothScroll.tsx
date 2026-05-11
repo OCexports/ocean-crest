@@ -15,11 +15,15 @@ export function SmoothScroll() {
     }
 
     const lenis = new Lenis({
-      duration: 1.1,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      // lerp mode (continuous interpolation toward the target) reads as
+      // more fluid/"premium" than fixed-duration easing. ~0.08 = smooth
+      // but still responsive; lower = floatier, higher = snappier.
+      lerp: 0.08,
       smoothWheel: true,
       wheelMultiplier: 1,
-      touchMultiplier: 1.5,
+      // Leave touch scrolling native — iOS momentum scroll is already
+      // smooth and syncTouch can feel laggy on some devices.
+      touchMultiplier: 1.6,
     });
 
     let rafId: number;

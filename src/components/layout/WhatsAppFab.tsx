@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import { m, AnimatePresence } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 import { companyInfo } from "@/lib/constants/navigation";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export function WhatsAppFab() {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
 
@@ -15,7 +17,7 @@ export function WhatsAppFab() {
   }, []);
 
   const whatsappUrl = `https://wa.me/${companyInfo.whatsapp}?text=${encodeURIComponent(
-    "Hello Ocean Crest! I'm interested in your spice products. Could you please share more details?"
+    t.overlays.whatsappPrefill
   )}`;
 
   return (
@@ -25,7 +27,7 @@ export function WhatsAppFab() {
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0, opacity: 0 }}
-          className="fixed right-4 sm:right-6 z-40"
+          className="fixed right-4 sm:right-6 [dir=rtl]:right-auto [dir=rtl]:left-4 [dir=rtl]:sm:left-6 z-40"
           style={{ bottom: "max(1rem, env(safe-area-inset-bottom))" }}
         >
           <div className="relative">
@@ -39,7 +41,7 @@ export function WhatsAppFab() {
               onMouseEnter={() => setShowTooltip(true)}
               onMouseLeave={() => setShowTooltip(false)}
               className="relative flex items-center justify-center w-14 h-14 bg-whatsapp rounded-full shadow-modal hover:scale-110 transition-transform cursor-pointer"
-              aria-label="Chat with us on WhatsApp"
+              aria-label={t.overlays.whatsappAria}
             >
               <MessageCircle className="w-6 h-6 text-white" />
             </a>
@@ -51,9 +53,9 @@ export function WhatsAppFab() {
                   initial={{ opacity: 0, x: 10 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 10 }}
-                  className="absolute right-full top-1/2 -translate-y-1/2 mr-3 bg-ocean-deep text-white text-sm px-3 py-1.5 rounded-lg whitespace-nowrap shadow-modal"
+                  className="hidden sm:block absolute right-full top-1/2 -translate-y-1/2 mr-3 bg-ocean-deep text-white text-sm px-3 py-1.5 rounded-lg whitespace-nowrap shadow-modal"
                 >
-                  Chat with us
+                  {t.overlays.whatsappTooltip}
                 </m.div>
               )}
             </AnimatePresence>

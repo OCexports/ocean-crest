@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ArrowUpRight,
   Leaf,
@@ -15,6 +17,7 @@ import Link from "next/link";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { StaggerChildren, StaggerItem } from "@/components/animations/StaggerChildren";
 import { certificates } from "@/lib/constants/certificates";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 type CertVisual = {
   icon: LucideIcon;
@@ -41,6 +44,7 @@ const fallback: CertVisual = {
 };
 
 export function CertificateStrip() {
+  const { t } = useLanguage();
   return (
     <section className="py-28 lg:py-36 bg-stone-100">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -48,10 +52,10 @@ export function CertificateStrip() {
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12">
             <div>
               <span className="text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase text-gold-deep">
-                Quality Assured
+                {t.certStrip.eyebrow}
               </span>
               <h2 className="mt-2 text-3xl lg:text-4xl font-semibold text-primary font-[family-name:var(--font-display)]">
-                Our Certifications
+                {t.certStrip.heading}
               </h2>
               <div className="gold-line-left mt-4" />
             </div>
@@ -59,7 +63,7 @@ export function CertificateStrip() {
               href="/certificates"
               className="mt-4 sm:mt-0 inline-flex items-center gap-1.5 text-sm font-medium text-gold hover:text-gold-muted transition-colors cursor-pointer"
             >
-              View All Certificates <ArrowUpRight className="w-3.5 h-3.5" />
+              {t.certStrip.viewAll} <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>
           </div>
         </ScrollReveal>
@@ -71,6 +75,7 @@ export function CertificateStrip() {
           {certificates.map((cert) => {
             const v = visualById[cert.id] ?? fallback;
             const Icon = v.icon;
+            const cd = t.certData[cert.id];
             return (
               <StaggerItem key={cert.id}>
                 <div className="group h-full flex flex-col items-center justify-center bg-warm-white rounded-[var(--radius-md)] p-5 lg:p-6 shadow-border hover:shadow-card-hover transition-all duration-200 hover:-translate-y-1 text-center cursor-default border border-edge-light hover:border-gold/30">
@@ -81,10 +86,10 @@ export function CertificateStrip() {
                     {v.mono}
                   </span>
                   <h3 className="text-[13px] font-semibold text-primary font-[family-name:var(--font-display)] leading-tight">
-                    {cert.name}
+                    {cd?.name ?? cert.name}
                   </h3>
                   <p className="mt-1 text-[12px] lg:text-[10px] text-ink-muted leading-tight">
-                    {cert.issuingBody}
+                    {cd?.issuingBody ?? cert.issuingBody}
                   </p>
                 </div>
               </StaggerItem>
