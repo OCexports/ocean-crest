@@ -30,7 +30,7 @@ export function ContactSideTab() {
       initial={{ x: 64, opacity: 0 }}
       animate={isVisible ? { x: 0, opacity: 1 } : { x: 64, opacity: 0 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="hidden lg:flex fixed right-0 [dir=rtl]:right-auto [dir=rtl]:left-0 top-1/2 -translate-y-1/2 z-40"
+      className="hidden lg:flex fixed right-0 [dir=rtl]:right-auto [dir=rtl]:left-0 top-1/2 -translate-y-1/2 z-40 print:hidden"
     >
       <Link
         href="/contact"

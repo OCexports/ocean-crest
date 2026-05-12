@@ -12,9 +12,8 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <LegalPage
-      title="Terms of Service"
-      breadcrumbLabel="Terms of Service"
-      effective="Last updated: May 2026"
+      kind="terms"
+      effectiveDate="May 2026"
       intro="These terms govern your use of the Ocean Crest Exports website (operated by Sheth & Bhatt's LLP). By using this site you agree to these terms. They do not, by themselves, create a contract for the sale of goods — any order is governed by a separate written agreement, quotation, or purchase contract between you and Ocean Crest Exports."
       sections={[
         {

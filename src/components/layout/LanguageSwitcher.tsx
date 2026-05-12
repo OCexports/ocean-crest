@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { m, AnimatePresence } from "framer-motion";
-import { Globe, Check, ChevronDown } from "lucide-react";
+import { Globe, Check, ChevronDown, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { localeNames, type Locale } from "@/lib/i18n/translations";
@@ -14,7 +14,23 @@ interface Props {
 export function LanguageSwitcher({ isScrolled = false }: Props) {
   const { locale, setLocale, t } = useLanguage();
   const [open, setOpen] = useState(false);
+  // Locale chunks load async; show a spinner on the trigger until the new
+  // dictionary resolves (cleared when `locale` from context updates).
+  const [pending, setPending] = useState<Locale | null>(null);
   const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setPending(null);
+  }, [locale]);
+
+  // Safety net: if the locale chunk never resolves (network failure), don't
+  // leave the spinner stuck — clear `pending` after a few seconds. Cleared
+  // early by the [locale] effect above when the switch actually completes.
+  useEffect(() => {
+    if (!pending) return;
+    const id = setTimeout(() => setPending(null), 8000);
+    return () => clearTimeout(id);
+  }, [pending]);
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -27,6 +43,13 @@ export function LanguageSwitcher({ isScrolled = false }: Props) {
   }, []);
 
   const locales = Object.keys(localeNames) as Locale[];
+
+  const choose = (lng: Locale) => {
+    setOpen(false);
+    if (lng === locale) return;
+    setPending(lng);
+    setLocale(lng);
+  };
 
   return (
     <div ref={ref} className="relative">
@@ -43,13 +66,17 @@ export function LanguageSwitcher({ isScrolled = false }: Props) {
         aria-haspopup="listbox"
       >
         <Globe className="w-3.5 h-3.5" />
-        <span>{locale.toUpperCase()}</span>
-        <ChevronDown
-          className={cn(
-            "w-3 h-3 transition-transform",
-            open && "rotate-180"
-          )}
-        />
+        <span>{(pending ?? locale).toUpperCase()}</span>
+        {pending ? (
+          <Loader2 className="w-3 h-3 animate-spin" aria-hidden="true" />
+        ) : (
+          <ChevronDown
+            className={cn(
+              "w-3 h-3 transition-transform",
+              open && "rotate-180"
+            )}
+          />
+        )}
       </button>
 
       <AnimatePresence>
@@ -68,10 +95,7 @@ export function LanguageSwitcher({ isScrolled = false }: Props) {
               {locales.map((lng) => (
                 <button
                   key={lng}
-                  onClick={() => {
-                    setLocale(lng);
-                    setOpen(false);
-                  }}
+                  onClick={() => choose(lng)}
                   className={cn(
                     "w-full flex items-center justify-between px-3 py-2 text-[13px] rounded-lg transition-all cursor-pointer",
                     locale === lng

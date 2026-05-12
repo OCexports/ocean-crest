@@ -239,6 +239,20 @@ const zh: Translations = {
     whatsappPre: "您好 Ocean Crest！我想发起一个询盘。", whatsappProduct: "产品：", whatsappQuantity: " | 数量：",
     required: "此字段为必填项", invalidEmail: "请输入有效的电子邮箱地址",
   },
+  legalPage: {
+    lastUpdated: "最后更新",
+    englishOnly: "本文件仅提供英文版本。",
+    questions: "对本文件有疑问？请通过以下方式联系我们：",
+  },
+  errorPages: {
+    notFoundTitle: "页面未找到",
+    notFoundBody: "您查找的页面不存在或已被移动。让我们帮您找到所需的内容。",
+    backHome: "返回首页",
+    browseProducts: "浏览产品",
+    errorTitle: "出错了",
+    errorBody: "发生了意外错误。请重试。",
+    tryAgain: "重试",
+  },
 };
 
 export default zh;

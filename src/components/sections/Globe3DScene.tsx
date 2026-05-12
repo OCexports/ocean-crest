@@ -26,11 +26,8 @@ const GlobeContinents = lazy(() => import("./GlobeContinents"));
  *  - Wireframe lat/long sphere + real country outlines (Natural Earth 1:110 m)
  *  - Mumbai = primary glowing hub; 8 destination ports as smaller gold pins
  *  - Each route is a permanent gold great-circle arc with a single bright
- *    pulse traveling end-to-end. Per-lane opacity variation gives the
+ *    gold pulse traveling end-to-end. Per-lane opacity variation gives the
  *    network a "live with mixed traffic" feel rather than uniform grid
- *  - One featured 3D aircraft flies the longest route (Mumbai → New York),
- *    smoothly looped, oriented along its velocity tangent
- *  - Globe rotates very slowly + responds to mouse parallax
  *  - Translucent ocean lets the radial glow behind the globe show through,
  *    so it reads as floating in open space, not pasted on a panel
  *
@@ -49,7 +46,9 @@ const GOLD = "#D4A64A";
 const GOLD_BRIGHT = "#F4C75D";
 const OCEAN = "#0B1D2A";
 const GRID_LINE = "#3A6B95";
-const HEAD_COLOR = "#FFFFFF";
+// Warm bright gold for the travelling lane pulses (pure white read as
+// off-brand "glitch" dots against the gold).
+const PULSE_COLOR = "#FFE9B0";
 
 /** Damping rate for mouse parallax — framerate-independent. */
 const PARALLAX_LAMBDA = 5;
@@ -82,9 +81,6 @@ const HUBS: City[] = [
   { name: "Sydney", lat: -33.94, lng: 151.18 },
 ];
 
-/** The single hero route that gets a 3D aircraft following it. */
-const FEATURED_HUB_NAME = "New York";
-
 /** Geographic lat/lng (degrees) → 3D unit-sphere position. */
 function latLngToVec3(lat: number, lng: number, radius = 1): Vector3 {
   const phi = (90 - lat) * (Math.PI / 180);
@@ -101,7 +97,10 @@ function greatCircleArc(
   start: Vector3,
   end: Vector3,
   segments = 60,
-  liftHeight = 0.18,
+  // 0.09, not 0.18: the camera only frames out to radius ~1.12, so a higher
+  // lift makes long-haul arcs peak past the canvas edge and clip / float off
+  // into the glow ring. This keeps the apex (~1.09) inside the visible frame.
+  liftHeight = 0.09,
 ): Vector3[] {
   const points: Vector3[] = [];
   const angle = start.angleTo(end);
@@ -214,9 +213,10 @@ function Wireframe() {
 // Reduced 12-segment marker spheres — at the camera distance these are
 // 6-10 px on screen; 8 segments is plenty.
 const MARKER_DOT_GEOMETRY_PRIMARY = new SphereGeometry(0.032, 8, 8);
-const MARKER_HALO_GEOMETRY_PRIMARY = new SphereGeometry(0.075, 8, 8);
+// Tighter halos — the old radii bloomed (×~1.7 at peak) into diffuse smudges.
+const MARKER_HALO_GEOMETRY_PRIMARY = new SphereGeometry(0.058, 8, 8);
 const MARKER_DOT_GEOMETRY = new SphereGeometry(0.022, 8, 8);
-const MARKER_HALO_GEOMETRY = new SphereGeometry(0.05, 8, 8);
+const MARKER_HALO_GEOMETRY = new SphereGeometry(0.042, 8, 8);
 
 function HubMarker({
   position,
@@ -265,6 +265,7 @@ function HubMarker({
           transparent
           opacity={0.3}
           toneMapped={false}
+          depthWrite={false}
         />
       </mesh>
     </group>
@@ -343,7 +344,9 @@ function ShippingLane({
     const y = p0.y + (p1.y - p0.y) * frac;
     const z = p0.z + (p1.z - p0.z) * frac;
 
-    const opacity = Math.sin(phase * Math.PI) * reveal;
+    // Keep a brightness floor so a pulse near a hub reads as a clean bead,
+    // not a muddy near-transparent smudge.
+    const opacity = (0.25 + 0.75 * Math.sin(phase * Math.PI)) * reveal;
 
     if (pulseRef.current) {
       pulseRef.current.position.set(x, y, z);
@@ -372,112 +375,12 @@ function ShippingLane({
       </mesh>
       <mesh ref={pulseRef} geometry={pulseGeometry}>
         <meshBasicMaterial
-          color={HEAD_COLOR}
+          color={PULSE_COLOR}
           transparent
           opacity={0}
           toneMapped={false}
         />
       </mesh>
-    </>
-  );
-}
-
-/* ─── Featured aircraft: ONE 3D plane following the hero route ────────── */
-
-const FEATURED_FLIGHT_DURATION = 14; // seconds for one full transit
-/** Active fraction of the cycle; remainder is invisible rest before next flight. */
-const FEATURED_ACTIVE_RATIO = 0.85;
-
-const _featuredFwd = new Vector3(0, 0, -1);
-const _featuredVel = new Vector3();
-
-function FeaturedAircraft({
-  start,
-  end,
-}: {
-  start: Vector3;
-  end: Vector3;
-}) {
-  // 60 segments instead of 100 — plane motion still reads smoothly.
-  const points = useMemo(() => greatCircleArc(start, end, 60, 0.20), [start, end]);
-  const planeRef = useRef<import("three").Group>(null);
-  const haloRef = useRef<Mesh>(null);
-  const tickRef = useRef(0);
-
-  useFrame((state, delta) => {
-    tickRef.current += delta;
-    if (tickRef.current < FRAME_INTERVAL) return;
-    tickRef.current = 0;
-    const cyclePhase = (state.clock.elapsedTime / FEATURED_FLIGHT_DURATION) % 1;
-    const isActive = cyclePhase < FEATURED_ACTIVE_RATIO;
-    const t = isActive ? cyclePhase / FEATURED_ACTIVE_RATIO : 1;
-    const opacity = isActive ? Math.sin(t * Math.PI) : 0;
-
-    const lastIdx = points.length - 1;
-    const idx = t * lastIdx;
-    const i0 = Math.min(Math.floor(idx), lastIdx - 1);
-    const frac = idx - i0;
-    const p0 = points[i0];
-    const p1 = points[i0 + 1];
-
-    const plane = planeRef.current;
-    if (plane) {
-      plane.position.set(
-        p0.x + (p1.x - p0.x) * frac,
-        p0.y + (p1.y - p0.y) * frac,
-        p0.z + (p1.z - p0.z) * frac,
-      );
-      _featuredVel
-        .set(p1.x - p0.x, p1.y - p0.y, p1.z - p0.z)
-        .normalize();
-      plane.quaternion.setFromUnitVectors(_featuredFwd, _featuredVel);
-      plane.traverse((child) => {
-        const mesh = child as Mesh;
-        if (mesh.isMesh) {
-          (mesh.material as MeshBasicMaterial).opacity = opacity;
-        }
-      });
-    }
-    const halo = haloRef.current;
-    if (halo && plane) {
-      halo.position.copy(plane.position);
-      const breathe = 1.5 + Math.sin(state.clock.elapsedTime * 2.5) * 0.3;
-      halo.scale.setScalar(breathe);
-      (halo.material as MeshBasicMaterial).opacity = 0.45 * opacity;
-    }
-  });
-
-  return (
-    <>
-      <mesh ref={haloRef}>
-        <sphereGeometry args={[0.024, 8, 8]} />
-        <meshBasicMaterial
-          color={GOLD_BRIGHT}
-          transparent
-          opacity={0}
-          depthWrite={false}
-        />
-      </mesh>
-      <group ref={planeRef}>
-        {/* Fuselage: long along -Z (forward) */}
-        <mesh position={[0, 0, -0.03]}>
-          <boxGeometry args={[0.012, 0.012, 0.06]} />
-          <meshBasicMaterial
-            color={HEAD_COLOR}
-            transparent
-            opacity={0}
-          />
-        </mesh>
-        {/* Wings: wide along X */}
-        <mesh position={[0, 0, -0.03]}>
-          <boxGeometry args={[0.04, 0.003, 0.012]} />
-          <meshBasicMaterial
-            color={HEAD_COLOR}
-            transparent
-            opacity={0}
-          />
-        </mesh>
-      </group>
     </>
   );
 }
@@ -502,8 +405,6 @@ function Globe({ richDetail }: { richDetail: boolean }) {
     [hubVecs],
   );
 
-  const featured = hubVecs.find((h) => h.name === FEATURED_HUB_NAME);
-
   return (
     <group rotation={[0, FACE_INDIA_Y, 0]}>
       <Ocean />
@@ -527,18 +428,14 @@ function Globe({ richDetail }: { richDetail: boolean }) {
           baseOpacity={laneOpacities[i]}
         />
       ))}
-      {richDetail && featured && (
-        <FeaturedAircraft start={originVec} end={featured.vec} />
-      )}
     </group>
   );
 }
 
 export default function Globe3DScene() {
-  // Visual parity across viewports — mobile gets the same continents +
-  // featured aircraft as desktop. The GPU dials (antialias / DPR) still
-  // step down on touch since those are imperceptible at phone DPI but
-  // ~30% GPU savings.
+  // Visual parity across viewports — mobile gets the same continents as
+  // desktop. The GPU dials (antialias / DPR) still step down on touch since
+  // those are imperceptible at phone DPI but ~30% GPU savings.
   const [isLgUp, setIsLgUp] = useState(false);
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");

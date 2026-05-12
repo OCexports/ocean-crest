@@ -239,6 +239,20 @@ const ar: Translations = {
     whatsappPre: "مرحباً Ocean Crest! أود تقديم استفسار. ", whatsappProduct: "المنتج: ", whatsappQuantity: " | الكمية: ",
     required: "هذا الحقل مطلوب", invalidEmail: "يرجى إدخال عنوان بريد إلكتروني صالح",
   },
+  legalPage: {
+    lastUpdated: "آخر تحديث",
+    englishOnly: "هذا المستند متاح باللغة الإنجليزية فقط.",
+    questions: "أسئلة حول هذا المستند؟ تواصل معنا على",
+  },
+  errorPages: {
+    notFoundTitle: "الصفحة غير موجودة",
+    notFoundBody: "الصفحة التي تبحث عنها غير موجودة أو تم نقلها. دعنا نساعدك في العثور على ما تحتاجه.",
+    backHome: "العودة إلى الرئيسية",
+    browseProducts: "تصفح المنتجات",
+    errorTitle: "حدث خطأ ما",
+    errorBody: "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.",
+    tryAgain: "حاول مرة أخرى",
+  },
 };
 
 export default ar;

@@ -351,7 +351,7 @@ function ScrollProgress() {
 
   return (
     <m.div
-      className="fixed top-0 left-0 right-0 h-[2px] bg-gold z-[60] origin-left [dir=rtl]:origin-right"
+      className="fixed top-0 left-0 right-0 h-[2px] bg-gold z-[60] origin-left [dir=rtl]:origin-right print:hidden"
       style={{ scaleX: scrollYProgress }}
     />
   );

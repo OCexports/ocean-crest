@@ -252,6 +252,10 @@ html[lang="ko"] {
 .animate-marquee {
   animation: marquee 60s linear infinite;
 }
+/* RTL: run the strip the other way so items enter from the reading side. */
+[dir="rtl"] .animate-marquee {
+  animation-direction: reverse;
+}
 
 /* ═══ Glow ═══ */
 .copper-glow {
@@ -408,4 +412,17 @@ html[lang="ko"] {
 }
 .animate-float-delay {
   animation: float 7s ease-in-out infinite 1s;
+}
+
+/* ═══ Print ═══
+   B2B buyers occasionally print a product / spec page. Strip the chrome, go
+   black-on-white, drop shadows + decorative gradients, and let content reflow. */
+@media print {
+  header, footer { display: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+  * { box-shadow: none !important; }
+  a { text-decoration: underline; color: #000 !important; }
+  section { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+  table { width: 100%; border-collapse: collapse; }
+  td { border: 1px solid #ccc; padding: 4px 8px; }
 }

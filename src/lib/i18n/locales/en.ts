@@ -279,6 +279,20 @@ const en = {
     whatsappPre: "Hello Ocean Crest! I'd like an inquiry. ", whatsappProduct: "Product: ", whatsappQuantity: " | Quantity: ",
     required: "This field is required", invalidEmail: "Please enter a valid email address",
   },
+  legalPage: {
+    lastUpdated: "Last updated",
+    englishOnly: "This document is available in English only.",
+    questions: "Questions about this document? Contact us at",
+  },
+  errorPages: {
+    notFoundTitle: "Page Not Found",
+    notFoundBody: "The page you're looking for doesn't exist or has been moved. Let us help you find what you need.",
+    backHome: "Back to Home",
+    browseProducts: "Browse Products",
+    errorTitle: "Something went wrong",
+    errorBody: "An unexpected error occurred. Please try again.",
+    tryAgain: "Try Again",
+  },
 };
 
 export type Translations = typeof en;

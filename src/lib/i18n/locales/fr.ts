@@ -239,6 +239,20 @@ const fr: Translations = {
     whatsappPre: "Bonjour Ocean Crest ! J'aimerais faire une demande. ", whatsappProduct: "Produit : ", whatsappQuantity: " | Quantité : ",
     required: "Ce champ est obligatoire", invalidEmail: "Veuillez saisir une adresse e-mail valide",
   },
+  legalPage: {
+    lastUpdated: "Dernière mise à jour",
+    englishOnly: "Ce document est disponible uniquement en anglais.",
+    questions: "Des questions sur ce document ? Contactez-nous à",
+  },
+  errorPages: {
+    notFoundTitle: "Page introuvable",
+    notFoundBody: "La page que vous recherchez n'existe pas ou a été déplacée. Laissez-nous vous aider à trouver ce dont vous avez besoin.",
+    backHome: "Retour à l'accueil",
+    browseProducts: "Parcourir les produits",
+    errorTitle: "Une erreur s'est produite",
+    errorBody: "Une erreur inattendue s'est produite. Veuillez réessayer.",
+    tryAgain: "Réessayer",
+  },
 };
 
 export default fr;

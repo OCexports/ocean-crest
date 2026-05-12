@@ -52,11 +52,15 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     if (!isLocale(stored) || stored === "en") return;
     applyDocAttrs(stored);
     let cancelled = false;
-    loadLocale(stored).then((dict) => {
-      if (cancelled) return;
-      setLocaleState(stored);
-      setT(dict);
-    });
+    loadLocale(stored)
+      .then((dict) => {
+        if (cancelled) return;
+        setLocaleState(stored);
+        setT(dict);
+      })
+      .catch((e) => {
+        console.error("[i18n] failed to load locale", stored, e);
+      });
     return () => {
       cancelled = true;
     };
@@ -70,10 +74,14 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       setT(en);
       return;
     }
-    loadLocale(next).then((dict) => {
-      setLocaleState(next);
-      setT(dict);
-    });
+    loadLocale(next)
+      .then((dict) => {
+        setLocaleState(next);
+        setT(dict);
+      })
+      .catch((e) => {
+        console.error("[i18n] failed to load locale", next, e);
+      });
   }, []);
 
   const value = useMemo<LanguageContextType>(() => {

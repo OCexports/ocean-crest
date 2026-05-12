@@ -189,7 +189,10 @@ export function HoverVideoMedia({
           muted
           loop
           playsInline
-          preload="auto"
+          // `metadata` not `auto`: with 5 card clips on /products, `auto` would
+          // eagerly pull ~10 MB on load. The re-encoded mp4s have +faststart so
+          // play() starts quickly once the card scrolls into view anyway.
+          preload="metadata"
           aria-hidden="true"
           tabIndex={-1}
           className={cn(

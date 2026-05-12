@@ -122,6 +122,18 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${cormorant.variable} ${montserrat.variable} ${notoDevanagari.variable} ${notoArabic.variable}`} suppressHydrationWarning>
       <body className="min-h-screen flex flex-col" suppressHydrationWarning>
+        {/* Set <html lang>/<html dir> from the stored locale *before* hydration
+            so RTL + the script-specific font are correct on first paint (no
+            flash of LTR/latin for returning ar/ur/hi/etc. visitors). The
+            translated text still re-renders one tick later via LanguageProvider,
+            but the layout no longer jumps. Keep this string in sync with
+            STORAGE_KEY / RTL_LOCALES in LanguageContext.tsx. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var l=localStorage.getItem('ocean-crest-locale');if(l&&l!=='en'){document.documentElement.lang=l;document.documentElement.dir=(l==='ar'||l==='ur')?'rtl':'ltr';}}catch(e){}})();",
+          }}
+        />
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:start-4 focus:z-[100] focus:bg-gold focus:text-white focus:px-4 focus:py-2 focus:rounded-[var(--radius-sm)] focus:text-sm focus:font-medium">
           Skip to main content
         </a>
