@@ -74,11 +74,18 @@ export function Header() {
           "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
           isScrolled
             ? "bg-warm-white/98 backdrop-blur-xl border-b border-edge/40"
-            : "bg-gradient-to-b from-black/40 to-transparent"
+            // At the top: fully transparent — the hero behind it is already dark
+            // navy, so the white nav text reads fine. The old from-black/40
+            // gradient created a dark "band" at the page top (and made the
+            // notch safe-area strip visible) that read as a gap above the nav.
+            : "bg-transparent"
         )}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-24 lg:h-32">
+          {/* Slim bar — h-14/h-16 (56/64px). Right at the practical floor: the
+              44px "Get in Touch" button + a few px of padding. The cream
+              scrolled-state background is as compact as it can be. */}
+          <div className="flex items-center justify-between h-14 lg:h-16">
             {/* Logo — text composite (circle + wordmark). Always returns to home;
                 scrolls to top if you're already there. */}
             <Link

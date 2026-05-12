@@ -243,7 +243,7 @@ export function HeroSection() {
       </div>
 
       {/* Mobile: 3-row stacked center | lg+: asymmetric 12-col split */}
-      <div className="relative z-10 flex-1 min-h-0 grid grid-rows-[auto_minmax(0,1fr)_auto] lg:grid-rows-1 lg:grid-cols-12 gap-2 sm:gap-3 lg:gap-8 xl:gap-12 px-4 sm:px-6 lg:px-10 xl:px-14 pt-16 pb-3 sm:pt-20 sm:pb-4 lg:pt-24 lg:pb-5 max-w-[1500px] mx-auto w-full">
+      <div className="relative z-10 flex-1 min-h-0 grid grid-rows-[auto_minmax(0,1fr)_auto] lg:grid-rows-1 lg:grid-cols-12 gap-2 sm:gap-3 lg:gap-8 xl:gap-12 px-4 sm:px-6 lg:px-10 xl:px-14 pt-14 pb-3 sm:pb-4 lg:pt-16 lg:pb-5 max-w-[1500px] mx-auto w-full">
         {/* MOBILE-ONLY: top eyebrow â†’ headline â†’ divider */}
         <div className="lg:hidden flex flex-col items-center text-center">
           <div
