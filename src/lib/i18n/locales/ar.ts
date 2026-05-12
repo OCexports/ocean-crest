@@ -52,7 +52,7 @@ const ar: Translations = {
   headerExtra: { whatsappUs: "راسلنا على واتساب" },
   footerExtra: { privacy: "سياسة الخصوصية", terms: "شروط الخدمة", copyright: "جميع الحقوق محفوظة. جزء من Sheth & Bhatt's LLP." },
   overlays: { whatsappAria: "تحدث معنا على واتساب", whatsappTooltip: "تحدث معنا", whatsappPrefill: "مرحباً Ocean Crest! أنا مهتم بمنتجاتكم. هل يمكنكم مشاركة المزيد من التفاصيل؟", contactSideAria: "تواصل مع Ocean Crest", contactSideLabel: "تواصل معنا", langSwitchAria: "تغيير اللغة" },
-  testimonials: { eyebrow: "بكلماتهم", heading: "ماذا يقول شركاؤنا" },
+  testimonials: { eyebrow: "بكلماتهم", heading: "اسمع ما يقوله المشترون لدينا" },
   productData: {
     "dehydrated-garlic-flakes": {
       name: "رقائق الثوم المجفف",

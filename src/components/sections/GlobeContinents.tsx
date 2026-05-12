@@ -11,14 +11,17 @@ import {
 import { feature } from "topojson-client";
 import type { Topology } from "topojson-specification";
 import type { Feature, MultiPolygon, Polygon } from "geojson";
-import countriesTopologyRaw from "world-atlas/countries-110m.json";
+import countriesTopologyRaw from "world-atlas/countries-50m.json";
 
 /**
  * Country outline lines for the globe.
  *
- * Lives in its own module so the world-atlas JSON (~108 KB) and the
+ * Lives in its own module so the world-atlas JSON (~750 KB) and the
  * topojson-client runtime ship in their own chunk, not the main globe
  * chunk. Loaded via React.lazy by Globe3DScene on every viewport.
+ *
+ * Uses Natural Earth 1:50 m boundaries — much sharper coastlines and
+ * country outlines than the 110 m fallback, with ~7× the line detail.
  */
 
 const COUNTRY_LINE = "#9DBFD7";

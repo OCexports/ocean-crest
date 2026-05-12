@@ -52,7 +52,7 @@ const ur: Translations = {
   headerExtra: { whatsappUs: "واٹس ایپ کریں" },
   footerExtra: { privacy: "رازداری کی پالیسی", terms: "سروس کی شرائط", copyright: "جملہ حقوق محفوظ ہیں۔ Sheth & Bhatt's LLP کا حصہ۔" },
   overlays: { whatsappAria: "واٹس ایپ پر ہم سے بات کریں", whatsappTooltip: "ہم سے بات کریں", whatsappPrefill: "ہیلو Ocean Crest! مجھے آپ کی مصنوعات میں دلچسپی ہے۔ براہ کرم مزید تفصیلات شیئر کریں۔", contactSideAria: "Ocean Crest سے رابطہ کریں", contactSideLabel: "رابطہ کریں", langSwitchAria: "زبان تبدیل کریں" },
-  testimonials: { eyebrow: "ان کے الفاظ میں", heading: "ہمارے پارٹنرز کیا کہتے ہیں" },
+  testimonials: { eyebrow: "ان کے الفاظ میں", heading: "سنیں ہمارے خریدار کیا کہتے ہیں" },
   productData: {
     "dehydrated-garlic-flakes": {
       name: "خشک لہسن کے فلیکس",

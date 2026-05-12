@@ -52,7 +52,7 @@ const es: Translations = {
   headerExtra: { whatsappUs: "WhatsApp" },
   footerExtra: { privacy: "Política de Privacidad", terms: "Términos de Servicio", copyright: "Todos los derechos reservados. Parte de Sheth & Bhatt's LLP." },
   overlays: { whatsappAria: "Chatee con nosotros en WhatsApp", whatsappTooltip: "Chatee con nosotros", whatsappPrefill: "¡Hola Ocean Crest! Estoy interesado en sus productos. ¿Podrían compartir más detalles?", contactSideAria: "Contacte con Ocean Crest", contactSideLabel: "Contactar", langSwitchAria: "Cambiar idioma" },
-  testimonials: { eyebrow: "En sus palabras", heading: "Lo que dicen nuestros socios" },
+  testimonials: { eyebrow: "En sus palabras", heading: "Lo que dicen nuestros compradores" },
   productData: {
     "dehydrated-garlic-flakes": {
       name: "Copos de ajo deshidratado",

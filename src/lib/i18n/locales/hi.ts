@@ -52,7 +52,7 @@ const hi: Translations = {
   headerExtra: { whatsappUs: "व्हाट्सएप करें" },
   footerExtra: { privacy: "गोपनीयता नीति", terms: "सेवा की शर्तें", copyright: "सर्वाधिकार सुरक्षित। शेठ एंड भट्ट्स एलएलपी का हिस्सा।" },
   overlays: { whatsappAria: "व्हाट्सएप पर हमसे चैट करें", whatsappTooltip: "हमसे चैट करें", whatsappPrefill: "नमस्ते Ocean Crest! मुझे आपके उत्पादों में रुचि है। कृपया अधिक विवरण साझा करें।", contactSideAria: "Ocean Crest से संपर्क करें", contactSideLabel: "संपर्क करें", langSwitchAria: "भाषा बदलें" },
-  testimonials: { eyebrow: "उनके शब्दों में", heading: "हमारे साझेदार क्या कहते हैं" },
+  testimonials: { eyebrow: "उनके शब्दों में", heading: "सुनिए हमारे खरीदार क्या कहते हैं" },
   productData: {
     "dehydrated-garlic-flakes": {
       name: "निर्जलित लहसुन फ्लेक्स",

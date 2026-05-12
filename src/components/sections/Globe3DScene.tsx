@@ -23,7 +23,7 @@ const GlobeContinents = lazy(() => import("./GlobeContinents"));
 /**
  * Hero centerpiece: a wireframe globe with live trade routes.
  *
- *  - Wireframe lat/long sphere + real country outlines (Natural Earth 1:110 m)
+ *  - Wireframe lat/long sphere + real country outlines (Natural Earth 1:50 m)
  *  - Mumbai = primary glowing hub; 8 destination ports as smaller gold pins
  *  - Each route is a permanent gold great-circle arc with a single bright
  *    gold pulse traveling end-to-end. Per-lane opacity variation gives the
@@ -126,9 +126,21 @@ function greatCircleArc(
 function Ocean() {
   // Translucent — lets the radial glow behind the canvas bleed through, so
   // the globe appears to float in open space rather than sitting on a card.
+  //
+  // renderOrder={-1} forces the ocean to render BEFORE the country lines and
+  // wireframe (all in the transparent queue with default order 0). Without
+  // this, the lines sometimes drew first, wrote depth, and then the ocean
+  // alpha-blended on top — making far-hemisphere outlines bleed through
+  // as ghost continents. With ocean first, its depth-write properly culls
+  // the back-side lines via depth test.
   return (
-    <mesh geometry={OCEAN_GEOMETRY}>
-      <meshBasicMaterial color={OCEAN} transparent opacity={0.92} />
+    <mesh geometry={OCEAN_GEOMETRY} renderOrder={-1}>
+      <meshBasicMaterial
+        color={OCEAN}
+        transparent
+        opacity={0.92}
+        depthWrite
+      />
     </mesh>
   );
 }
@@ -387,7 +399,14 @@ function ShippingLane({
 
 /* ─── Globe ───────────────────────────────────────────────────────────── */
 
-const FACE_INDIA_Y = -((ORIGIN.lng * Math.PI) / 180 + Math.PI / 2);
+// Frame India dead-center using its *geographic* centroid (~22°N, 79°E),
+// not Mumbai. Mumbai sits at 19°N 72.8°E — south-west of India's middle —
+// so centering on Mumbai pushes the subcontinent up-and-right in the disk.
+// Using the centroid plants India in the visual middle of the globe.
+const INDIA_VIEW_LAT = 22;
+const INDIA_VIEW_LNG = 79;
+const FACE_INDIA_Y = -((INDIA_VIEW_LNG * Math.PI) / 180 + Math.PI / 2);
+const INDIA_TILT_X = (INDIA_VIEW_LAT * Math.PI) / 180;
 /** Very slow auto-rotation, rad/sec. ~0.4° per second. */
 const AUTO_ROTATE_RATE = 0.007;
 
@@ -406,7 +425,7 @@ function Globe({ richDetail }: { richDetail: boolean }) {
   );
 
   return (
-    <group rotation={[0, FACE_INDIA_Y, 0]}>
+    <group rotation={[INDIA_TILT_X, FACE_INDIA_Y, 0]}>
       <Ocean />
       <Wireframe />
       {richDetail && (
@@ -448,7 +467,7 @@ export default function Globe3DScene() {
   return (
     <Canvas
       className="absolute inset-0"
-      camera={{ position: [0, 0.05, 2.7], fov: 45 }}
+      camera={{ position: [0, 0, 2.6], fov: 45 }}
       gl={{ antialias: isLgUp, alpha: true, powerPreference: "low-power" }}
       dpr={isLgUp ? [1, 1.25] : [1, 1]}
     >

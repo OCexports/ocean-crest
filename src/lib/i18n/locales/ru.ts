@@ -52,7 +52,7 @@ const ru: Translations = {
   headerExtra: { whatsappUs: "Написать в WhatsApp" },
   footerExtra: { privacy: "Политика Конфиденциальности", terms: "Условия Использования", copyright: "Все права защищены. Часть Sheth & Bhatt's LLP." },
   overlays: { whatsappAria: "Напишите нам в WhatsApp", whatsappTooltip: "Напишите нам", whatsappPrefill: "Здравствуйте, Ocean Crest! Меня интересует ваша продукция. Не могли бы вы предоставить больше информации?", contactSideAria: "Связаться с Ocean Crest", contactSideLabel: "Связаться", langSwitchAria: "Сменить язык" },
-  testimonials: { eyebrow: "Их словами", heading: "Что говорят наши партнёры" },
+  testimonials: { eyebrow: "Их словами", heading: "Что говорят наши покупатели" },
   productData: {
     "dehydrated-garlic-flakes": {
       name: "Сушёные чесночные хлопья",

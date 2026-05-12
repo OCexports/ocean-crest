@@ -424,7 +424,7 @@ export function HeroSection() {
               animationDelay: "0.4s",
               animationDuration: "1s",
             }}
-            className="hero-fade relative aspect-square h-full max-h-full w-full max-w-[640px] lg:max-w-none"
+            className="hero-fade relative aspect-square h-full max-h-full max-w-full mx-auto"
           >
             <div
               className="absolute inset-0"

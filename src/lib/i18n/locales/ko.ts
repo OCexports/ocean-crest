@@ -52,7 +52,7 @@ const ko: Translations = {
   headerExtra: { whatsappUs: "WhatsApp 문의" },
   footerExtra: { privacy: "개인정보 처리방침", terms: "서비스 약관", copyright: "모든 권리 보유. Sheth & Bhatt's LLP 소속." },
   overlays: { whatsappAria: "WhatsApp으로 채팅하기", whatsappTooltip: "채팅하기", whatsappPrefill: "안녕하세요 Ocean Crest! 귀사의 제품에 관심이 있습니다. 자세한 내용을 알려주시겠어요?", contactSideAria: "Ocean Crest에 문의하기", contactSideLabel: "문의하기", langSwitchAria: "언어 변경" },
-  testimonials: { eyebrow: "그들의 말", heading: "파트너들의 평가" },
+  testimonials: { eyebrow: "그들의 말", heading: "바이어들의 이야기" },
   productData: {
     "dehydrated-garlic-flakes": {
       name: "건조 마늘 플레이크",

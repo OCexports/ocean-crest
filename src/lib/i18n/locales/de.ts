@@ -52,7 +52,7 @@ const de: Translations = {
   headerExtra: { whatsappUs: "WhatsApp" },
   footerExtra: { privacy: "Datenschutzrichtlinie", terms: "Nutzungsbedingungen", copyright: "Alle Rechte vorbehalten. Teil von Sheth & Bhatt's LLP." },
   overlays: { whatsappAria: "Chatten Sie mit uns auf WhatsApp", whatsappTooltip: "Chatten Sie mit uns", whatsappPrefill: "Hallo Ocean Crest! Ich interessiere mich für Ihre Produkte. Könnten Sie mir mehr Details geben?", contactSideAria: "Kontaktieren Sie Ocean Crest", contactSideLabel: "Kontakt", langSwitchAria: "Sprache ändern" },
-  testimonials: { eyebrow: "In ihren Worten", heading: "Was unsere Partner sagen" },
+  testimonials: { eyebrow: "In ihren Worten", heading: "Was unsere Käufer sagen" },
   productData: {
     "dehydrated-garlic-flakes": {
       name: "Getrocknete Knoblauchflocken",

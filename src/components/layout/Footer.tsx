@@ -63,6 +63,17 @@ export function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
             {/* Brand */}
             <div>
+              <div className="mb-3">
+                <Image
+                  src="/images/brand/ocean-crest-logo.png"
+                  alt="Ocean Crest Exports"
+                  width={500}
+                  height={500}
+                  sizes="(min-width: 1024px) 160px, 140px"
+                  loading="lazy"
+                  className="h-28 lg:h-32 w-auto"
+                />
+              </div>
               <div className="mb-4 -ms-6 lg:-ms-8">
                 <Image
                   src="/images/brand/sheth-bhatts-logo.png"

@@ -52,7 +52,7 @@ const it: Translations = {
   headerExtra: { whatsappUs: "WhatsApp" },
   footerExtra: { privacy: "Informativa sulla Privacy", terms: "Termini di Servizio", copyright: "Tutti i diritti riservati. Parte di Sheth & Bhatt's LLP." },
   overlays: { whatsappAria: "Chatta con noi su WhatsApp", whatsappTooltip: "Chatta con noi", whatsappPrefill: "Ciao Ocean Crest! Sono interessato ai vostri prodotti. Potreste condividere maggiori dettagli?", contactSideAria: "Contatta Ocean Crest", contactSideLabel: "Contattaci", langSwitchAria: "Cambia lingua" },
-  testimonials: { eyebrow: "Con le loro parole", heading: "Cosa dicono i nostri partner" },
+  testimonials: { eyebrow: "Con le loro parole", heading: "Cosa dicono i nostri acquirenti" },
   productData: {
     "dehydrated-garlic-flakes": {
       name: "Fiocchi di aglio disidratato",

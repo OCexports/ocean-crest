@@ -52,7 +52,7 @@ const fr: Translations = {
   headerExtra: { whatsappUs: "WhatsApp" },
   footerExtra: { privacy: "Politique de Confidentialité", terms: "Conditions d'Utilisation", copyright: "Tous droits réservés. Membre de Sheth & Bhatt's LLP." },
   overlays: { whatsappAria: "Discutez avec nous sur WhatsApp", whatsappTooltip: "Discutez avec nous", whatsappPrefill: "Bonjour Ocean Crest ! Je suis intéressé par vos produits. Pourriez-vous partager plus de détails ?", contactSideAria: "Contactez Ocean Crest", contactSideLabel: "Nous Contacter", langSwitchAria: "Changer de langue" },
-  testimonials: { eyebrow: "En leurs mots", heading: "Ce que disent nos partenaires" },
+  testimonials: { eyebrow: "En leurs mots", heading: "Ce que disent nos acheteurs" },
   productData: {
     "dehydrated-garlic-flakes": {
       name: "Flocons d'ail déshydraté",

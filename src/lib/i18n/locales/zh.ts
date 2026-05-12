@@ -52,7 +52,7 @@ const zh: Translations = {
   headerExtra: { whatsappUs: "WhatsApp 联系" },
   footerExtra: { privacy: "隐私政策", terms: "服务条款", copyright: "版权所有。Sheth & Bhatt's LLP 旗下。" },
   overlays: { whatsappAria: "通过 WhatsApp 与我们聊天", whatsappTooltip: "与我们聊天", whatsappPrefill: "您好 Ocean Crest！我对贵公司的产品感兴趣。能否分享更多详情？", contactSideAria: "联系 Ocean Crest", contactSideLabel: "联系我们", langSwitchAria: "更改语言" },
-  testimonials: { eyebrow: "他们的评价", heading: "我们的合作伙伴怎么说" },
+  testimonials: { eyebrow: "他们的评价", heading: "听听我们的买家怎么说" },
   productData: {
     "dehydrated-garlic-flakes": {
       name: "脱水蒜片",

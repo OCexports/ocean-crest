@@ -52,7 +52,7 @@ const ja: Translations = {
   headerExtra: { whatsappUs: "WhatsApp で連絡" },
   footerExtra: { privacy: "プライバシーポリシー", terms: "利用規約", copyright: "全著作権所有。Sheth & Bhatt's LLP の一員。" },
   overlays: { whatsappAria: "WhatsApp でチャットする", whatsappTooltip: "チャットする", whatsappPrefill: "こんにちは Ocean Crest！御社の製品に興味があります。詳細を教えていただけますか？", contactSideAria: "Ocean Crest に問い合わせる", contactSideLabel: "お問い合わせ", langSwitchAria: "言語を変更" },
-  testimonials: { eyebrow: "お客様の声", heading: "パートナーの評価" },
+  testimonials: { eyebrow: "お客様の声", heading: "バイヤーの声" },
   productData: {
     "dehydrated-garlic-flakes": {
       name: "乾燥ガーリックフレーク",

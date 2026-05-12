@@ -89,7 +89,7 @@ const en = {
     contactSideLabel: "Get in Touch",
     langSwitchAria: "Change language",
   },
-  testimonials: { eyebrow: "In their words", heading: "What our partners say" },
+  testimonials: { eyebrow: "In their words", heading: "Hear what our buyers say" },
   productData: {
     "dehydrated-garlic-flakes": {
       name: "Dehydrated Garlic Flakes",
