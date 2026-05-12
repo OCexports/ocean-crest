@@ -26,8 +26,10 @@ const featured: {
     tag: "Dehydrated",
     moq: "MOQ 200 KG",
     color: "from-stone-900/40 via-stone-900/10 to-stone-950/80",
-    span: "md:col-span-2 lg:col-span-2 lg:row-span-2",
-    height: "h-[340px] md:h-[420px] lg:h-full",
+    // At md (iPad portrait, 2 cols) this stays a normal cell so row 1 isn't
+    // sparse; it only becomes the wide hero card at lg.
+    span: "lg:col-span-2 lg:row-span-2",
+    height: "h-[340px] md:h-[280px] lg:h-full",
   },
   {
     name: "Dehydrated Garlic Chopped",

@@ -12,9 +12,8 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <LegalPage
-      title="Privacy Policy"
-      breadcrumbLabel="Privacy Policy"
-      effective="Last updated: May 2026"
+      kind="privacy"
+      effectiveDate="May 2026"
       intro="Ocean Crest Exports (a brand of Sheth & Bhatt's LLP, “we”, “us”) respects your privacy. This policy explains what information we collect through this website, why we collect it, and the choices you have. We only collect what we need to respond to your business inquiries."
       sections={[
         {

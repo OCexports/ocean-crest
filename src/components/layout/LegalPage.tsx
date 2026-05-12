@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import { companyInfo } from "@/lib/constants/navigation";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface LegalSection {
   heading: string;
@@ -7,20 +11,26 @@ interface LegalSection {
 }
 
 interface LegalPageProps {
-  title: string;
-  breadcrumbLabel: string;
-  /** e.g. "Last updated: May 2026" */
-  effective: string;
+  /** Picks the localized title/breadcrumb (reuses the footer link labels). */
+  kind: "privacy" | "terms";
+  /** Raw effective date, e.g. "May 2026" — kept as-is, prefixed with the localized "Last updated". */
+  effectiveDate: string;
+  /** Intro paragraph — English (legal copy isn't translated). */
   intro: string;
+  /** Numbered sections — English. */
   sections: LegalSection[];
 }
 
 /**
- * Static shell for the Privacy Policy / Terms of Service pages.
- * These are Server Components — the content is intentionally English-only
- * (legal copy should be reviewed by counsel before any translation).
+ * Shell for the Privacy Policy / Terms of Service pages. The page *chrome*
+ * (breadcrumb, "last updated", the "available in English" notice, the contact
+ * line) is localized via `useLanguage()`; the legal *body* stays English on
+ * purpose — that copy should be reviewed by counsel before any translation.
  */
-export function LegalPage({ title, breadcrumbLabel, effective, intro, sections }: LegalPageProps) {
+export function LegalPage({ kind, effectiveDate, intro, sections }: LegalPageProps) {
+  const { t } = useLanguage();
+  const title = kind === "privacy" ? t.footerExtra.privacy : t.footerExtra.terms;
+
   return (
     <>
       {/* Hero */}
@@ -33,12 +43,12 @@ export function LegalPage({ title, breadcrumbLabel, effective, intro, sections }
         </svg>
         <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-8">
           <nav className="flex items-center gap-2 text-[12px] text-white/75 mb-4">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+            <Link href="/" className="hover:text-white transition-colors">{t.nav.home}</Link>
             <span className="text-white/60">/</span>
-            <span className="text-white/80">{breadcrumbLabel}</span>
+            <span className="text-white/80">{title}</span>
           </nav>
           <h1 className="text-3xl sm:text-4xl font-bold text-white font-[family-name:var(--font-display)]">{title}</h1>
-          <p className="mt-3 text-sm text-white/60">{effective}</p>
+          <p className="mt-3 text-sm text-white/60">{t.legalPage.lastUpdated}: {effectiveDate}</p>
         </div>
       </section>
 
@@ -46,6 +56,9 @@ export function LegalPage({ title, breadcrumbLabel, effective, intro, sections }
       <section className="py-16 lg:py-24 bg-stone">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <p className="text-ink-muted leading-relaxed">{intro}</p>
+          {t.legalPage.englishOnly && (
+            <p className="mt-3 text-xs text-ink-muted/80 italic">{t.legalPage.englishOnly}</p>
+          )}
           <div className="mt-10 space-y-10">
             {sections.map((s, i) => (
               <div key={s.heading}>
@@ -61,8 +74,8 @@ export function LegalPage({ title, breadcrumbLabel, effective, intro, sections }
             ))}
           </div>
           <p className="mt-12 text-xs text-ink-muted/80">
-            Questions about this document? Contact us at{" "}
-            <a href="mailto:priyam.sheth@ocexports.com" className="text-gold hover:underline">priyam.sheth@ocexports.com</a>.
+            {t.legalPage.questions}{" "}
+            <a href={`mailto:${companyInfo.email}`} className="text-gold hover:underline">{companyInfo.email}</a>.
           </p>
         </div>
       </section>

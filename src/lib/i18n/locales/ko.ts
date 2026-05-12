@@ -239,6 +239,20 @@ const ko: Translations = {
     whatsappPre: "안녕하세요 Ocean Crest! 문의를 하고 싶습니다. ", whatsappProduct: "제품: ", whatsappQuantity: " | 수량: ",
     required: "이 항목은 필수입니다", invalidEmail: "유효한 이메일 주소를 입력하세요",
   },
+  legalPage: {
+    lastUpdated: "최종 업데이트",
+    englishOnly: "이 문서는 영어로만 제공됩니다.",
+    questions: "이 문서에 대한 질문이 있으신가요? 다음으로 문의하세요:",
+  },
+  errorPages: {
+    notFoundTitle: "페이지를 찾을 수 없습니다",
+    notFoundBody: "찾으시는 페이지가 존재하지 않거나 이동되었습니다. 필요한 것을 찾도록 도와드리겠습니다.",
+    backHome: "홈으로 돌아가기",
+    browseProducts: "제품 둘러보기",
+    errorTitle: "문제가 발생했습니다",
+    errorBody: "예기치 않은 오류가 발생했습니다. 다시 시도해 주세요.",
+    tryAgain: "다시 시도",
+  },
 };
 
 export default ko;

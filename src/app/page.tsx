@@ -4,6 +4,7 @@ import { ProductShowcase } from "@/components/sections/ProductShowcase";
 import { JourneySection } from "@/components/sections/JourneySection";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { CertificateStrip } from "@/components/sections/CertificateStrip";
+import { Testimonials } from "@/components/sections/Testimonials";
 import { CTABanner } from "@/components/sections/CTABanner";
 import { StructuredData } from "@/components/seo/StructuredData";
 import { siteUrl } from "@/lib/seo/site";
@@ -36,6 +37,7 @@ export default function HomePage() {
       <JourneySection />
       <WhyChooseUs />
       <CertificateStrip />
+      <Testimonials />
       <CTABanner />
     </>
   );

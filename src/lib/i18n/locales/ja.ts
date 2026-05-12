@@ -239,6 +239,20 @@ const ja: Translations = {
     whatsappPre: "こんにちは Ocean Crest！お問い合わせをしたいです。", whatsappProduct: "製品：", whatsappQuantity: " | 数量：",
     required: "この項目は必須です", invalidEmail: "有効なメールアドレスを入力してください",
   },
+  legalPage: {
+    lastUpdated: "最終更新",
+    englishOnly: "この文書は英語のみで提供されています。",
+    questions: "この文書に関するご質問は次までお問い合わせください：",
+  },
+  errorPages: {
+    notFoundTitle: "ページが見つかりません",
+    notFoundBody: "お探しのページは存在しないか、移動されました。必要なものを見つけるお手伝いをいたします。",
+    backHome: "ホームに戻る",
+    browseProducts: "製品を見る",
+    errorTitle: "問題が発生しました",
+    errorBody: "予期しないエラーが発生しました。もう一度お試しください。",
+    tryAgain: "再試行",
+  },
 };
 
 export default ja;

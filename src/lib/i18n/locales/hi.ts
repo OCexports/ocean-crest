@@ -239,6 +239,20 @@ const hi: Translations = {
     whatsappPre: "नमस्ते Ocean Crest! मैं एक पूछताछ करना चाहूंगा। ", whatsappProduct: "उत्पाद: ", whatsappQuantity: " | मात्रा: ",
     required: "यह फ़ील्ड आवश्यक है", invalidEmail: "कृपया एक मान्य ईमेल पता दर्ज करें",
   },
+  legalPage: {
+    lastUpdated: "अंतिम अपडेट",
+    englishOnly: "यह दस्तावेज़ केवल अंग्रेज़ी में उपलब्ध है।",
+    questions: "इस दस्तावेज़ के बारे में प्रश्न? हमसे संपर्क करें:",
+  },
+  errorPages: {
+    notFoundTitle: "पेज नहीं मिला",
+    notFoundBody: "आप जिस पेज की तलाश कर रहे हैं वह मौजूद नहीं है या स्थानांतरित कर दिया गया है। हमें आपको वह खोजने में मदद करने दें जिसकी आपको आवश्यकता है।",
+    backHome: "होम पर वापस जाएं",
+    browseProducts: "उत्पाद ब्राउज़ करें",
+    errorTitle: "कुछ गलत हो गया",
+    errorBody: "एक अप्रत्याशित त्रुटि हुई। कृपया पुनः प्रयास करें।",
+    tryAgain: "पुनः प्रयास करें",
+  },
 };
 
 export default hi;

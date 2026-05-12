@@ -27,7 +27,7 @@ export function WhatsAppFab() {
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0, opacity: 0 }}
-          className="fixed right-4 sm:right-6 [dir=rtl]:right-auto [dir=rtl]:left-4 [dir=rtl]:sm:left-6 z-40"
+          className="fixed right-4 sm:right-6 [dir=rtl]:right-auto [dir=rtl]:left-4 [dir=rtl]:sm:left-6 z-40 print:hidden"
           style={{ bottom: "max(1rem, env(safe-area-inset-bottom))" }}
         >
           <div className="relative">
