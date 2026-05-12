@@ -60,7 +60,7 @@ export function ProductGallery({
   // Empty → placeholder.
   if (slides.length === 0) {
     return (
-      <div className="sticky top-24 lg:top-32">
+      <div className="sticky top-14 lg:top-16">
         <div className="aspect-square rounded-[var(--radius-lg)] overflow-hidden shadow-border relative bg-stone-100">
           <ProductImagePlaceholder />
         </div>
@@ -71,7 +71,7 @@ export function ProductGallery({
   const current = slides[active];
 
   return (
-    <div className="sticky top-24 lg:top-32">
+    <div className="sticky top-14 lg:top-16">
       {/* Main slide with hover-zoom for images */}
       <div className="aspect-square rounded-[var(--radius-lg)] overflow-hidden shadow-border relative group bg-stone-100">
         <AnimatePresence mode="wait">
