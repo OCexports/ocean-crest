@@ -79,7 +79,15 @@ const nextConfig: NextConfig = {
         ].join("; "),
       },
     ];
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      {
+        source: "/:path(videos|images|fonts)/:rest*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
+      },
+    ];
   },
 };
 

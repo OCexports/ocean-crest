@@ -467,7 +467,7 @@ export default function Globe3DScene() {
   return (
     <Canvas
       className="absolute inset-0"
-      camera={{ position: [0, 0, 2.6], fov: 45 }}
+      camera={{ position: [0, 0, 3.0], fov: 45 }}
       gl={{ antialias: isLgUp, alpha: true, powerPreference: "low-power" }}
       dpr={isLgUp ? [1, 1.25] : [1, 1]}
     >

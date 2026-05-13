@@ -48,7 +48,12 @@ export function ProductsContent() {
         </div>
       </section>
 
-      <CTABanner />
+      <CTABanner
+        eyebrow="Request a quote"
+        heading1="Tell us your volume,"
+        heading2="we'll send our price list."
+        intro="Share quantity, target moisture / mesh, and destination port — you'll get our latest indicative pricing and lead times in under 24 hours."
+      />
     </>
   );
 }

@@ -113,7 +113,12 @@ export function CertificatesContent() {
         </div>
       </section>
 
-      <CTABanner />
+      <CTABanner
+        eyebrow="Verify with your buyer"
+        heading1="Need a copy of"
+        heading2="a specific certificate?"
+        intro="Tell us which certificate your buyer's QA team needs — FSSAI, APEDA, ISO 22000, HACCP, FDA — and we'll send a current copy within 24 hours."
+      />
     </>
   );
 }

@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { m, AnimatePresence, useScroll } from "framer-motion";
-import { Menu, X, ChevronDown, Mail, Phone, ArrowRight } from "lucide-react";
+import { X, ChevronDown, Mail, Phone, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { navigation, companyInfo } from "@/lib/constants/navigation";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -159,7 +159,7 @@ export function Header() {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 10, scale: 0.98 }}
                           transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-                          className="absolute top-full left-0 mt-2 w-60 bg-white rounded-[var(--radius-md)] shadow-lg overflow-hidden border border-edge/50"
+                          className="absolute top-full left-0 [dir=rtl]:left-auto [dir=rtl]:right-0 mt-2 w-60 bg-white rounded-[var(--radius-md)] shadow-lg overflow-hidden border border-edge/50"
                         >
                           <div className="p-1.5">
                             {item.children.map((child) => (
@@ -204,7 +204,7 @@ export function Header() {
             >
               <div className="flex flex-col gap-1.5">
                 <span className={cn("block w-6 h-[1.5px] transition-colors", isScrolled ? "bg-primary" : "bg-white")} />
-                <span className={cn("block w-4 h-[1.5px] transition-colors ml-auto", isScrolled ? "bg-primary" : "bg-white")} />
+                <span className={cn("block w-4 h-[1.5px] transition-colors ms-auto", isScrolled ? "bg-primary" : "bg-white")} />
               </div>
             </button>
           </div>
@@ -272,7 +272,7 @@ export function Header() {
                   {navigation.map((item, i) => (
                     <m.div
                       key={item.name}
-                      initial={{ opacity: 0, x: 30 }}
+                      initial={{ opacity: 0, x: dir === "rtl" ? -30 : 30 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.05 + i * 0.06, duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
                     >

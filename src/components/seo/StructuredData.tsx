@@ -44,10 +44,8 @@ export const organizationSchema = {
     addressCountry: "IN",
   },
   sameAs: [
-    companyInfo.social.linkedin,
     companyInfo.social.facebook,
     companyInfo.social.instagram,
-    companyInfo.social.twitter,
   ],
 };
 
