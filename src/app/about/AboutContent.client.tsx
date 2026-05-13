@@ -176,7 +176,12 @@ export function AboutContent() {
         </div>
       </section>
 
-      <CTABanner />
+      <CTABanner
+        eyebrow="Partner with us"
+        heading1="Build a long-term"
+        heading2="sourcing relationship."
+        intro="From verified Indian fields to your warehouse — let's set up a steady, reliable supply line built around your specs and volumes."
+      />
     </>
   );
 }

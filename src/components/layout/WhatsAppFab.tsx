@@ -32,7 +32,7 @@ export function WhatsAppFab() {
         >
           <div className="relative">
             {/* Pulse ring */}
-            <span className="absolute inset-0 rounded-full bg-whatsapp/30 animate-ping" />
+            <span className="absolute inset-0 rounded-full bg-whatsapp/30 motion-safe:animate-ping" />
 
             <a
               href={whatsappUrl}

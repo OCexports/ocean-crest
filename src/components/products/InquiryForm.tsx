@@ -117,7 +117,7 @@ export function InquiryForm() {
       </div>
       <Input label={f.quantity} name="quantity" placeholder={f.phQuantity} />
       <Textarea label={f.message} name="message" placeholder={f.phMessage} required />
-      <Button type="submit" size="lg" className="w-full sm:w-auto" isLoading={isSubmitting}>
+      <Button type="submit" size="lg" className="w-full sm:w-auto" isLoading={isSubmitting} aria-busy={isSubmitting}>
         <Send className="w-4 h-4" />
         {isSubmitting ? f.sending : f.send}
       </Button>

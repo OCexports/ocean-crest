@@ -78,7 +78,7 @@ export function CertificateStrip() {
             const cd = t.certData[cert.id];
             return (
               <StaggerItem key={cert.id}>
-                <div className="group h-full flex flex-col items-center justify-center bg-warm-white rounded-[var(--radius-md)] p-5 lg:p-6 shadow-border hover:shadow-card-hover transition-all duration-200 hover:-translate-y-1 text-center cursor-default border border-edge-light hover:border-gold/30">
+                <div className="group h-full flex flex-col items-center justify-center bg-warm-white rounded-[var(--radius-md)] p-5 lg:p-6 shadow-border hover:shadow-card-hover transition-all duration-200 text-center cursor-default border border-edge-light hover:border-gold/30">
                   <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-3 transition-colors shrink-0 ${v.accent}`}>
                     <Icon className="w-7 h-7" />
                   </div>

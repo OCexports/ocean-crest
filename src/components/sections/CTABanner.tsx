@@ -5,10 +5,22 @@ import { Send, CheckCircle } from "lucide-react";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
-export function CTABanner() {
+interface CTABannerProps {
+  eyebrow?: string;
+  heading1?: string;
+  heading2?: string;
+  intro?: string;
+}
+
+export function CTABanner({ eyebrow, heading1, heading2, intro }: CTABannerProps = {}) {
   const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const showEyebrow = eyebrow ?? t.common.getInTouch;
+  const showHeading1 = heading1 ?? t.ctaBanner.heading1;
+  const showHeading2 = heading2 ?? t.ctaBanner.heading2;
+  const showIntro = intro ?? t.ctaBanner.intro;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,16 +44,16 @@ export function CTABanner() {
           {/* Left: Text */}
           <ScrollReveal>
             <span className="text-[12px] lg:text-[11px] font-medium tracking-[0.3em] uppercase text-gold">
-              {t.common.getInTouch}
+              {showEyebrow}
             </span>
             <h2 className="mt-4 text-3xl lg:text-5xl font-bold text-white font-[family-name:var(--font-display)] leading-tight">
-              {t.ctaBanner.heading1}
+              {showHeading1}
               <br />
-              <span className="text-gradient-copper">{t.ctaBanner.heading2}</span>
+              <span className="text-gradient-copper">{showHeading2}</span>
             </h2>
             <div className="gold-line-left mt-6" />
             <p className="mt-6 text-base text-white/80 leading-relaxed max-w-md font-light">
-              {t.ctaBanner.intro}
+              {showIntro}
             </p>
           </ScrollReveal>
 
@@ -157,7 +169,8 @@ export function CTABanner() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 bg-gold text-white font-semibold text-sm tracking-wider uppercase rounded-[var(--radius-sm)] hover:bg-gold-muted transition-colors cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+                  aria-busy={isSubmitting}
+                  className="w-full py-3.5 bg-gold text-white font-semibold text-sm tracking-wider uppercase rounded-[var(--radius-sm)] hover:bg-gold-muted transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
                     <svg

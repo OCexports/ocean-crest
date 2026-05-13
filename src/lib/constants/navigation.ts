@@ -31,10 +31,8 @@ export const companyInfo = {
     country: "India",
   },
   social: {
-    linkedin: "https://linkedin.com/company/oceancrest",
     facebook: "https://facebook.com/oceancrest",
     instagram: "https://instagram.com/oceancrest",
-    twitter: "https://twitter.com/oceancrest",
   },
   stats: {
     countries: 0,

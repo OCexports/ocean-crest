@@ -20,7 +20,7 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin", "latin-ext"],
   display: "swap",
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
 });
 
 // Script-specific webfonts for the non-latin locales. `preload: false` so the
