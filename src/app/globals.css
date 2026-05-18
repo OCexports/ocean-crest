@@ -92,7 +92,11 @@
 
 /* ═══ Base ═══ */
 html {
-  scroll-behavior: smooth;
+  /* No `scroll-behavior: smooth` here — Lenis (see SmoothScroll.tsx)
+     hijacks scroll via JS rAF and the native CSS animation would run in
+     parallel, causing double-easing on programmatic scrolls + anchor
+     clicks. The reduced-motion media query below sets `scroll-behavior:
+     auto !important`, which is also correct when Lenis is disabled. */
   scrollbar-gutter: stable;
 }
 

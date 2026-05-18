@@ -456,6 +456,14 @@ export default function Globe3DScene() {
   // desktop. The GPU dials (antialias / DPR) still step down on touch since
   // those are imperceptible at phone DPI but ~30% GPU savings.
   const [isLgUp, setIsLgUp] = useState(false);
+  // Pause the render loop when the tab is hidden — saves battery / CPU on
+  // backgrounded tabs without changing the visual result on return.
+  const [tabVisible, setTabVisible] = useState(true);
+  // Also pause when the hero is scrolled off-screen. The globe lives only
+  // in the hero; rendering it while the user is reading the footer is pure
+  // GPU/CPU waste (the pixels never reach the screen).
+  const [inView, setInView] = useState(true);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
     setIsLgUp(mq.matches);
@@ -463,16 +471,37 @@ export default function Globe3DScene() {
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
   }, []);
+  useEffect(() => {
+    const onVis = () => setTabVisible(!document.hidden);
+    setTabVisible(!document.hidden);
+    document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
+  }, []);
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      // A little headroom so the scene resumes a beat before scrolling
+      // back into view — avoids a visible "blank frame" on re-entry.
+      { rootMargin: "200px 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
-    <Canvas
-      className="absolute inset-0"
-      camera={{ position: [0, 0, 3.0], fov: 45 }}
-      gl={{ antialias: isLgUp, alpha: true, powerPreference: "low-power" }}
-      dpr={isLgUp ? [1, 1.25] : [1, 1]}
-    >
-      <Globe richDetail />
-    </Canvas>
+    <div ref={wrapperRef} className="absolute inset-0">
+      <Canvas
+        className="absolute inset-0"
+        camera={{ position: [0, 0, 3.0], fov: 45 }}
+        gl={{ antialias: isLgUp, alpha: true, powerPreference: "low-power" }}
+        dpr={isLgUp ? [1, 1.25] : [1, 1]}
+        frameloop={tabVisible && inView ? "always" : "never"}
+      >
+        <Globe richDetail />
+      </Canvas>
+    </div>
   );
 }
 

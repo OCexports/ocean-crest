@@ -38,6 +38,9 @@ export function ProductGallery({
   if (video) slides.push({ type: "video", src: video, poster: videoPoster ?? images[0] });
 
   const [active, setActive] = useState(0);
+  // Pulse the placeholder background until the first image paints. Cleared
+  // by next/image's onLoad — avoids the flat-grey "is this loading?" beat.
+  const [firstImageLoaded, setFirstImageLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // When the active slide is a video, autoplay it; otherwise pause + reset.
@@ -73,7 +76,12 @@ export function ProductGallery({
   return (
     <div className="sticky top-14 lg:top-16">
       {/* Main slide with hover-zoom for images */}
-      <div className="aspect-square rounded-[var(--radius-lg)] overflow-hidden shadow-border relative group bg-stone-100">
+      <div
+        className={cn(
+          "aspect-square rounded-[var(--radius-lg)] overflow-hidden shadow-border relative group bg-stone-100",
+          !firstImageLoaded && "animate-pulse",
+        )}
+      >
         <AnimatePresence mode="wait">
           <m.div
             key={`${current.type}-${active}`}
@@ -92,6 +100,7 @@ export function ProductGallery({
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                 unoptimized={!isLocalImage(current.src)}
                 priority={active === 0}
+                onLoad={() => setFirstImageLoaded(true)}
               />
             ) : (
               <video
@@ -138,6 +147,7 @@ export function ProductGallery({
               className={cn(
                 "aspect-square rounded-[var(--radius-sm)] overflow-hidden relative transition-all duration-200 cursor-pointer bg-stone-100",
                 "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold",
+                "active:scale-95",
                 i === active
                   ? "ring-2 ring-gold ring-offset-2 ring-offset-stone"
                   : "opacity-70 hover:opacity-100",
