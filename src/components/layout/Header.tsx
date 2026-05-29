@@ -9,9 +9,11 @@ import { cn } from "@/lib/utils";
 import { navigation, companyInfo } from "@/lib/constants/navigation";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { useScrollToTop } from "./SmoothScroll";
 
 export function Header() {
   const { t, dir } = useLanguage();
+  const scrollToTop = useScrollToTop();
   // In RTL the hamburger sits on the left (the header flex reverses), so the
   // drawer must anchor to / slide in from the left instead of the right.
   const drawerOffset = dir === "rtl" ? "-100%" : "100%";
@@ -23,16 +25,35 @@ export function Header() {
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const drawerCloseRef = useRef<HTMLButtonElement>(null);
 
-  // Hide header on scroll down, show on scroll up (like Everest)
+  // Hide header on scroll down, show on scroll up (like Everest).
+  // 4 px hysteresis: with Lenis active, scroll events fire all the way
+  // through the lerp tail, so tiny easing-induced direction flips would
+  // pop the header back in mid-gesture. Requiring >4 px of travel before
+  // committing to a direction filters out that noise without making
+  // intentional scroll-ups feel sluggish.
+  //
+  // Refs mirror the current rendered values so we only call setState when
+  // the next value actually differs — avoids ~60 React re-renders per
+  // second during a scroll gesture.
+  const isScrolledRef = useRef(false);
+  const isHiddenRef = useRef(false);
   useEffect(() => {
+    const DIRECTION_THRESHOLD = 4;
     const handleScroll = () => {
       const currentY = window.scrollY;
-      setIsScrolled(currentY > 60);
+      const nextScrolled = currentY > 60;
+      if (nextScrolled !== isScrolledRef.current) {
+        isScrolledRef.current = nextScrolled;
+        setIsScrolled(nextScrolled);
+      }
 
-      if (currentY > 110) {
-        setIsHidden(currentY > lastScrollY.current && currentY > 300);
-      } else {
-        setIsHidden(false);
+      const delta = currentY - lastScrollY.current;
+      if (Math.abs(delta) < DIRECTION_THRESHOLD) return;
+
+      const nextHidden = currentY > 110 ? delta > 0 && currentY > 300 : false;
+      if (nextHidden !== isHiddenRef.current) {
+        isHiddenRef.current = nextHidden;
+        setIsHidden(nextHidden);
       }
       lastScrollY.current = currentY;
     };
@@ -91,7 +112,7 @@ export function Header() {
             <Link
               href="/"
               dir="ltr"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              onClick={() => scrollToTop()}
               className="flex items-center gap-3 cursor-pointer group"
             >
               <Image
@@ -196,7 +217,7 @@ export function Header() {
             {/* Mobile Hamburger */}
             <button
               ref={hamburgerRef}
-              className="lg:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 cursor-pointer"
+              className="lg:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 cursor-pointer transition-transform duration-100 active:scale-90"
               onClick={() => setIsMobileOpen(true)}
               aria-label="Open menu"
               aria-expanded={isMobileOpen}
@@ -241,7 +262,7 @@ export function Header() {
                     dir="ltr"
                     onClick={() => {
                       setIsMobileOpen(false);
-                      window.scrollTo({ top: 0, behavior: "smooth" });
+                      scrollToTop();
                     }}
                     className="flex items-center gap-2.5 cursor-pointer"
                   >

@@ -18,6 +18,10 @@ export function LanguageSwitcher({ isScrolled = false }: Props) {
   // dictionary resolves (cleared when `locale` from context updates).
   const [pending, setPending] = useState<Locale | null>(null);
   const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  // Roving focus index for keyboard nav; -1 means trigger has focus.
+  const [focusIdx, setFocusIdx] = useState(-1);
 
   useEffect(() => {
     setPending(null);
@@ -46,17 +50,64 @@ export function LanguageSwitcher({ isScrolled = false }: Props) {
 
   const choose = (lng: Locale) => {
     setOpen(false);
+    triggerRef.current?.focus();
     if (lng === locale) return;
     setPending(lng);
     setLocale(lng);
   };
 
+  // When the menu opens, focus the active locale so ↑/↓ feel natural.
+  useEffect(() => {
+    if (!open) {
+      setFocusIdx(-1);
+      return;
+    }
+    const idx = locales.indexOf(locale);
+    setFocusIdx(idx >= 0 ? idx : 0);
+  }, [open, locale, locales]);
+
+  // Move DOM focus to whichever option `focusIdx` points at.
+  useEffect(() => {
+    if (!open || focusIdx < 0) return;
+    const btn = listRef.current?.querySelectorAll<HTMLButtonElement>("button[data-locale]")[focusIdx];
+    btn?.focus();
+  }, [focusIdx, open]);
+
+  const onListKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setFocusIdx((i) => (i + 1) % locales.length);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setFocusIdx((i) => (i - 1 + locales.length) % locales.length);
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      setFocusIdx(0);
+    } else if (e.key === "End") {
+      e.preventDefault();
+      setFocusIdx(locales.length - 1);
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      setOpen(false);
+      triggerRef.current?.focus();
+    }
+  };
+
+  const onTriggerKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (!open && (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ")) {
+      e.preventDefault();
+      setOpen(true);
+    }
+  };
+
   return (
     <div ref={ref} className="relative">
       <button
+        ref={triggerRef}
         onClick={() => setOpen(!open)}
+        onKeyDown={onTriggerKeyDown}
         className={cn(
-          "flex items-center gap-1.5 min-h-11 px-3 py-2.5 text-[12px] lg:text-[11px] font-medium tracking-[0.1em] uppercase transition-colors cursor-pointer rounded-full",
+          "flex items-center gap-1.5 min-h-11 px-3 py-2.5 text-[12px] lg:text-[11px] font-medium tracking-[0.1em] uppercase transition-all duration-150 cursor-pointer rounded-full active:scale-95",
           isScrolled
             ? "text-ink-muted hover:text-primary hover:bg-stone-100"
             : "text-white/80 hover:text-white hover:bg-white/10"
@@ -89,15 +140,22 @@ export function LanguageSwitcher({ isScrolled = false }: Props) {
             className="absolute top-full right-0 [dir=rtl]:right-auto [dir=rtl]:left-0 mt-2 w-48 max-w-[calc(100vw-1rem)] bg-white rounded-[var(--radius-md)] shadow-modal overflow-hidden border border-edge-light z-50"
           >
             <div
+              ref={listRef}
+              role="listbox"
+              aria-label={t.overlays.langSwitchAria}
+              onKeyDown={onListKeyDown}
               className="p-1.5 max-h-[400px] overflow-y-auto overscroll-contain"
               data-lenis-prevent
             >
               {locales.map((lng) => (
                 <button
                   key={lng}
+                  data-locale={lng}
+                  role="option"
+                  aria-selected={locale === lng}
                   onClick={() => choose(lng)}
                   className={cn(
-                    "w-full flex items-center justify-between px-3 py-2 text-[13px] rounded-lg transition-all cursor-pointer",
+                    "w-full flex items-center justify-between px-3 py-2 text-[13px] rounded-lg transition-all cursor-pointer focus:outline-none focus:bg-stone-100 focus:text-primary",
                     locale === lng
                       ? "bg-gold/10 text-gold font-medium"
                       : "text-ink-muted hover:bg-stone-100 hover:text-primary"

@@ -7,6 +7,7 @@ import { LanguageProvider } from "@/lib/i18n/LanguageContext";
 import { StructuredData, organizationSchema } from "@/components/seo/StructuredData";
 import { siteUrl, siteName } from "@/lib/seo/site";
 import { DeferredOverlays } from "@/components/layout/DeferredOverlays";
+import { SmoothScrollProvider } from "@/components/layout/SmoothScroll";
 
 const cormorant = Cormorant({
   variable: "--font-cormorant",
@@ -121,6 +122,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${cormorant.variable} ${montserrat.variable} ${notoDevanagari.variable} ${notoArabic.variable}`} suppressHydrationWarning>
+      <head>
+        {/* DNS-prefetch / preconnect for third-party origins we actually hit:
+            - Google Maps iframe in the footer
+            - WhatsApp click-to-chat (WhatsAppFab)
+            Cheap latency win on first interaction with each. */}
+        <link rel="dns-prefetch" href="https://www.google.com" />
+        <link rel="dns-prefetch" href="https://maps.gstatic.com" />
+        <link rel="preconnect" href="https://www.google.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://wa.me" />
+      </head>
       <body className="min-h-screen flex flex-col" suppressHydrationWarning>
         {/* Set <html lang>/<html dir> from the stored locale *before* hydration
             so RTL + the script-specific font are correct on first paint (no
@@ -138,11 +149,13 @@ export default function RootLayout({
           Skip to main content
         </a>
         <LanguageProvider>
-          <StructuredData data={organizationSchema} />
-          <Header />
-          <main id="main-content" className="flex-1">{children}</main>
-          <Footer />
-          <DeferredOverlays />
+          <SmoothScrollProvider>
+            <StructuredData data={organizationSchema} />
+            <Header />
+            <main id="main-content" className="flex-1">{children}</main>
+            <Footer />
+            <DeferredOverlays />
+          </SmoothScrollProvider>
         </LanguageProvider>
       </body>
     </html>

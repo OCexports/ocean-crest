@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { companyInfo } from "@/lib/constants/navigation";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { useScrollToTop } from "./SmoothScroll";
 
 type IconProps = { className?: string };
 
@@ -41,6 +42,7 @@ const productLinks = [
 
 export function Footer() {
   const { t } = useLanguage();
+  const scrollToTop = useScrollToTop();
   return (
     <footer className="relative">
       <div className="gold-line" />
@@ -54,7 +56,7 @@ export function Footer() {
                 <Link
                   href="/"
                   dir="ltr"
-                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                  onClick={() => scrollToTop()}
                   className="inline-flex items-center gap-3 cursor-pointer"
                 >
                   <Image
@@ -181,8 +183,12 @@ export function Footer() {
                 </a>
               </div>
 
-              {/* Google Map */}
-              <div className="mt-4 rounded-[var(--radius-sm)] overflow-hidden border border-white/10">
+              {/* Google Map — data-lenis-prevent so wheel events inside the
+                  embed zoom the map instead of being captured by Lenis. */}
+              <div
+                data-lenis-prevent
+                className="mt-4 rounded-[var(--radius-sm)] overflow-hidden border border-white/10"
+              >
                 <iframe
                   src="https://www.google.com/maps?q=Zodiac+Aarish+Sundervan+Epitome+Jodhpur+Ahmedabad+380015&output=embed"
                   width="100%"
