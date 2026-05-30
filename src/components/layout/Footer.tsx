@@ -28,7 +28,7 @@ const footerLinks = [
   { key: "home", href: "/" },
   { key: "about", href: "/about" },
   { key: "products", href: "/products" },
-  { key: "certificates", href: "/certificates" },
+  // { key: "certificates", href: "/certificates" }, // hidden for now — re-enable later
   { key: "contact", href: "/contact" },
 ] as const;
 

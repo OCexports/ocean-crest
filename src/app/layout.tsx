@@ -139,6 +139,11 @@ export default function RootLayout({
             translated text still re-renders one tick later via LanguageProvider,
             but the layout no longer jumps. Keep this string in sync with
             STORAGE_KEY / RTL_LOCALES in LanguageContext.tsx. */}
+        {/* Runs at parse time, before hydration, so returning ar/ur/etc. visitors
+            get the right lang/dir on first paint without forcing dynamic rendering.
+            React logs a dev-only "script tag" warning for inline executable scripts
+            (stripped in production, harmless) — there is no way around it for a
+            pre-hydration inline script while keeping these pages statically rendered. */}
         <script
           dangerouslySetInnerHTML={{
             __html:
