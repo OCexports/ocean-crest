@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { CertificatesContent } from "./CertificatesContent.client";
 
 const certificatesDescription =
@@ -22,5 +23,7 @@ export const metadata: Metadata = {
 };
 
 export default function CertificatesPage() {
+  // Page hidden for now — re-enable by returning <CertificatesContent /> below.
+  notFound();
   return <CertificatesContent />;
 }

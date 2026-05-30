@@ -3,7 +3,7 @@ import { HeroSection } from "@/components/sections/HeroSection";
 import { ProductShowcase } from "@/components/sections/ProductShowcase";
 import { JourneySection } from "@/components/sections/JourneySection";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
-import { CertificateStrip } from "@/components/sections/CertificateStrip";
+// import { CertificateStrip } from "@/components/sections/CertificateStrip"; // hidden for now — re-enable later
 import { Testimonials } from "@/components/sections/Testimonials";
 import { CTABanner } from "@/components/sections/CTABanner";
 import { StructuredData } from "@/components/seo/StructuredData";
@@ -36,7 +36,7 @@ export default function HomePage() {
       <ProductShowcase />
       <JourneySection />
       <WhyChooseUs />
-      <CertificateStrip />
+      {/* <CertificateStrip /> */}{/* hidden for now — re-enable later */}
       <Testimonials />
       <CTABanner />
     </>

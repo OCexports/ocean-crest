@@ -76,7 +76,7 @@ export function ProductDetailContent({ product, galleryImages, related }: Props)
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
             <ScrollReveal direction="left">
-              <ProductGallery images={galleryImages} alt={name} />
+              <ProductGallery images={galleryImages} video={product.video} alt={name} />
             </ScrollReveal>
 
             <ScrollReveal direction="right">

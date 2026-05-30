@@ -12,7 +12,7 @@ export const navigation = [
       { name: "Garlic Powder", href: "/products/dehydrated-garlic-powder" },
     ],
   },
-  { name: "Certificates", href: "/certificates" },
+  // { name: "Certificates", href: "/certificates" }, // hidden for now — re-enable later
   { name: "Contact", href: "/contact" },
 ] as const;
 
