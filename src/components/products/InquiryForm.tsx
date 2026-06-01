@@ -51,6 +51,7 @@ export function InquiryForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [emailError, setEmailError] = useState<string | undefined>();
   const [phoneError, setPhoneError] = useState<string | undefined>();
+  const [submitError, setSubmitError] = useState<string | undefined>();
   const successHeadingRef = useRef<HTMLHeadingElement>(null);
 
   // Move focus to the success heading once the success card mounts so screen
@@ -74,11 +75,43 @@ export function InquiryForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSubmitError(undefined);
+
+    // Block submit if a field-level validation error is still showing.
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const payload = {
+      name: String(data.get("name") ?? ""),
+      email: String(data.get("email") ?? ""),
+      phone: String(data.get("phone") ?? ""),
+      company: String(data.get("company") ?? ""),
+      country: String(data.get("country") ?? ""),
+      product: String(data.get("product") ?? ""),
+      quantity: String(data.get("quantity") ?? ""),
+      message: String(data.get("message") ?? ""),
+    };
+
     setIsSubmitting(true);
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    try {
+      const res = await fetch("/api/inquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const json = await res.json().catch(() => null);
+        // i18n key for the submit error not yet in the dictionary; reuse the
+        // server-provided English string (or a generic fallback) for now.
+        throw new Error(json?.error ?? "Something went wrong. Please try again.");
+      }
+      setIsSubmitted(true);
+    } catch (err) {
+      setSubmitError(
+        err instanceof Error ? err.message : "Something went wrong. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const wa = `https://wa.me/${companyInfo.whatsapp}?text=${encodeURIComponent(f.whatsappPre)}`;
@@ -131,6 +164,7 @@ export function InquiryForm() {
                 setIsSubmitted(false);
                 setEmailError(undefined);
                 setPhoneError(undefined);
+                setSubmitError(undefined);
               }}
               className="text-sm text-gold hover:text-primary transition-colors underline cursor-pointer"
             >
@@ -195,6 +229,11 @@ export function InquiryForm() {
             <Input label={f.quantity} name="quantity" placeholder={f.phQuantity} />
             <Textarea label={f.message} name="message" placeholder={f.phMessage} required />
           </fieldset>
+          {submitError && (
+            <p role="alert" className="text-sm text-red-600">
+              {submitError}
+            </p>
+          )}
           <Button type="submit" size="lg" className="w-full sm:w-auto" isLoading={isSubmitting} aria-busy={isSubmitting}>
             <Send className="w-4 h-4" />
             {isSubmitting ? f.sending : f.send}
