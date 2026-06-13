@@ -1,8 +1,9 @@
 export const navigation = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
+  { name: "Home", key: "home", href: "/" },
+  { name: "About", key: "about", href: "/about" },
   {
     name: "Products",
+    key: "products",
     href: "/products",
     children: [
       { name: "Garlic Flakes", href: "/products/dehydrated-garlic-flakes" },
@@ -12,8 +13,8 @@ export const navigation = [
       { name: "Garlic Powder", href: "/products/dehydrated-garlic-powder" },
     ],
   },
-  // { name: "Certificates", href: "/certificates" }, // hidden for now — re-enable later
-  { name: "Contact", href: "/contact" },
+  // { name: "Certificates", key: "certificates", href: "/certificates" }, // hidden for now — re-enable later
+  { name: "Contact", key: "contact", href: "/contact" },
 ] as const;
 
 export const companyInfo = {
@@ -22,7 +23,7 @@ export const companyInfo = {
   tagline: "Your Verified Partner for Indian Commodities",
   phone: "+91 92748 11041",
   email: "priyam.sheth@ocexports.com",
-  whatsapp: "+919274811041",
+  whatsapp: "919274811041",
   address: {
     street: "C 802 Zodiac Aarish, Opp. Sundervan Epitome, Besides Ratnamani Party Plot, Jodhpur",
     city: "Ahmedabad",
@@ -32,7 +33,12 @@ export const companyInfo = {
   },
   social: {
     facebook: "https://facebook.com/oceancrest",
-    instagram: "https://instagram.com/oceancrest",
+    linkedin: "https://linkedin.com/company/oceancrest",
+  },
+  registration: {
+    gstin: "24AFXFS5993L1ZS",
+    udyam: "UDYAM-GJ-01-0645893",
+    iec: "AFXFS5993L",
   },
   stats: {
     countries: 0,

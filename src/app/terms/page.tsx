@@ -14,7 +14,7 @@ export default function TermsPage() {
     <LegalPage
       kind="terms"
       effectiveDate="May 2026"
-      intro="These terms govern your use of the Ocean Crest Exports website (operated by Sheth & Bhatt's LLP). By using this site you agree to these terms. They do not, by themselves, create a contract for the sale of goods — any order is governed by a separate written agreement, quotation, or purchase contract between you and Ocean Crest Exports."
+      intro="These terms govern your use of the Ocean Crest Exports website (operated by Sheth & Bhatt's LLP — GSTIN: 24AFXFS5993L1ZS · Udyam Registration No.: UDYAM-GJ-01-0645893 · IEC: AFXFS5993L). By using this site you agree to these terms. They do not, by themselves, create a contract for the sale of goods — any order is governed by a separate written agreement, quotation, or purchase contract between you and Ocean Crest Exports."
       sections={[
         {
           heading: "Use of the website",
