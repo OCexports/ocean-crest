@@ -14,7 +14,7 @@ export default function PrivacyPage() {
     <LegalPage
       kind="privacy"
       effectiveDate="May 2026"
-      intro="Ocean Crest Exports (a brand of Sheth & Bhatt's LLP, “we”, “us”) respects your privacy. This policy explains what information we collect through this website, why we collect it, and the choices you have. We only collect what we need to respond to your business inquiries."
+      intro="Ocean Crest Exports (a brand of Sheth & Bhatt's LLP, “we”, “us”) respects your privacy. This policy explains what information we collect through this website, why we collect it, and the choices you have. We only collect what we need to respond to your business inquiries. GSTIN: 24AFXFS5993L1ZS · Udyam Registration No.: UDYAM-GJ-01-0645893 · IEC: AFXFS5993L."
       sections={[
         {
           heading: "Information we collect",

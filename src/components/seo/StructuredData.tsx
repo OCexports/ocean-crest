@@ -29,6 +29,12 @@ export const organizationSchema = {
   logo: `${siteUrl}/logo.png`,
   email: companyInfo.email,
   telephone: companyInfo.phone,
+  taxID: companyInfo.registration.gstin,
+  identifier: [
+    { "@type": "PropertyValue", propertyID: "GSTIN", value: companyInfo.registration.gstin },
+    { "@type": "PropertyValue", propertyID: "Udyam Registration Number", value: companyInfo.registration.udyam },
+    { "@type": "PropertyValue", propertyID: "IEC", value: companyInfo.registration.iec },
+  ],
   contactPoint: [
     {
       "@type": "ContactPoint",
@@ -49,7 +55,7 @@ export const organizationSchema = {
   },
   sameAs: [
     companyInfo.social.facebook,
-    companyInfo.social.instagram,
+    companyInfo.social.linkedin,
   ],
 };
 

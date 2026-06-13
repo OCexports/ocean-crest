@@ -165,7 +165,7 @@ export function Header() {
                     )}
                   >
                     <span className="flex items-center gap-1.5">
-                      {item.name}
+                      {t.nav[item.key]}
                       {hasChildren && <ChevronDown className={cn("w-3 h-3 opacity-50 transition-transform duration-200", isOpen && "rotate-180")} />}
                     </span>
                     {/* Everest-style underline: slides in from left, slides out to right */}
@@ -302,7 +302,7 @@ export function Header() {
                         onClick={() => setIsMobileOpen(false)}
                         className="flex items-center justify-between px-2 py-4 text-[15px] font-medium text-white/80 hover:text-gold border-b border-white/5 transition-colors cursor-pointer"
                       >
-                        {item.name}
+                        {t.nav[item.key]}
                         <ArrowRight className="w-4 h-4 opacity-20" />
                       </Link>
                       {"children" in item && (

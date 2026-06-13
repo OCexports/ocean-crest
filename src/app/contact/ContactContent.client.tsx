@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Suspense } from "react";
-import { MapPin, Phone, Mail, Clock, MessageCircle, type LucideIcon } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, MessageCircle, FileBadge, type LucideIcon } from "lucide-react";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { companyInfo } from "@/lib/constants/navigation";
 import { InquiryForm } from "@/components/products/InquiryForm";
@@ -98,6 +98,34 @@ export function ContactContent() {
                   </div>
                 </ScrollReveal>
               ))}
+
+              {/* Registration details */}
+              <ScrollReveal>
+                <div className="bg-white rounded-[var(--radius-md)] p-5 shadow-card">
+                  <div className="flex items-start gap-4">
+                    <div className="w-11 h-11 rounded-[var(--radius-sm)] bg-gold/10 flex items-center justify-center shrink-0">
+                      <FileBadge className="w-5 h-5 text-gold" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-primary font-[family-name:var(--font-display)]">Registration &amp; Compliance</h3>
+                      <dl className="mt-1 space-y-0.5 text-sm text-ink-muted">
+                        <div className="flex gap-2">
+                          <dt className="font-medium text-primary/70 shrink-0">GSTIN</dt>
+                          <dd>{companyInfo.registration.gstin}</dd>
+                        </div>
+                        <div className="flex gap-2">
+                          <dt className="font-medium text-primary/70 shrink-0">Udyam</dt>
+                          <dd>{companyInfo.registration.udyam}</dd>
+                        </div>
+                        <div className="flex gap-2">
+                          <dt className="font-medium text-primary/70 shrink-0">IEC</dt>
+                          <dd>{companyInfo.registration.iec}</dd>
+                        </div>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+              </ScrollReveal>
 
               {/* WhatsApp CTA */}
               {companyInfo.whatsapp && (
