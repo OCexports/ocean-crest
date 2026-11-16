@@ -77,7 +77,7 @@ const en = {
   },
   heroLede: "Premium Indian commodities, verified at source and shipped from Ahmedabad to 25+ countries.",
   contact: { title: "Send Us Your Inquiry", subtitle: "Fill in the details below and our team will respond within 24 hours.", name: "Full Name", email: "Email", phone: "Phone", company: "Company", country: "Country", product: "Product Interest", quantity: "Estimated Quantity", message: "Message", submit: "Get in Touch", success: "Inquiry Sent Successfully!", successMsg: "Thank you for your interest. Our team will respond within 24 hours." },
-  categoriesLabels: { all: "All", dehydrated: "Dehydrated" },
+  categoriesLabels: { all: "All", "dehydrated-vegetables": "Dehydrated Vegetables", spices: "Spices", "herbal-wellness": "Herbal & Wellness" },
   gallery: { viewVideo: "View product video", viewImage: "View image" },
   headerExtra: { whatsappUs: "WhatsApp Us" },
   footerExtra: { privacy: "Privacy Policy", terms: "Terms of Service", copyright: "All rights reserved. Part of Sheth & Bhatt's LLP." },
@@ -93,7 +93,7 @@ const en = {
   productData: {
     "dehydrated-garlic-flakes": {
       name: "Dehydrated Garlic Flakes",
-      category: "Dehydrated",
+      category: "Dehydrated Vegetables",
       meshBadge: "8–15 mm",
       shortDescription: "The closest form to fresh garlic — premium 8–15 mm flakes processed from selected Indian crops.",
       description: "Our premium flakes are the closest form to fresh garlic, meticulously processed from selected Indian crops to maintain their robust aroma and strong flavor profile.",
@@ -104,7 +104,7 @@ const en = {
     },
     "dehydrated-garlic-chopped": {
       name: "Dehydrated Garlic Chopped",
-      category: "Dehydrated",
+      category: "Dehydrated Vegetables",
       meshBadge: "3–5 mm · 8–20 mesh",
       shortDescription: "Chunky 3–5 mm chopped garlic for applications where garlic needs to be both tasted and seen.",
       description: "Ocean Crest Chopped Garlic provides a chunky texture and bold flavor bursts. Designed for applications where garlic needs to be both tasted and seen.",
@@ -115,7 +115,7 @@ const en = {
     },
     "dehydrated-garlic-minced": {
       name: "Dehydrated Garlic Minced",
-      category: "Dehydrated",
+      category: "Dehydrated Vegetables",
       meshBadge: "1–3 mm · 20–40 mesh",
       shortDescription: "Uniformly cut 1–3 mm minced garlic — a cost-effective replacement for fresh minced in high-speed production lines.",
       description: "Our Minced Garlic is uniformly cut and gently dehydrated — a cost-effective, efficient replacement for fresh minced garlic in high-speed food production lines.",
@@ -126,7 +126,7 @@ const en = {
     },
     "dehydrated-garlic-granules": {
       name: "Dehydrated Garlic Granules",
-      category: "Dehydrated",
+      category: "Dehydrated Vegetables",
       meshBadge: "0.5–1 mm · 40–80 mesh",
       shortDescription: "Sandy, consistent 0.5–1 mm granules — the bridge between minced and powder, ideal for spice blends and dry marinades.",
       description: "Ocean Crest Granules are the bridge between minced garlic and fine powder, providing a sandy, consistent texture that blends seamlessly with other dry ingredients.",
@@ -137,7 +137,7 @@ const en = {
     },
     "dehydrated-garlic-powder": {
       name: "Dehydrated Garlic Powder",
-      category: "Dehydrated",
+      category: "Dehydrated Vegetables",
       meshBadge: "80–100+ mesh",
       shortDescription: "Ultra-fine pulverized garlic powder — engineered for instant dissolution and intense flavor.",
       description: "Our garlic powder is “pulverized” to an ultra-fine finish, engineered for instant dissolution and an immediate, intense flavor punch.",
@@ -148,7 +148,7 @@ const en = {
     },
     "dehydrated-turmeric-powder": {
       name: "Dehydrated Turmeric Powder",
-      category: "Dehydrated",
+      category: "Spices",
       meshBadge: "80–100 mesh",
       shortDescription: "Vibrant, high-curcumin turmeric powder milled from sun-cured rhizomes for deep color and earthy warmth.",
       description: "Ocean Crest Turmeric Powder is milled from carefully selected, sun-cured rhizomes to deliver a deep golden color, high curcumin content, and the warm, earthy aroma that defines premium turmeric.",
@@ -159,7 +159,7 @@ const en = {
     },
     "dehydrated-ginger-powder": {
       name: "Dehydrated Ginger Powder",
-      category: "Dehydrated",
+      category: "Spices",
       meshBadge: "40–100 mesh",
       shortDescription: "Aromatic ivory ginger powder milled to a customizable 40–100 mesh, with a strong, warm, slightly pungent flavor.",
       description: "Ocean Crest Ginger Powder is milled from dried ginger into a smooth, uniform ivory powder. Distinctly aromatic with a strong, warm, slightly pungent profile, it delivers consistent flavor and can be customized to your preferred mesh size.",

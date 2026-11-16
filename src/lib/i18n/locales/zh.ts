@@ -47,7 +47,7 @@ const zh: Translations = {
   heroCards: { globalReach: { title: "全球覆盖", value: "8个港口 · 6大洲" }, verifiedQuality: { title: "可信质量", value: "FSSAI + ISO 22000" }, directSource: { title: "直接来源", value: "从农场到港口的可追溯性" }, timelyDelivery: { title: "准时交付", value: "整箱和拼箱就绪" } },
   heroLede: "优质印度商品，源头检验，从艾哈迈达巴德发往25多个国家。",
   contact: { title: "发送您的询价", subtitle: "填写以下信息，我们的团队将在24小时内回复。", name: "全名", email: "邮箱", phone: "电话", company: "公司", country: "国家", product: "感兴趣的产品", quantity: "预估数量", message: "留言", submit: "联系我们", success: "询价发送成功！", successMsg: "感谢您的关注。我们的团队将在24小时内回复。" },
-  categoriesLabels: { all: "全部", dehydrated: "脱水" },
+  categoriesLabels: { all: "全部", "dehydrated-vegetables": "脱水蔬菜", spices: "香料", "herbal-wellness": "草本与养生" },
   gallery: { viewVideo: "查看产品视频", viewImage: "查看图片" },
   headerExtra: { whatsappUs: "WhatsApp 联系" },
   footerExtra: { privacy: "隐私政策", terms: "服务条款", copyright: "版权所有。Sheth & Bhatt's LLP 旗下。" },
@@ -56,7 +56,7 @@ const zh: Translations = {
   productData: {
     "dehydrated-garlic-flakes": {
       name: "脱水蒜片",
-      category: "脱水",
+      category: "脱水蔬菜",
       meshBadge: "8–15 毫米",
       shortDescription: "最接近新鲜大蒜的形态——采用精选印度作物加工的优质 8–15 毫米蒜片。",
       description: "我们的优质蒜片是最接近新鲜大蒜的形态，由精选印度作物精心加工而成，以保持其浓郁的香气和强烈的风味。",
@@ -67,7 +67,7 @@ const zh: Translations = {
     },
     "dehydrated-garlic-chopped": {
       name: "脱水蒜碎",
-      category: "脱水",
+      category: "脱水蔬菜",
       meshBadge: "3–5 毫米 · 8–20 目",
       shortDescription: "3–5 毫米的大块蒜碎，适用于既需要品尝到也需要看到大蒜的应用。",
       description: "Ocean Crest 蒜碎提供大块的质地和浓烈的风味爆发。专为既需要品尝到也需要看到大蒜的应用而设计。",
@@ -78,7 +78,7 @@ const zh: Translations = {
     },
     "dehydrated-garlic-minced": {
       name: "脱水蒜末",
-      category: "脱水",
+      category: "脱水蔬菜",
       meshBadge: "1–3 毫米 · 20–40 目",
       shortDescription: "均匀切割的 1–3 毫米蒜末——在高速生产线上替代新鲜蒜末的经济选择。",
       description: "我们的蒜末切割均匀且经轻柔脱水——是高速食品生产线上替代新鲜蒜末的经济高效选择。",
@@ -89,7 +89,7 @@ const zh: Translations = {
     },
     "dehydrated-garlic-granules": {
       name: "脱水蒜粒",
-      category: "脱水",
+      category: "脱水蔬菜",
       meshBadge: "0.5–1 毫米 · 40–80 目",
       shortDescription: "沙质、均匀的 0.5–1 毫米蒜粒——蒜末与蒜粉之间的桥梁，适合香料混合物和干腌料。",
       description: "Ocean Crest 蒜粒是蒜末与细蒜粉之间的桥梁，提供沙质、均匀的质地，可与其他干性配料无缝混合。",
@@ -100,7 +100,7 @@ const zh: Translations = {
     },
     "dehydrated-garlic-powder": {
       name: "脱水蒜粉",
-      category: "脱水",
+      category: "脱水蔬菜",
       meshBadge: "80–100+ 目",
       shortDescription: "超细研磨蒜粉——专为即时溶解和浓烈风味而设计。",
       description: "我们的蒜粉被“研磨”至超细程度，专为即时溶解和即刻、浓烈的风味冲击而设计。",
@@ -111,7 +111,7 @@ const zh: Translations = {
     },
     "dehydrated-turmeric-powder": {
       name: "脱水姜黄粉",
-      category: "脱水",
+      category: "香料",
       meshBadge: "60–200 目",
       shortDescription: "色泽鲜艳、姜黄素含量高的姜黄粉，由晒干的根茎研磨而成，色泽浓郁，香气温暖厚重。",
       description: "Ocean Crest姜黄粉选用精心挑选的晒干根茎研磨而成，呈现浓郁的金黄色泽、高姜黄素含量以及优质姜黄特有的温暖泥土香气。",

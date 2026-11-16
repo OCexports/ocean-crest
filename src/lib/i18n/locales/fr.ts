@@ -47,7 +47,7 @@ const fr: Translations = {
   heroCards: { globalReach: { title: "Portée Mondiale", value: "8 ports · 6 continents" }, verifiedQuality: { title: "Qualité Vérifiée", value: "FSSAI + ISO 22000" }, directSource: { title: "Source Directe", value: "Traçabilité ferme-au-port" }, timelyDelivery: { title: "Livraison Ponctuelle", value: "Conteneur et LCL prêts" } },
   heroLede: "Produits indiens premium, vérifiés à la source et expédiés d'Ahmedabad vers plus de 25 pays.",
   contact: { title: "Envoyez-nous Votre Demande", subtitle: "Remplissez les détails ci-dessous et notre équipe vous répondra sous 24 heures.", name: "Nom Complet", email: "Email", phone: "Téléphone", company: "Entreprise", country: "Pays", product: "Produit d'Intérêt", quantity: "Quantité Estimée", message: "Message", submit: "Nous Contacter", success: "Demande Envoyée avec Succès!", successMsg: "Merci pour votre intérêt. Notre équipe répondra sous 24 heures." },
-  categoriesLabels: { all: "Tous", dehydrated: "Déshydraté" },
+  categoriesLabels: { all: "Tous", "dehydrated-vegetables": "Légumes déshydratés", spices: "Épices", "herbal-wellness": "Plantes et bien-être" },
   gallery: { viewVideo: "Voir la vidéo du produit", viewImage: "Voir l'image" },
   headerExtra: { whatsappUs: "WhatsApp" },
   footerExtra: { privacy: "Politique de Confidentialité", terms: "Conditions d'Utilisation", copyright: "Tous droits réservés. Membre de Sheth & Bhatt's LLP." },
@@ -56,7 +56,7 @@ const fr: Translations = {
   productData: {
     "dehydrated-garlic-flakes": {
       name: "Flocons d'ail déshydraté",
-      category: "Déshydraté",
+      category: "Légumes déshydratés",
       meshBadge: "8–15 mm",
       shortDescription: "La forme la plus proche de l'ail frais — des flocons premium de 8 à 15 mm issus de récoltes indiennes sélectionnées.",
       description: "Nos flocons premium sont la forme la plus proche de l'ail frais, méticuleusement transformés à partir de récoltes indiennes sélectionnées pour préserver leur arôme puissant et leur saveur intense.",
@@ -67,7 +67,7 @@ const fr: Translations = {
     },
     "dehydrated-garlic-chopped": {
       name: "Ail déshydraté concassé",
-      category: "Déshydraté",
+      category: "Légumes déshydratés",
       meshBadge: "3–5 mm · 8–20 mesh",
       shortDescription: "Ail concassé épais de 3 à 5 mm pour les applications où l'ail doit être à la fois goûté et vu.",
       description: "L'ail concassé Ocean Crest offre une texture épaisse et des éclats de saveur intenses. Conçu pour les applications où l'ail doit être à la fois goûté et vu.",
@@ -78,7 +78,7 @@ const fr: Translations = {
     },
     "dehydrated-garlic-minced": {
       name: "Ail déshydraté haché",
-      category: "Déshydraté",
+      category: "Légumes déshydratés",
       meshBadge: "1–3 mm · 20–40 mesh",
       shortDescription: "Ail haché uniformément coupé de 1 à 3 mm — un substitut économique à l'ail haché frais pour les lignes de production à grande vitesse.",
       description: "Notre ail haché est coupé uniformément et délicatement déshydraté — un substitut économique et efficace à l'ail haché frais pour les lignes de production alimentaire à grande vitesse.",
@@ -89,7 +89,7 @@ const fr: Translations = {
     },
     "dehydrated-garlic-granules": {
       name: "Granulés d'ail déshydraté",
-      category: "Déshydraté",
+      category: "Légumes déshydratés",
       meshBadge: "0.5–1 mm · 40–80 mesh",
       shortDescription: "Granulés sableux et homogènes de 0,5 à 1 mm — le pont entre le haché et la poudre, idéal pour les mélanges d'épices et les marinades sèches.",
       description: "Les granulés Ocean Crest sont le pont entre l'ail haché et la poudre fine, offrant une texture sableuse et homogène qui se mélange parfaitement aux autres ingrédients secs.",
@@ -100,7 +100,7 @@ const fr: Translations = {
     },
     "dehydrated-garlic-powder": {
       name: "Poudre d'ail déshydraté",
-      category: "Déshydraté",
+      category: "Légumes déshydratés",
       meshBadge: "80–100+ mesh",
       shortDescription: "Poudre d'ail ultra-fine pulvérisée — conçue pour une dissolution instantanée et une saveur intense.",
       description: "Notre poudre d'ail est « pulvérisée » jusqu'à une finition ultra-fine, conçue pour une dissolution instantanée et un coup de saveur immédiat et intense.",
@@ -111,7 +111,7 @@ const fr: Translations = {
     },
     "dehydrated-turmeric-powder": {
       name: "Poudre de curcuma déshydraté",
-      category: "Déshydraté",
+      category: "Épices",
       meshBadge: "60–200 mesh",
       shortDescription: "Poudre de curcuma vibrante, riche en curcumine, moulue à partir de rhizomes séchés au soleil pour une couleur profonde et une chaleur terreuse.",
       description: "La poudre de curcuma Ocean Crest est moulue à partir de rhizomes soigneusement sélectionnés et séchés au soleil pour offrir une couleur dorée profonde, une haute teneur en curcumine et l'arôme chaud et terreux qui définit le curcuma premium.",

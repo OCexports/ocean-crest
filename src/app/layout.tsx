@@ -47,7 +47,7 @@ const notoArabic = Noto_Sans_Arabic({
 
 const defaultTitle = "Ocean Crest — Premium Spice Exports from India";
 const defaultDescription =
-  "Ocean Crest Exports is a verified Indian exporter of dehydrated garlic, premium spices, grains, and seeds. Quality-certified, FSSAI/APEDA registered, serving B2B buyers in 25+ countries.";
+  "Ocean Crest Exports is a verified Indian exporter of dehydrated garlic and onion, premium spices, herbal ingredients, and food-grade gums. Quality-certified, FSSAI/APEDA registered, serving B2B buyers in 25+ countries.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -64,6 +64,12 @@ export const metadata: Metadata = {
     "Indian spice exporter",
     "bulk spice supplier",
     "dehydrated vegetables India",
+    "dehydrated white onion exporter",
+    "ashwagandha exporter India",
+    "isabgol psyllium husk exporter",
+    "Byadgi Kashmiri red chilli exporter",
+    "guar gum powder supplier",
+    "moringa leaf powder wholesale",
     "FSSAI certified spice exporter",
     "APEDA registered exporter",
   ],

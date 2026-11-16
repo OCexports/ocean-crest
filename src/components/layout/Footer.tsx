@@ -33,13 +33,19 @@ const footerLinks = [
 ] as const;
 
 const productLinks = [
-  { slug: "dehydrated-garlic-flakes", fallback: "Garlic Flakes" },
-  { slug: "dehydrated-garlic-chopped", fallback: "Garlic Chopped" },
-  { slug: "dehydrated-garlic-minced", fallback: "Garlic Minced" },
-  { slug: "dehydrated-garlic-granules", fallback: "Garlic Granules" },
-  { slug: "dehydrated-garlic-powder", fallback: "Garlic Powder" },
-  { slug: "dehydrated-turmeric-powder", fallback: "Turmeric Powder" },
-  { slug: "dehydrated-ginger-powder", fallback: "Ginger Powder" },
+  { slug: "dehydrated-white-onion-flakes", label: "Dehydrated White Onion" },
+  { slug: "dehydrated-garlic-flakes", label: "Dehydrated Garlic" },
+  { slug: "dehydrated-amla-powder", label: "Amla Powder" },
+  { slug: "dehydrated-turmeric-powder", label: "Turmeric Powder" },
+  { slug: "dehydrated-ginger-powder", label: "Ginger Powder" },
+  { slug: "byadgi-dried-red-chilli-crushed-flakes", label: "Red Chilli (Byadgi & Kashmiri)" },
+  { slug: "ajwain-carom-seeds", label: "Ajwain (Carom)" },
+  { slug: "kasuri-methi-dried-fenugreek-leaves", label: "Kasuri Methi" },
+  { slug: "tamarind-whole-pods-fingers", label: "Tamarind" },
+  { slug: "isabgol-whole-husk", label: "Isabgol (Psyllium)" },
+  { slug: "ashwagandha-dried-whole-roots", label: "Ashwagandha" },
+  { slug: "moringa-leaf-powder", label: "Moringa Leaf Powder" },
+  { slug: "guar-gum-powder", label: "Guar Gum Powder" },
 ] as const;
 
 export function Footer() {
@@ -49,7 +55,7 @@ export function Footer() {
     <footer className="relative">
       <div className="gold-line" />
 
-      <div className="bg-primary text-white relative overflow-hidden">
+      <div className="bg-stone text-ink relative overflow-hidden">
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-32">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
             {/* Brand */}
@@ -64,20 +70,38 @@ export function Footer() {
                   <Image
                     src="/images/brand/OC MONOGRAM.png"
                     alt="OC monogram"
-                    width={120}
-                    height={120}
-                    sizes="96px"
+                    width={160}
+                    height={160}
+                    sizes="128px"
                     loading="lazy"
-                    className="h-20 lg:h-24 w-auto object-contain [filter:drop-shadow(0_0_1px_rgba(212,166,74,1))_drop-shadow(0_0_1px_rgba(212,166,74,1))_drop-shadow(0_0_2px_rgba(212,166,74,0.7))]"
+                    className="h-28 lg:h-32 w-auto object-contain"
                   />
-                  <span className="text-[14px] lg:text-[16px] font-semibold tracking-[0.12em] uppercase font-[family-name:var(--font-display)] text-white leading-none whitespace-nowrap">
+                  <span className="text-[15px] lg:text-[18px] font-semibold tracking-[0.12em] uppercase font-[family-name:var(--font-display)] text-primary leading-none whitespace-nowrap">
                     Ocean Crest Exports
                   </span>
                 </Link>
               </div>
-              <p className="text-white/80 text-sm leading-relaxed">
-                {t.footer.tagline}
-              </p>
+              {/* Registrations — transparent logos sit directly on the beige footer */}
+              <div className="flex items-center gap-5" dir="ltr">
+                <Image
+                  src="/images/brand/fssai.webp"
+                  alt="FSSAI"
+                  width={360}
+                  height={178}
+                  sizes="120px"
+                  loading="lazy"
+                  className="h-14 w-auto object-contain"
+                />
+                <Image
+                  src="/images/brand/msme.webp"
+                  alt="MSME — Micro, Small & Medium Enterprises"
+                  width={360}
+                  height={135}
+                  sizes="150px"
+                  loading="lazy"
+                  className="h-14 w-auto object-contain"
+                />
+              </div>
               {/* Social */}
               <div className="flex gap-3 mt-6">
                 {Object.entries(companyInfo.social).map(([name, url]) => {
@@ -88,7 +112,7 @@ export function Footer() {
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-gold/20 hover:text-gold transition-all cursor-pointer"
+                      className="w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-gold/25 hover:text-gold-deep transition-all cursor-pointer"
                       aria-label={name}
                     >
                       {Icon ? (
@@ -106,7 +130,7 @@ export function Footer() {
 
             {/* Quick Links */}
             <div>
-              <h3 className="text-sm font-semibold tracking-wider uppercase text-white/80 mb-4">
+              <h3 className="text-sm font-semibold tracking-wider uppercase text-primary mb-4">
                 {t.footer.quickLinks}
               </h3>
               <ul className="space-y-2.5">
@@ -114,7 +138,7 @@ export function Footer() {
                   <li key={link.key}>
                     <Link
                       href={link.href}
-                      className="text-sm text-white/80 hover:text-gold transition-colors cursor-pointer"
+                      className="text-sm text-ink-muted hover:text-gold-deep transition-colors cursor-pointer"
                     >
                       {t.nav[link.key]}
                     </Link>
@@ -125,7 +149,7 @@ export function Footer() {
 
             {/* Products */}
             <div>
-              <h3 className="text-sm font-semibold tracking-wider uppercase text-white/80 mb-4">
+              <h3 className="text-sm font-semibold tracking-wider uppercase text-primary mb-4">
                 {t.footer.products}
               </h3>
               <ul className="space-y-2.5">
@@ -133,9 +157,9 @@ export function Footer() {
                   <li key={link.slug}>
                     <Link
                       href={`/products/${link.slug}`}
-                      className="text-sm text-white/80 hover:text-gold transition-colors cursor-pointer"
+                      className="text-sm text-ink-muted hover:text-gold-deep transition-colors cursor-pointer"
                     >
-                      {t.productData[link.slug]?.name ?? link.fallback}
+                      {link.label}
                     </Link>
                   </li>
                 ))}
@@ -144,12 +168,12 @@ export function Footer() {
 
             {/* Contact + Map */}
             <div>
-              <h3 className="text-sm font-semibold tracking-wider uppercase text-white/80 mb-4">
+              <h3 className="text-sm font-semibold tracking-wider uppercase text-primary mb-4">
                 {t.footer.contact}
               </h3>
-              <div className="space-y-3 text-sm text-white/80">
+              <div className="space-y-3 text-sm text-ink-muted">
                 <div className="flex gap-3">
-                  <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-gold" />
+                  <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-gold-deep" />
                   <p>
                     {companyInfo.address.street}, {companyInfo.address.city},{" "}
                     {companyInfo.address.state} {companyInfo.address.zip},{" "}
@@ -159,34 +183,34 @@ export function Footer() {
                 {companyInfo.phone && (
                   <a
                     href={`tel:${companyInfo.phone}`}
-                    className="flex items-center gap-3 hover:text-gold transition-colors cursor-pointer"
+                    className="flex items-center gap-3 hover:text-gold-deep transition-colors cursor-pointer"
                   >
-                    <Phone className="w-4 h-4 shrink-0 text-gold" />
+                    <Phone className="w-4 h-4 shrink-0 text-gold-deep" />
                     {companyInfo.phone}
                   </a>
                 )}
                 <a
                   href={`mailto:${companyInfo.email}`}
-                  className="flex items-center gap-3 hover:text-gold transition-colors cursor-pointer"
+                  className="flex items-center gap-3 hover:text-gold-deep transition-colors cursor-pointer"
                 >
-                  <Mail className="w-4 h-4 shrink-0 text-gold" />
+                  <Mail className="w-4 h-4 shrink-0 text-gold-deep" />
                   {companyInfo.email}
                 </a>
               </div>
 
               {/* Registration details — universal identifiers, not translated */}
-              <dl className="mt-5 pt-5 border-t border-white/10 space-y-1.5 text-xs text-white/70">
+              <dl className="mt-5 pt-5 border-t border-edge space-y-1.5 text-xs text-ink-muted">
                 <div className="flex gap-2">
-                  <dt className="font-semibold uppercase tracking-wider text-white/60 shrink-0">GSTIN</dt>
-                  <dd className="text-white/80">{companyInfo.registration.gstin}</dd>
+                  <dt className="font-semibold uppercase tracking-wider text-ink-muted shrink-0">GSTIN</dt>
+                  <dd className="text-ink">{companyInfo.registration.gstin}</dd>
                 </div>
                 <div className="flex gap-2">
-                  <dt className="font-semibold uppercase tracking-wider text-white/60 shrink-0">Udyam</dt>
-                  <dd className="text-white/80">{companyInfo.registration.udyam}</dd>
+                  <dt className="font-semibold uppercase tracking-wider text-ink-muted shrink-0">Udyam</dt>
+                  <dd className="text-ink">{companyInfo.registration.udyam}</dd>
                 </div>
                 <div className="flex gap-2">
-                  <dt className="font-semibold uppercase tracking-wider text-white/60 shrink-0">IEC</dt>
-                  <dd className="text-white/80">{companyInfo.registration.iec}</dd>
+                  <dt className="font-semibold uppercase tracking-wider text-ink-muted shrink-0">IEC</dt>
+                  <dd className="text-ink">{companyInfo.registration.iec}</dd>
                 </div>
               </dl>
 
@@ -194,7 +218,7 @@ export function Footer() {
                   embed zoom the map instead of being captured by Lenis. */}
               <div
                 data-lenis-prevent
-                className="mt-4 rounded-[var(--radius-sm)] overflow-hidden border border-white/10"
+                className="mt-4 rounded-[var(--radius-sm)] overflow-hidden border border-edge"
               >
                 <iframe
                   src="https://www.google.com/maps?q=Zodiac+Aarish+Sundervan+Epitome+Jodhpur+Ahmedabad+380015&output=embed"
@@ -211,20 +235,20 @@ export function Footer() {
           </div>
 
           {/* Bottom */}
-          <div className="mt-12 pt-8 border-t border-gold/10 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-white/80">
+          <div className="mt-12 pt-8 border-t border-edge flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-ink-muted">
               &copy; {new Date().getFullYear()} Ocean Crest Exports. {t.footerExtra.copyright}
             </p>
-            <div className="flex gap-6 text-sm text-white/80">
+            <div className="flex gap-6 text-sm text-ink-muted">
               <Link
                 href="/privacy"
-                className="hover:text-gold/60 transition-colors cursor-pointer"
+                className="hover:text-gold-deep transition-colors cursor-pointer"
               >
                 {t.footerExtra.privacy}
               </Link>
               <Link
                 href="/terms"
-                className="hover:text-gold/60 transition-colors cursor-pointer"
+                className="hover:text-gold-deep transition-colors cursor-pointer"
               >
                 {t.footerExtra.terms}
               </Link>

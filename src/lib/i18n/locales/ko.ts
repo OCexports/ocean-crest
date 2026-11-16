@@ -47,7 +47,7 @@ const ko: Translations = {
   heroCards: { globalReach: { title: "글로벌 도달", value: "8개 항구 · 6개 대륙" }, verifiedQuality: { title: "검증된 품질", value: "FSSAI + ISO 22000" }, directSource: { title: "직접 소싱", value: "농장에서 항구까지 추적성" }, timelyDelivery: { title: "정시 배송", value: "컨테이너 및 LCL 준비 완료" } },
   heroLede: "프리미엄 인도 상품, 원산지에서 검증되어 아메다바드에서 25개국 이상으로 배송됩니다.",
   contact: { title: "문의를 보내주세요", subtitle: "아래 세부 정보를 입력하시면 저희 팀이 24시간 이내에 답변드리겠습니다.", name: "성명", email: "이메일", phone: "전화번호", company: "회사명", country: "국가", product: "관심 제품", quantity: "예상 수량", message: "메시지", submit: "문의하기", success: "문의가 성공적으로 전송되었습니다!", successMsg: "관심을 가져주셔서 감사합니다. 저희 팀이 24시간 이내에 답변드리겠습니다." },
-  categoriesLabels: { all: "전체", dehydrated: "건조" },
+  categoriesLabels: { all: "전체", "dehydrated-vegetables": "건조 채소", spices: "향신료", "herbal-wellness": "허브 & 웰니스" },
   gallery: { viewVideo: "제품 동영상 보기", viewImage: "이미지 보기" },
   headerExtra: { whatsappUs: "WhatsApp 문의" },
   footerExtra: { privacy: "개인정보 처리방침", terms: "서비스 약관", copyright: "모든 권리 보유. Sheth & Bhatt's LLP 소속." },
@@ -56,7 +56,7 @@ const ko: Translations = {
   productData: {
     "dehydrated-garlic-flakes": {
       name: "건조 마늘 플레이크",
-      category: "건조",
+      category: "건조 채소",
       meshBadge: "8~15mm",
       shortDescription: "신선한 마늘에 가장 가까운 형태 — 엄선된 인도 작물로 가공한 프리미엄 8~15mm 플레이크.",
       description: "당사의 프리미엄 플레이크는 신선한 마늘에 가장 가까운 형태로, 강한 향과 진한 풍미를 유지하기 위해 엄선된 인도 작물로 정성껏 가공됩니다.",
@@ -67,7 +67,7 @@ const ko: Translations = {
     },
     "dehydrated-garlic-chopped": {
       name: "건조 마늘 다진것(굵게)",
-      category: "건조",
+      category: "건조 채소",
       meshBadge: "3~5mm · 8~20 메시",
       shortDescription: "마늘을 맛보면서 동시에 보아야 하는 용도를 위한 3~5mm의 굵게 다진 마늘.",
       description: "Ocean Crest 다진 마늘은 굵은 식감과 강렬한 풍미의 폭발을 제공합니다. 마늘을 맛보면서 동시에 보아야 하는 용도를 위해 설계되었습니다.",
@@ -78,7 +78,7 @@ const ko: Translations = {
     },
     "dehydrated-garlic-minced": {
       name: "건조 마늘 다진것(곱게)",
-      category: "건조",
+      category: "건조 채소",
       meshBadge: "1~3mm · 20~40 메시",
       shortDescription: "균일하게 자른 1~3mm의 곱게 다진 마늘 — 고속 생산 라인에서 신선한 다진 마늘의 경제적인 대체품.",
       description: "당사의 곱게 다진 마늘은 균일하게 자르고 부드럽게 건조됩니다 — 고속 식품 생산 라인에서 신선한 다진 마늘의 경제적이고 효율적인 대체품입니다.",
@@ -89,7 +89,7 @@ const ko: Translations = {
     },
     "dehydrated-garlic-granules": {
       name: "건조 마늘 과립",
-      category: "건조",
+      category: "건조 채소",
       meshBadge: "0.5~1mm · 40~80 메시",
       shortDescription: "모래 같은 균일한 0.5~1mm 과립 — 다진 마늘과 분말 사이의 가교로, 향신료 블렌드와 드라이 마리네이드에 이상적.",
       description: "Ocean Crest 과립은 다진 마늘과 미세 분말 사이의 가교로, 다른 건조 재료와 매끄럽게 섞이는 모래 같은 균일한 식감을 제공합니다.",
@@ -100,7 +100,7 @@ const ko: Translations = {
     },
     "dehydrated-garlic-powder": {
       name: "건조 마늘 분말",
-      category: "건조",
+      category: "건조 채소",
       meshBadge: "80~100+ 메시",
       shortDescription: "초미세 분쇄 마늘 분말 — 즉각적인 용해와 강렬한 풍미를 위해 설계.",
       description: "당사의 마늘 분말은 초미세한 마감까지 \"분쇄\"되어, 즉각적인 용해와 즉시 강렬한 풍미의 일격을 위해 설계되었습니다.",
@@ -111,7 +111,7 @@ const ko: Translations = {
     },
     "dehydrated-turmeric-powder": {
       name: "건조 강황 분말",
-      category: "건조",
+      category: "향신료",
       meshBadge: "60~200 메시",
       shortDescription: "햇볕에 말린 뿌리줄기를 분쇄하여 만든 선명하고 커큐민 함량이 높은 강황 분말 — 짙은 색상과 흙 내음이 특징.",
       description: "Ocean Crest 강황 분말은 엄선된 햇볕 건조 뿌리줄기를 분쇄하여 만들어지며, 짙은 황금빛 색상, 높은 커큐민 함량, 그리고 프리미엄 강황 특유의 따뜻하고 흙내음 나는 향을 제공합니다.",

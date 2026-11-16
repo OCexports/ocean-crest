@@ -16,6 +16,9 @@ import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface RelatedItem {
   slug: string;
+  name: string;
+  category: string;
+  shortDescription: string;
   hasPhotography: boolean;
   image: string;
 }
@@ -187,7 +190,7 @@ export function ProductDetailContent({ product, galleryImages, related }: Props)
                               <>
                                 <Image
                                   src={rp.image}
-                                  alt={rpd?.name ?? rp.slug}
+                                  alt={rpd?.name ?? rp.name}
                                   fill
                                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.08]"
@@ -199,9 +202,9 @@ export function ProductDetailContent({ product, galleryImages, related }: Props)
                             )}
                           </div>
                           <CardContent>
-                            <Badge variant="gold" className="mb-2">{rpd?.category ?? category}</Badge>
-                            <h3 className="font-semibold text-primary font-[family-name:var(--font-display)] group-hover:text-gold transition-colors">{rpd?.name ?? rp.slug}</h3>
-                            <p className="mt-1 text-sm text-ink-muted line-clamp-2">{rpd?.shortDescription ?? ""}</p>
+                            <Badge variant="gold" className="mb-2">{rpd?.category ?? rp.category}</Badge>
+                            <h3 className="font-semibold text-primary font-[family-name:var(--font-display)] group-hover:text-gold transition-colors">{rpd?.name ?? rp.name}</h3>
+                            <p className="mt-1 text-sm text-ink-muted line-clamp-2">{rpd?.shortDescription ?? rp.shortDescription}</p>
                           </CardContent>
                         </Card>
                       </Link>

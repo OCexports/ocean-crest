@@ -47,7 +47,7 @@ const it: Translations = {
   heroCards: { globalReach: { title: "Portata Globale", value: "8 porti · 6 continenti" }, verifiedQuality: { title: "Qualità Verificata", value: "FSSAI + ISO 22000" }, directSource: { title: "Fonte Diretta", value: "Tracciabilità dalla fattoria al porto" }, timelyDelivery: { title: "Consegna Puntuale", value: "Container e LCL pronti" } },
   heroLede: "Prodotti indiani premium, verificati alla fonte e spediti da Ahmedabad in oltre 25 paesi.",
   contact: { title: "Inviaci la Tua Richiesta", subtitle: "Compila i dettagli e il nostro team ti risponderà entro 24 ore.", name: "Nome Completo", email: "Email", phone: "Telefono", company: "Azienda", country: "Paese", product: "Prodotto di Interesse", quantity: "Quantità Stimata", message: "Messaggio", submit: "Contattaci", success: "Richiesta Inviata con Successo!", successMsg: "Grazie per il tuo interesse. Il nostro team risponderà entro 24 ore." },
-  categoriesLabels: { all: "Tutti", dehydrated: "Disidratato" },
+  categoriesLabels: { all: "Tutti", "dehydrated-vegetables": "Verdure disidratate", spices: "Spezie", "herbal-wellness": "Erbe e benessere" },
   gallery: { viewVideo: "Guarda il video del prodotto", viewImage: "Visualizza immagine" },
   headerExtra: { whatsappUs: "WhatsApp" },
   footerExtra: { privacy: "Informativa sulla Privacy", terms: "Termini di Servizio", copyright: "Tutti i diritti riservati. Parte di Sheth & Bhatt's LLP." },
@@ -56,7 +56,7 @@ const it: Translations = {
   productData: {
     "dehydrated-garlic-flakes": {
       name: "Fiocchi di aglio disidratato",
-      category: "Disidratato",
+      category: "Verdure disidratate",
       meshBadge: "8–15 mm",
       shortDescription: "La forma più vicina all'aglio fresco — fiocchi premium da 8 a 15 mm lavorati da raccolti indiani selezionati.",
       description: "I nostri fiocchi premium sono la forma più vicina all'aglio fresco, lavorati con cura da raccolti indiani selezionati per mantenere il loro aroma deciso e il sapore intenso.",
@@ -67,7 +67,7 @@ const it: Translations = {
     },
     "dehydrated-garlic-chopped": {
       name: "Aglio disidratato tritato grosso",
-      category: "Disidratato",
+      category: "Verdure disidratate",
       meshBadge: "3–5 mm · 8–20 mesh",
       shortDescription: "Aglio tritato grosso da 3 a 5 mm per applicazioni in cui l'aglio deve essere sia gustato che visto.",
       description: "L'aglio tritato di Ocean Crest offre una consistenza grossa ed esplosioni di sapore intense. Progettato per applicazioni in cui l'aglio deve essere sia gustato che visto.",
@@ -78,7 +78,7 @@ const it: Translations = {
     },
     "dehydrated-garlic-minced": {
       name: "Aglio disidratato tritato fine",
-      category: "Disidratato",
+      category: "Verdure disidratate",
       meshBadge: "1–3 mm · 20–40 mesh",
       shortDescription: "Aglio tritato fine tagliato uniformemente da 1 a 3 mm — un sostituto economico dell'aglio tritato fresco per linee di produzione ad alta velocità.",
       description: "Il nostro aglio tritato fine è tagliato uniformemente e disidratato delicatamente — un sostituto economico ed efficiente dell'aglio tritato fresco nelle linee di produzione alimentare ad alta velocità.",
@@ -89,7 +89,7 @@ const it: Translations = {
     },
     "dehydrated-garlic-granules": {
       name: "Granuli di aglio disidratato",
-      category: "Disidratato",
+      category: "Verdure disidratate",
       meshBadge: "0.5–1 mm · 40–80 mesh",
       shortDescription: "Granuli sabbiosi e uniformi da 0,5 a 1 mm — il ponte tra il tritato fine e la polvere, ideali per miscele di spezie e marinate secche.",
       description: "I granuli di Ocean Crest sono il ponte tra l'aglio tritato fine e la polvere fine, offrendo una consistenza sabbiosa e uniforme che si amalgama perfettamente con altri ingredienti secchi.",
@@ -100,7 +100,7 @@ const it: Translations = {
     },
     "dehydrated-garlic-powder": {
       name: "Aglio disidratato in polvere",
-      category: "Disidratato",
+      category: "Verdure disidratate",
       meshBadge: "80–100+ mesh",
       shortDescription: "Aglio in polvere ultrafine polverizzato — progettato per dissoluzione istantanea e sapore intenso.",
       description: "Il nostro aglio in polvere viene «polverizzato» fino a una finitura ultrafine, progettato per una dissoluzione istantanea e un'esplosione di sapore immediata e intensa.",
@@ -111,7 +111,7 @@ const it: Translations = {
     },
     "dehydrated-turmeric-powder": {
       name: "Curcuma disidratata in polvere",
-      category: "Disidratato",
+      category: "Spezie",
       meshBadge: "60–200 mesh",
       shortDescription: "Polvere di curcuma vibrante e ricca di curcumina, macinata da rizomi essiccati al sole per un colore intenso e un calore terroso.",
       description: "La polvere di curcuma di Ocean Crest è macinata da rizomi accuratamente selezionati ed essiccati al sole per offrire un colore dorato intenso, un alto contenuto di curcumina e l'aroma caldo e terroso che definisce la curcuma premium.",

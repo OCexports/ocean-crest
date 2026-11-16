@@ -7,7 +7,7 @@ import { m, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardContent } from "@/components/ui/Card";
-import { categories, getProductsByCategory } from "@/lib/constants/products";
+import { categories, getProductsByCategory, type Product } from "@/lib/constants/products";
 import { ProductImagePlaceholder } from "./ProductImagePlaceholder";
 import { HoverVideoMedia } from "./HoverVideoMedia";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
@@ -17,6 +17,16 @@ export function ProductsSection() {
   const [active, setActive] = useState("all");
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
   const filtered = getProductsByCategory(active);
+
+  // Consecutive products sharing a category + family form one group (one sub-heading).
+  type Group = { categorySlug: string; family?: string; items: Product[] };
+  const groups: Group[] = [];
+  for (const p of filtered) {
+    const last = groups[groups.length - 1];
+    if (last && last.categorySlug === p.categorySlug && last.family === p.family) last.items.push(p);
+    else groups.push({ categorySlug: p.categorySlug, family: p.family, items: [p] });
+  }
+  const order = new Map(filtered.map((p, i) => [p.slug, i]));
 
   return (
     <>
@@ -38,7 +48,7 @@ export function ProductsSection() {
         ))}
       </div>
 
-      {/* Product Grid with animation */}
+      {/* Product Grid with animation — grouped by category (All view) and by product family */}
       <AnimatePresence mode="wait">
         <m.div
           key={active}
@@ -46,74 +56,99 @@ export function ProductsSection() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -12 }}
           transition={{ duration: 0.25 }}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="space-y-12"
         >
-          {filtered.map((product, i) => {
-            const pd = t.productData[product.slug];
-            const name = pd?.name ?? product.name;
-            const meshBadge = pd?.meshBadge ?? product.meshBadge;
+          {groups.map((group, gi) => {
+            const showCategory =
+              active === "all" && (gi === 0 || groups[gi - 1].categorySlug !== group.categorySlug);
+            const cat = categories.find((c) => c.slug === group.categorySlug);
             return (
-            <m.div
-              key={product.slug}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05, duration: 0.3 }}
-            >
-              <Link
-                href={`/products/${product.slug}`}
-                className="group block h-full"
-                onMouseEnter={() => setHoveredSlug(product.slug)}
-                onMouseLeave={() => setHoveredSlug(null)}
-              >
-                <Card className="h-full">
-                  <div className="aspect-[4/3] relative overflow-hidden bg-stone-100">
-                    {product.hasPhotography ? (
-                      <>
-                        <HoverVideoMedia
-                          src={product.image}
-                          video={product.video}
-                          alt={name}
-                          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                          isHovered={hoveredSlug === product.slug}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent group-hover:from-black/10 transition-colors duration-300 pointer-events-none" />
-                      </>
-                    ) : (
-                      <ProductImagePlaceholder />
-                    )}
-                    {meshBadge && (
-                      <span className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-sm text-[12px] lg:text-[10px] font-semibold tracking-[0.15em] uppercase text-primary shadow-border">
-                        {meshBadge}
-                      </span>
-                    )}
-                    {product.video && (
-                      <span
-                        className="absolute top-3 right-3 z-10 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-ink/70 backdrop-blur-sm text-[12px] lg:text-[9px] font-semibold tracking-[0.15em] uppercase text-white"
-                        aria-hidden="true"
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
-                        Video
-                      </span>
-                    )}
+              <div key={`${group.categorySlug}-${group.family ?? "single"}-${gi}`}>
+                {showCategory && cat && (
+                  <div className="mb-8 mt-4 first:mt-0">
+                    <h2 className="text-2xl lg:text-3xl font-semibold text-primary font-[family-name:var(--font-display)]">
+                      {t.categoriesLabels[cat.slug as keyof typeof t.categoriesLabels] ?? cat.name}
+                    </h2>
+                    <div className="gold-line-left mt-3" />
                   </div>
-                  <CardContent>
-                    <Badge variant="gold" className="mb-2">
-                      {pd?.category ?? product.category}
-                    </Badge>
-                    <h3 className="text-lg font-semibold text-primary font-[family-name:var(--font-display)] group-hover:text-gold transition-colors">
-                      {name}
-                    </h3>
-                    <p className="mt-1.5 text-sm text-ink-muted line-clamp-2">
-                      {pd?.shortDescription ?? product.shortDescription}
-                    </p>
-                    <span className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-gold group-hover:gap-2 transition-all">
-                      {t.productsSection.viewDetails}{" "}
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </span>
-                  </CardContent>
-                </Card>
-              </Link>
-            </m.div>
+                )}
+                {group.family && (
+                  <h3 className="mb-5 text-[12px] lg:text-[11px] font-medium tracking-[0.25em] uppercase text-gold-deep">
+                    {group.family}
+                  </h3>
+                )}
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {group.items.map((product) => {
+                    const i = order.get(product.slug) ?? 0;
+                    const pd = t.productData[product.slug];
+                    const name = pd?.name ?? product.name;
+                    const meshBadge = pd?.meshBadge ?? product.meshBadge;
+                    return (
+                      <m.div
+                        key={product.slug}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: Math.min(i, 8) * 0.05, duration: 0.3 }}
+                      >
+                        <Link
+                          href={`/products/${product.slug}`}
+                          className="group block h-full"
+                          onMouseEnter={() => setHoveredSlug(product.slug)}
+                          onMouseLeave={() => setHoveredSlug(null)}
+                        >
+                          <Card className="h-full">
+                            <div className="aspect-[4/3] relative overflow-hidden bg-stone-100">
+                              {product.hasPhotography ? (
+                                <>
+                                  <HoverVideoMedia
+                                    src={product.image}
+                                    video={product.video}
+                                    alt={name}
+                                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                                    isHovered={hoveredSlug === product.slug}
+                                  />
+                                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent group-hover:from-black/10 transition-colors duration-300 pointer-events-none" />
+                                </>
+                              ) : (
+                                <ProductImagePlaceholder />
+                              )}
+                              {meshBadge && (
+                                <span className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-sm text-[12px] lg:text-[10px] font-semibold tracking-[0.15em] uppercase text-primary shadow-border">
+                                  {meshBadge}
+                                </span>
+                              )}
+                              {product.video && (
+                                <span
+                                  className="absolute top-3 right-3 z-10 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-ink/70 backdrop-blur-sm text-[12px] lg:text-[9px] font-semibold tracking-[0.15em] uppercase text-white"
+                                  aria-hidden="true"
+                                >
+                                  <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
+                                  Video
+                                </span>
+                              )}
+                            </div>
+                            <CardContent>
+                              <Badge variant="gold" className="mb-2">
+                                {pd?.category ?? product.category}
+                              </Badge>
+                              <h3 className="text-lg font-semibold text-primary font-[family-name:var(--font-display)] group-hover:text-gold transition-colors">
+                                {name}
+                              </h3>
+                              <p className="mt-1.5 text-sm text-ink-muted line-clamp-2">
+                                {pd?.shortDescription ?? product.shortDescription}
+                              </p>
+                              <span className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-gold group-hover:gap-2 transition-all">
+                                {t.productsSection.viewDetails}{" "}
+                                <ArrowRight className="w-3.5 h-3.5" />
+                              </span>
+                            </CardContent>
+                          </Card>
+                        </Link>
+                      </m.div>
+                    );
+                  })}
+                </div>
+              </div>
             );
           })}
         </m.div>

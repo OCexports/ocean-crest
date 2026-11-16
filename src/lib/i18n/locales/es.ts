@@ -47,7 +47,7 @@ const es: Translations = {
   heroCards: { globalReach: { title: "Alcance Global", value: "8 puertos · 6 continentes" }, verifiedQuality: { title: "Calidad Verificada", value: "FSSAI + ISO 22000" }, directSource: { title: "Origen Directo", value: "Trazabilidad de la granja al puerto" }, timelyDelivery: { title: "Entrega Puntual", value: "Contenedor y LCL listos" } },
   heroLede: "Productos indios premium, verificados en origen y enviados desde Ahmedabad a más de 25 países.",
   contact: { title: "Envíenos su Consulta", subtitle: "Complete los detalles y nuestro equipo le responderá dentro de 24 horas.", name: "Nombre Completo", email: "Correo Electrónico", phone: "Teléfono", company: "Empresa", country: "País", product: "Producto de Interés", quantity: "Cantidad Estimada", message: "Mensaje", submit: "Contactar", success: "¡Consulta Enviada con Éxito!", successMsg: "Gracias por su interés. Nuestro equipo responderá dentro de 24 horas." },
-  categoriesLabels: { all: "Todos", dehydrated: "Deshidratado" },
+  categoriesLabels: { all: "Todos", "dehydrated-vegetables": "Verduras deshidratadas", spices: "Especias", "herbal-wellness": "Hierbas y bienestar" },
   gallery: { viewVideo: "Ver video del producto", viewImage: "Ver imagen" },
   headerExtra: { whatsappUs: "WhatsApp" },
   footerExtra: { privacy: "Política de Privacidad", terms: "Términos de Servicio", copyright: "Todos los derechos reservados. Parte de Sheth & Bhatt's LLP." },
@@ -56,7 +56,7 @@ const es: Translations = {
   productData: {
     "dehydrated-garlic-flakes": {
       name: "Copos de ajo deshidratado",
-      category: "Deshidratado",
+      category: "Verduras deshidratadas",
       meshBadge: "8–15 mm",
       shortDescription: "La forma más parecida al ajo fresco — copos premium de 8 a 15 mm procesados a partir de cosechas indias seleccionadas.",
       description: "Nuestros copos premium son la forma más parecida al ajo fresco, procesados meticulosamente a partir de cosechas indias seleccionadas para mantener su aroma robusto y sabor intenso.",
@@ -67,7 +67,7 @@ const es: Translations = {
     },
     "dehydrated-garlic-chopped": {
       name: "Ajo deshidratado picado grueso",
-      category: "Deshidratado",
+      category: "Verduras deshidratadas",
       meshBadge: "3–5 mm · 8–20 mesh",
       shortDescription: "Ajo picado grueso de 3 a 5 mm para aplicaciones donde el ajo debe ser tanto saboreado como visto.",
       description: "El ajo picado de Ocean Crest aporta una textura gruesa y ráfagas de sabor intenso. Diseñado para aplicaciones donde el ajo debe ser tanto saboreado como visto.",
@@ -78,7 +78,7 @@ const es: Translations = {
     },
     "dehydrated-garlic-minced": {
       name: "Ajo deshidratado picado fino",
-      category: "Deshidratado",
+      category: "Verduras deshidratadas",
       meshBadge: "1–3 mm · 20–40 mesh",
       shortDescription: "Ajo picado fino cortado uniformemente de 1 a 3 mm — un sustituto rentable del ajo picado fresco para líneas de producción de alta velocidad.",
       description: "Nuestro ajo picado fino está cortado uniformemente y deshidratado suavemente — un sustituto rentable y eficiente del ajo picado fresco en líneas de producción alimentaria de alta velocidad.",
@@ -89,7 +89,7 @@ const es: Translations = {
     },
     "dehydrated-garlic-granules": {
       name: "Gránulos de ajo deshidratado",
-      category: "Deshidratado",
+      category: "Verduras deshidratadas",
       meshBadge: "0.5–1 mm · 40–80 mesh",
       shortDescription: "Gránulos arenosos y consistentes de 0,5 a 1 mm — el puente entre el picado fino y el polvo, ideal para mezclas de especias y adobos secos.",
       description: "Los gránulos de Ocean Crest son el puente entre el ajo picado fino y el polvo fino, proporcionando una textura arenosa y consistente que se mezcla a la perfección con otros ingredientes secos.",
@@ -100,7 +100,7 @@ const es: Translations = {
     },
     "dehydrated-garlic-powder": {
       name: "Ajo deshidratado en polvo",
-      category: "Deshidratado",
+      category: "Verduras deshidratadas",
       meshBadge: "80–100+ mesh",
       shortDescription: "Ajo en polvo ultrafino pulverizado — diseñado para disolución instantánea y sabor intenso.",
       description: "Nuestro ajo en polvo se «pulveriza» hasta un acabado ultrafino, diseñado para una disolución instantánea y un golpe de sabor inmediato e intenso.",
@@ -111,7 +111,7 @@ const es: Translations = {
     },
     "dehydrated-turmeric-powder": {
       name: "Cúrcuma deshidratada en polvo",
-      category: "Deshidratado",
+      category: "Especias",
       meshBadge: "60–200 mesh",
       shortDescription: "Polvo de cúrcuma vibrante y alto en curcumina, molido a partir de rizomas curados al sol para un color intenso y calidez terrosa.",
       description: "El polvo de cúrcuma de Ocean Crest se muele a partir de rizomas cuidadosamente seleccionados y curados al sol para ofrecer un color dorado intenso, un alto contenido de curcumina y el aroma cálido y terroso que define a la cúrcuma premium.",
