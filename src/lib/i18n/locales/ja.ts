@@ -47,7 +47,7 @@ const ja: Translations = {
   heroCards: { globalReach: { title: "グローバル展開", value: "8港 · 6大陸" }, verifiedQuality: { title: "検証済み品質", value: "FSSAI + ISO 22000" }, directSource: { title: "直接調達", value: "農場から港までのトレーサビリティ" }, timelyDelivery: { title: "時間通りの配送", value: "コンテナおよびLCL対応" } },
   heroLede: "プレミアムなインド商品を、原産地で検証し、アーメダバードから25か国以上へ出荷します。",
   contact: { title: "お問い合わせを送信", subtitle: "以下の詳細をご記入ください。チームが24時間以内にご返答いたします。", name: "氏名", email: "メールアドレス", phone: "電話番号", company: "会社名", country: "国", product: "ご関心の製品", quantity: "推定数量", message: "メッセージ", submit: "お問い合わせ", success: "お問い合わせが正常に送信されました!", successMsg: "ご関心をお寄せいただきありがとうございます。チームが24時間以内にご返答いたします。" },
-  categoriesLabels: { all: "すべて", dehydrated: "乾燥" },
+  categoriesLabels: { all: "すべて", "dehydrated-vegetables": "乾燥野菜", spices: "スパイス", "herbal-wellness": "ハーブ＆ウェルネス" },
   gallery: { viewVideo: "製品動画を見る", viewImage: "画像を見る" },
   headerExtra: { whatsappUs: "WhatsApp で連絡" },
   footerExtra: { privacy: "プライバシーポリシー", terms: "利用規約", copyright: "全著作権所有。Sheth & Bhatt's LLP の一員。" },
@@ -56,7 +56,7 @@ const ja: Translations = {
   productData: {
     "dehydrated-garlic-flakes": {
       name: "乾燥ガーリックフレーク",
-      category: "乾燥",
+      category: "乾燥野菜",
       meshBadge: "8〜15 mm",
       shortDescription: "生にんにくに最も近い形態 — 厳選されたインド産作物から加工したプレミアム 8〜15 mm フレーク。",
       description: "当社のプレミアムフレークは生にんにくに最も近い形態で、力強い香りと濃厚な風味を保つために厳選されたインド産作物から丁寧に加工されています。",
@@ -67,7 +67,7 @@ const ja: Translations = {
     },
     "dehydrated-garlic-chopped": {
       name: "乾燥ガーリックチョップド",
-      category: "乾燥",
+      category: "乾燥野菜",
       meshBadge: "3〜5 mm · 8〜20 メッシュ",
       shortDescription: "にんにくを味わうと同時に見せる必要がある用途向けの、3〜5 mm の粗めチョップドガーリック。",
       description: "Ocean Crest チョップドガーリックは、粗めの食感と力強い風味の弾けを提供します。にんにくを味わうと同時に見せる必要がある用途向けに設計されています。",
@@ -78,7 +78,7 @@ const ja: Translations = {
     },
     "dehydrated-garlic-minced": {
       name: "乾燥ガーリックミンス",
-      category: "乾燥",
+      category: "乾燥野菜",
       meshBadge: "1〜3 mm · 20〜40 メッシュ",
       shortDescription: "均一にカットされた 1〜3 mm のミンスガーリック — 高速生産ラインにおける生ミンスガーリックの費用対効果の高い代替品。",
       description: "当社のミンスガーリックは均一にカットされ、優しく乾燥されています — 高速食品生産ラインにおける生ミンスガーリックの費用対効果が高く効率的な代替品です。",
@@ -89,7 +89,7 @@ const ja: Translations = {
     },
     "dehydrated-garlic-granules": {
       name: "乾燥ガーリックグラニュール",
-      category: "乾燥",
+      category: "乾燥野菜",
       meshBadge: "0.5〜1 mm · 40〜80 メッシュ",
       shortDescription: "砂状で均一な 0.5〜1 mm のグラニュール — ミンスとパウダーの架け橋であり、スパイスブレンドやドライマリネに最適。",
       description: "Ocean Crest グラニュールはミンスガーリックと微細パウダーの架け橋で、他の乾燥材料とシームレスに混ざる砂状で均一な食感を提供します。",
@@ -100,7 +100,7 @@ const ja: Translations = {
     },
     "dehydrated-garlic-powder": {
       name: "乾燥ガーリックパウダー",
-      category: "乾燥",
+      category: "乾燥野菜",
       meshBadge: "80〜100+ メッシュ",
       shortDescription: "超微細に粉砕されたガーリックパウダー — 瞬時の溶解と濃厚な風味のために設計。",
       description: "当社のガーリックパウダーは超微細な仕上がりまで「粉砕」されており、瞬時の溶解と即座の濃厚な風味の一撃のために設計されています。",
@@ -111,7 +111,7 @@ const ja: Translations = {
     },
     "dehydrated-turmeric-powder": {
       name: "乾燥ターメリックパウダー",
-      category: "乾燥",
+      category: "スパイス",
       meshBadge: "60〜200 メッシュ",
       shortDescription: "天日干しされた根茎から挽かれた、鮮やかで高クルクミン含有量のターメリックパウダー — 深い色合いと土っぽい温かみが特徴。",
       description: "Ocean Crestのターメリックパウダーは、厳選された天日干しの根茎から挽かれており、深い黄金色、高いクルクミン含有量、そしてプレミアムターメリックを特徴づける温かく土っぽい香りを実現しています。",

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Send, CheckCircle } from "lucide-react";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { categories, products } from "@/lib/constants/products";
 
 interface CTABannerProps {
   eyebrow?: string;
@@ -146,12 +147,19 @@ export function CTABanner({ eyebrow, heading1, heading2, intro }: CTABannerProps
                   </label>
                   <select id="cta-product" name="product" className="w-full px-3 py-2.5 bg-white/8 border border-white/15 rounded-[var(--radius-sm)] text-white text-sm focus:outline-none focus:ring-2 focus:ring-gold/40 focus:border-gold focus:bg-white/10 transition-colors cursor-pointer">
                     <option value="" className="bg-primary">{t.ctaBanner.selectProduct}</option>
-                    <option value="dehydrated-garlic-flakes" className="bg-primary">Garlic Flakes</option>
-                    <option value="dehydrated-garlic-chopped" className="bg-primary">Garlic Chopped</option>
-                    <option value="dehydrated-garlic-minced" className="bg-primary">Garlic Minced</option>
-                    <option value="dehydrated-garlic-granules" className="bg-primary">Garlic Granules</option>
-                    <option value="dehydrated-garlic-powder" className="bg-primary">Garlic Powder</option>
-                    <option value="dehydrated-turmeric-powder" className="bg-primary">Turmeric Powder</option>
+                    {categories
+                      .filter((c) => c.slug !== "all")
+                      .map((c) => (
+                        <optgroup key={c.slug} label={c.name} className="bg-primary">
+                          {products
+                            .filter((p) => p.categorySlug === c.slug)
+                            .map((p) => (
+                              <option key={p.slug} value={p.slug} className="bg-primary">
+                                {p.name}
+                              </option>
+                            ))}
+                        </optgroup>
+                      ))}
                   </select>
                 </div>
                 <div className="space-y-1.5">

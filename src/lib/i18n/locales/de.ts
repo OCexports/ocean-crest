@@ -47,7 +47,7 @@ const de: Translations = {
   heroCards: { globalReach: { title: "Globale Reichweite", value: "8 Häfen · 6 Kontinente" }, verifiedQuality: { title: "Verifizierte Qualität", value: "FSSAI + ISO 22000" }, directSource: { title: "Direkte Quelle", value: "Rückverfolgbarkeit vom Hof zum Hafen" }, timelyDelivery: { title: "Pünktliche Lieferung", value: "Container und LCL bereit" } },
   heroLede: "Premium-Produkte aus Indien, an der Quelle verifiziert und von Ahmedabad in über 25 Länder verschickt.",
   contact: { title: "Senden Sie Uns Ihre Anfrage", subtitle: "Füllen Sie die Details aus und unser Team antwortet innerhalb von 24 Stunden.", name: "Vollständiger Name", email: "E-Mail", phone: "Telefon", company: "Unternehmen", country: "Land", product: "Produktinteresse", quantity: "Geschätzte Menge", message: "Nachricht", submit: "Kontakt", success: "Anfrage Erfolgreich Gesendet!", successMsg: "Vielen Dank für Ihr Interesse. Unser Team antwortet innerhalb von 24 Stunden." },
-  categoriesLabels: { all: "Alle", dehydrated: "Getrocknet" },
+  categoriesLabels: { all: "Alle", "dehydrated-vegetables": "Getrocknetes Gemüse", spices: "Gewürze", "herbal-wellness": "Kräuter & Wellness" },
   gallery: { viewVideo: "Produktvideo ansehen", viewImage: "Bild ansehen" },
   headerExtra: { whatsappUs: "WhatsApp" },
   footerExtra: { privacy: "Datenschutzrichtlinie", terms: "Nutzungsbedingungen", copyright: "Alle Rechte vorbehalten. Teil von Sheth & Bhatt's LLP." },
@@ -56,7 +56,7 @@ const de: Translations = {
   productData: {
     "dehydrated-garlic-flakes": {
       name: "Getrocknete Knoblauchflocken",
-      category: "Getrocknet",
+      category: "Getrocknetes Gemüse",
       meshBadge: "8–15 mm",
       shortDescription: "Die frischestem Knoblauch am nächsten kommende Form — hochwertige 8–15-mm-Flocken aus ausgewählten indischen Ernten.",
       description: "Unsere Premium-Flocken kommen frischem Knoblauch am nächsten und werden sorgfältig aus ausgewählten indischen Ernten verarbeitet, um ihr kräftiges Aroma und ihren intensiven Geschmack zu bewahren.",
@@ -67,7 +67,7 @@ const de: Translations = {
     },
     "dehydrated-garlic-chopped": {
       name: "Getrockneter Knoblauch gehackt",
-      category: "Getrocknet",
+      category: "Getrocknetes Gemüse",
       meshBadge: "3–5 mm · 8–20 mesh",
       shortDescription: "Grob gehackter Knoblauch von 3–5 mm für Anwendungen, bei denen Knoblauch sowohl geschmeckt als auch gesehen werden soll.",
       description: "Ocean Crest gehackter Knoblauch bietet eine grobe Textur und kräftige Geschmacksexplosionen. Entwickelt für Anwendungen, bei denen Knoblauch sowohl geschmeckt als auch gesehen werden soll.",
@@ -78,7 +78,7 @@ const de: Translations = {
     },
     "dehydrated-garlic-minced": {
       name: "Getrockneter Knoblauch fein gehackt",
-      category: "Getrocknet",
+      category: "Getrocknetes Gemüse",
       meshBadge: "1–3 mm · 20–40 mesh",
       shortDescription: "Gleichmäßig geschnittener, fein gehackter Knoblauch von 1–3 mm — ein kostengünstiger Ersatz für frisch gehackten Knoblauch in Hochgeschwindigkeitsproduktionslinien.",
       description: "Unser fein gehackter Knoblauch ist gleichmäßig geschnitten und schonend getrocknet — ein kostengünstiger, effizienter Ersatz für frisch gehackten Knoblauch in Hochgeschwindigkeits-Lebensmittelproduktionslinien.",
@@ -89,7 +89,7 @@ const de: Translations = {
     },
     "dehydrated-garlic-granules": {
       name: "Getrocknetes Knoblauchgranulat",
-      category: "Getrocknet",
+      category: "Getrocknetes Gemüse",
       meshBadge: "0.5–1 mm · 40–80 mesh",
       shortDescription: "Sandiges, gleichmäßiges Granulat von 0,5–1 mm — die Brücke zwischen fein gehacktem Knoblauch und Pulver, ideal für Gewürzmischungen und trockene Marinaden.",
       description: "Ocean Crest Granulat ist die Brücke zwischen fein gehacktem Knoblauch und feinem Pulver und bietet eine sandige, gleichmäßige Textur, die sich nahtlos mit anderen trockenen Zutaten vermischt.",
@@ -100,7 +100,7 @@ const de: Translations = {
     },
     "dehydrated-garlic-powder": {
       name: "Getrocknetes Knoblauchpulver",
-      category: "Getrocknet",
+      category: "Getrocknetes Gemüse",
       meshBadge: "80–100+ mesh",
       shortDescription: "Ultrafeines pulverisiertes Knoblauchpulver — entwickelt für sofortige Auflösung und intensiven Geschmack.",
       description: "Unser Knoblauchpulver wird zu einer ultrafeinen Konsistenz „pulverisiert“, entwickelt für sofortige Auflösung und einen unmittelbaren, intensiven Geschmacksschub.",
@@ -111,7 +111,7 @@ const de: Translations = {
     },
     "dehydrated-turmeric-powder": {
       name: "Getrocknetes Kurkumapulver",
-      category: "Getrocknet",
+      category: "Gewürze",
       meshBadge: "60–200 mesh",
       shortDescription: "Leuchtendes, curcuminreiches Kurkumapulver, gemahlen aus sonnengetrockneten Rhizomen für tiefe Farbe und erdige Wärme.",
       description: "Das Kurkumapulver von Ocean Crest wird aus sorgfältig ausgewählten, sonnengetrockneten Rhizomen gemahlen und liefert eine tiefgoldene Farbe, einen hohen Curcumingehalt und das warme, erdige Aroma, das Premium-Kurkuma ausmacht.",

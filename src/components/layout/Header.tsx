@@ -180,7 +180,7 @@ export function Header() {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 10, scale: 0.98 }}
                           transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-                          className="absolute top-full left-0 [dir=rtl]:left-auto [dir=rtl]:right-0 mt-2 w-60 bg-white rounded-[var(--radius-md)] shadow-lg overflow-hidden border border-edge/50"
+                          className="absolute top-full left-0 [dir=rtl]:left-auto [dir=rtl]:right-0 mt-2 w-64 max-h-[80vh] overflow-y-auto bg-white rounded-[var(--radius-md)] shadow-lg border border-edge/50"
                         >
                           <div className="p-1.5">
                             {item.children.map((child) => (

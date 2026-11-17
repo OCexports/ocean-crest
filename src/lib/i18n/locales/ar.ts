@@ -47,7 +47,7 @@ const ar: Translations = {
   heroCards: { globalReach: { title: "وصول عالمي", value: "8 موانئ · 6 قارات" }, verifiedQuality: { title: "جودة موثَّقة", value: "FSSAI + ISO 22000" }, directSource: { title: "مصدر مباشر", value: "تتبّع من المزرعة إلى الميناء" }, timelyDelivery: { title: "تسليم في الموعد", value: "حاويات وLCL جاهزة" } },
   heroLede: "سلع هندية ممتازة، موثَّقة من المصدر وتُشحن من أحمد آباد إلى أكثر من 25 دولة.",
   contact: { title: "أرسل لنا استفسارك", subtitle: "املأ التفاصيل أدناه وسيرد فريقنا خلال 24 ساعة.", name: "الاسم الكامل", email: "البريد الإلكتروني", phone: "الهاتف", company: "الشركة", country: "الدولة", product: "المنتج المطلوب", quantity: "الكمية المقدرة", message: "الرسالة", submit: "تواصل معنا", success: "تم إرسال الاستفسار بنجاح!", successMsg: "شكراً لاهتمامك. سيرد فريقنا خلال 24 ساعة." },
-  categoriesLabels: { all: "الكل", dehydrated: "مجفف" },
+  categoriesLabels: { all: "الكل", "dehydrated-vegetables": "خضروات مجففة", spices: "التوابل", "herbal-wellness": "أعشاب وعافية" },
   gallery: { viewVideo: "مشاهدة فيديو المنتج", viewImage: "عرض الصورة" },
   headerExtra: { whatsappUs: "راسلنا على واتساب" },
   footerExtra: { privacy: "سياسة الخصوصية", terms: "شروط الخدمة", copyright: "جميع الحقوق محفوظة. جزء من Sheth & Bhatt's LLP." },
@@ -56,7 +56,7 @@ const ar: Translations = {
   productData: {
     "dehydrated-garlic-flakes": {
       name: "رقائق الثوم المجفف",
-      category: "مجفف",
+      category: "خضروات مجففة",
       meshBadge: "8–15 مم",
       shortDescription: "الشكل الأقرب إلى الثوم الطازج — رقائق فاخرة بحجم 8–15 مم معالجة من محاصيل هندية مختارة.",
       description: "رقائقنا الفاخرة هي الشكل الأقرب إلى الثوم الطازج، تُعالج بعناية من محاصيل هندية مختارة للحفاظ على رائحتها القوية ونكهتها الغنية.",
@@ -67,7 +67,7 @@ const ar: Translations = {
     },
     "dehydrated-garlic-chopped": {
       name: "الثوم المجفف المفروم خشناً",
-      category: "مجفف",
+      category: "خضروات مجففة",
       meshBadge: "3–5 مم · 8–20 مِش",
       shortDescription: "ثوم مفروم خشن بحجم 3–5 مم للتطبيقات التي يجب فيها تذوق الثوم ورؤيته معاً.",
       description: "يوفر الثوم المفروم من Ocean Crest قواماً خشناً ودفقات نكهة جريئة. مصمم للتطبيقات التي يجب فيها تذوق الثوم ورؤيته معاً.",
@@ -78,7 +78,7 @@ const ar: Translations = {
     },
     "dehydrated-garlic-minced": {
       name: "الثوم المجفف المفروم ناعماً",
-      category: "مجفف",
+      category: "خضروات مجففة",
       meshBadge: "1–3 مم · 20–40 مِش",
       shortDescription: "ثوم مفروم ناعماً ومقطّع بانتظام بحجم 1–3 مم — بديل اقتصادي للثوم المفروم الطازج في خطوط الإنتاج عالية السرعة.",
       description: "ثومنا المفروم ناعماً مقطّع بانتظام ومجفف بلطف — بديل اقتصادي وفعّال للثوم المفروم الطازج في خطوط إنتاج الأغذية عالية السرعة.",
@@ -89,7 +89,7 @@ const ar: Translations = {
     },
     "dehydrated-garlic-granules": {
       name: "حبيبات الثوم المجفف",
-      category: "مجفف",
+      category: "خضروات مجففة",
       meshBadge: "0.5–1 مم · 40–80 مِش",
       shortDescription: "حبيبات رملية متجانسة بحجم 0.5–1 مم — الجسر بين المفروم والمسحوق، مثالية لخلطات البهارات والتتبيلات الجافة.",
       description: "حبيبات Ocean Crest هي الجسر بين الثوم المفروم والمسحوق الناعم، توفر قواماً رملياً متجانساً يمتزج بسلاسة مع المكونات الجافة الأخرى.",
@@ -100,7 +100,7 @@ const ar: Translations = {
     },
     "dehydrated-garlic-powder": {
       name: "مسحوق الثوم المجفف",
-      category: "مجفف",
+      category: "خضروات مجففة",
       meshBadge: "80–100+ مِش",
       shortDescription: "مسحوق ثوم فائق النعومة ومطحون — مصمم للذوبان الفوري والنكهة المكثفة.",
       description: "مسحوق الثوم لدينا «مطحون» إلى درجة نهائية فائقة النعومة، مصمم للذوبان الفوري وضربة نكهة فورية ومكثفة.",
@@ -111,7 +111,7 @@ const ar: Translations = {
     },
     "dehydrated-turmeric-powder": {
       name: "مسحوق الكركم المجفف",
-      category: "مجفف",
+      category: "التوابل",
       meshBadge: "60–200 مِش",
       shortDescription: "مسحوق كركم زاهي بمحتوى عالٍ من الكركمين، مطحون من جذور مجففة بالشمس للحصول على لون عميق ودفء ترابي.",
       description: "يُطحن مسحوق الكركم من Ocean Crest من جذور مختارة بعناية ومجففة بالشمس لتقديم لون ذهبي عميق، ومحتوى عالٍ من الكركمين، ورائحة دافئة وترابية تُميّز الكركم الفاخر.",
